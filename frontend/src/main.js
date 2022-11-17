@@ -4,7 +4,7 @@ import App from "./App";
 // BootstrapVue add
 import BootstrapVue from "bootstrap-vue";
 // Router & Store add
-import router from "./router";
+import router from "@/routers/router";
 import store from "./store";
 // Multi Language Add
 import en from "./locales/en.json";

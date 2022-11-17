@@ -8,8 +8,23 @@
     </b-row>
     <b-row>
       <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('menu.area')"> </b-card>
+        <b-card class="mb-4">
+          <dong-search></dong-search>
+          <kakao-map></kakao-map>
+        </b-card>
       </b-colxx>
     </b-row>
   </div>
 </template>
+
+<script>
+import KakaoMap from "@/components/Maps/KakaoMap.vue";
+import DongSearch from "@/components/Headers/DongSearch.vue";
+export default {
+  name: "Area",
+  components: {
+    KakaoMap,
+    DongSearch
+  }
+};
+</script>
