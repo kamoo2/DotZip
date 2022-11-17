@@ -30,8 +30,8 @@ const data = [
   },
   {
     id: "bookmark",
-    icon: "iconsminds-reverbnation",
-    // icon: "iconsminds-love",
+    // icon: "iconsminds-reverbnation",
+    icon: "iconsminds-like",
     label: "MY 관심",
     to: `${adminRoot}/bookmark`,
     subs: [

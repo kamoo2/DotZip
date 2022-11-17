@@ -1,0 +1,66 @@
+2022-11-16 16:27:20.942  INFO 13028 --- [restartedMain] com.mycom.myapp.BackendApplication       : Starting BackendApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 13028 (C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend\bin\main started by SSAFY in C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend)
+2022-11-16 16:27:20.942  INFO 13028 --- [restartedMain] com.mycom.myapp.BackendApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-11-16 16:27:21.108  INFO 13028 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-16 16:27:21.108  INFO 13028 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-16 16:27:21.115  INFO 13028 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-16 16:27:21.133  INFO 13028 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-16 16:27:21.133  INFO 13028 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 188 ms
+2022-11-16 16:27:21.225  INFO 13028 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-16 16:27:21.231  INFO 13028 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-16 16:27:21.234  INFO 13028 --- [restartedMain] com.mycom.myapp.BackendApplication       : Started BackendApplication in 0.31 seconds (JVM running for 1833.867)
+2022-11-16 16:27:21.235  INFO 13028 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-16 16:27:30.948  INFO 13028 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-11-16 16:27:31.038  INFO 13028 --- [RMI TCP Connection(2)-127.0.0.1] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-16 16:27:36.582  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Starting BackendApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 9288 (C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend\bin\main started by SSAFY in C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend)
+2022-11-16 16:27:36.582  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-11-16 16:27:36.607  INFO 9288 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-11-16 16:27:36.607  INFO 9288 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-11-16 16:27:37.204  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-16 16:27:37.209  INFO 9288 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-16 16:27:37.209  INFO 9288 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-16 16:27:37.251  INFO 9288 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-16 16:27:37.251  INFO 9288 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 644 ms
+2022-11-16 16:27:37.623  INFO 9288 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-16 16:27:37.671  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-16 16:27:37.677  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Started BackendApplication in 1.316 seconds (JVM running for 1.76)
+2022-11-16 16:28:14.914  INFO 9288 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2022-11-16 16:28:15.012  INFO 9288 --- [Thread-6] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-16 16:28:15.115  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Starting BackendApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 9288 (C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend\bin\main started by SSAFY in C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend)
+2022-11-16 16:28:15.115  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-11-16 16:28:15.290  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-16 16:28:15.290  INFO 9288 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-16 16:28:15.290  INFO 9288 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-16 16:28:15.298  INFO 9288 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-16 16:28:15.299  INFO 9288 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 183 ms
+2022-11-16 16:28:15.395  INFO 9288 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-16 16:28:15.403  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-16 16:28:15.405  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Started BackendApplication in 0.309 seconds (JVM running for 39.489)
+2022-11-16 16:28:15.407  INFO 9288 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-16 16:28:17.259  INFO 9288 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2022-11-16 16:28:17.333  INFO 9288 --- [Thread-8] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-16 16:28:17.430  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Starting BackendApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 9288 (C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend\bin\main started by SSAFY in C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend)
+2022-11-16 16:28:17.430  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-11-16 16:28:17.592  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-16 16:28:17.592  INFO 9288 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-16 16:28:17.592  INFO 9288 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-16 16:28:17.600  INFO 9288 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-16 16:28:17.600  INFO 9288 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 168 ms
+2022-11-16 16:28:17.684  INFO 9288 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-16 16:28:17.691  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-16 16:28:17.694  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Started BackendApplication in 0.28 seconds (JVM running for 41.777)
+2022-11-16 16:28:17.695  INFO 9288 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-16 16:40:51.076  INFO 9288 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2022-11-16 16:40:51.147  INFO 9288 --- [Thread-12] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-16 16:40:51.239  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Starting BackendApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 9288 (C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend\bin\main started by SSAFY in C:\Users\SSAFY\Documents\ssafy\FinalHappyHouse\backend)
+2022-11-16 16:40:51.239  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : No active profile set, falling back to 1 default profile: "default"
+2022-11-16 16:40:51.396  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-16 16:40:51.396  INFO 9288 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-16 16:40:51.397  INFO 9288 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-16 16:40:51.405  INFO 9288 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-16 16:40:51.405  INFO 9288 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 164 ms
+2022-11-16 16:40:51.485  INFO 9288 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-16 16:40:51.491  INFO 9288 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-16 16:40:51.494  INFO 9288 --- [restartedMain] com.mycom.myapp.BackendApplication       : Started BackendApplication in 0.271 seconds (JVM running for 795.577)
+2022-11-16 16:40:51.495  INFO 9288 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-16 17:54:12.136  INFO 9288 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-11-16 17:54:12.222  INFO 9288 --- [RMI TCP Connection(2)-127.0.0.1] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
