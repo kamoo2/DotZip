@@ -9,89 +9,65 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: () => import(/* webpackChunkName: "home" */ "./views/home")
-    // redirect: `${adminRoot}/piaf`,
+    component: () => import("./views/home")
   },
   {
     path: adminRoot,
-    component: () => import(/* webpackChunkName: "app" */ "./views/app"),
+    component: () => import("./views/app"),
     redirect: `${adminRoot}/home`,
     meta: { loginRequired: true },
-    /*
-   define with Authorization :
-   meta: { loginRequired: true, roles: [UserRole.Admin, UserRole.Editor] },
-   */
     children: [
       {
         path: "home",
-        component: () =>
-          import(/* webpackChunkName: "piaf" */ "./views/app/home")
+        component: () => import("./views/app/home")
       },
       {
         path: "search",
-        component: () =>
-          import(/* webpackChunkName: "piaf" */ "./views/app/search"),
+        component: () => import("./views/app/search"),
         redirect: `${adminRoot}/search/area`,
         children: [
           {
             path: "area",
-            component: () =>
-              import(/* webpackChunkName: "piaf" */ "./views/app/search/Area")
-            // meta: { roles: [UserRole.Admin, UserRole.Editor] },
+            component: () => import("./views/app/search/Area")
           },
           {
             path: "name",
-            component: () =>
-              import(/* webpackChunkName: "piaf" */ "./views/app/search/Name")
-            // meta: { roles: [UserRole.Admin, UserRole.Editor] },
+            component: () => import("./views/app/search/Name")
           }
         ]
       },
       {
         path: "bookmark",
-        component: () =>
-          import(/* webpackChunkName: "second-menu" */ "./views/app/bookmark"),
+        component: () => import("./views/app/bookmark"),
         redirect: `${adminRoot}/bookmark/area`,
         children: [
           {
             path: "area",
-            component: () =>
-              import(/* webpackChunkName: "piaf" */ "./views/app/bookmark/Area")
+            component: () => import("./views/app/bookmark/Area")
           },
           {
             path: "house",
-            component: () =>
-              import(
-                /* webpackChunkName: "piaf" */ "./views/app/bookmark/House"
-              )
+            component: () => import("./views/app/bookmark/House")
           }
         ]
       },
 
       {
         path: "support",
-        component: () =>
-          import(/* webpackChunkName: "single" */ "./views/app/support"),
+        component: () => import("./views/app/support"),
         redirect: `${adminRoot}/support/notice`,
         children: [
           {
             path: "notice",
-            component: () =>
-              import(
-                /* webpackChunkName: "piaf" */ "./views/app/support/Notice"
-              )
+            component: () => import("./views/app/support/Notice")
           },
           {
             path: "QnA",
-            component: () =>
-              import(/* webpackChunkName: "piaf" */ "./views/app/support/QnA")
+            component: () => import("./views/app/support/QnA")
           },
           {
             path: "contact",
-            component: () =>
-              import(
-                /* webpackChunkName: "piaf" */ "./views/app/support/Contact"
-              )
+            component: () => import("./views/app/support/Contact")
           }
         ]
       }
@@ -99,38 +75,34 @@ const routes = [
   },
   {
     path: "/error",
-    component: () => import(/* webpackChunkName: "error" */ "./views/Error")
+    component: () => import("./views/Error")
   },
   {
     path: "/user",
-    component: () => import(/* webpackChunkName: "user" */ "./views/user"),
+    component: () => import("./views/user"),
     redirect: "/user/login",
     children: [
       {
         path: "login",
-        component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/Login")
+        component: () => import("./views/user/Login")
       },
       {
         path: "register",
-        component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/Register")
+        component: () => import("./views/user/Register")
       },
       {
         path: "forgot-password",
-        component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/ForgotPassword")
+        component: () => import("./views/user/ForgotPassword")
       },
       {
         path: "reset-password",
-        component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/ResetPassword")
+        component: () => import("./views/user/ResetPassword")
       }
     ]
   },
   {
     path: "*",
-    component: () => import(/* webpackChunkName: "error" */ "./views/Error")
+    component: () => import("./views/Error")
   }
 ];
 

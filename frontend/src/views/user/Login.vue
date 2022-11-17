@@ -4,13 +4,7 @@
       <b-card class="auth-card" no-body>
         <div class="position-relative image-side">
           <p class="text-white h2">
-            {{ $t("dashboards.magic-is-in-the-details") }}
-          </p>
-          <p class="white mb-0">
-            Please use your credentials to login.
-            <br />If you are not a member, please
-            <router-link to="/user/register" class="white">register</router-link
-            >.
+            <!-- <span class="logo-single" /> -->
           </p>
         </div>
         <div class="form-side">
@@ -33,14 +27,13 @@
                 :state="!$v.form.email.$error"
               />
               <b-form-invalid-feedback v-if="!$v.form.email.required"
-                >Please enter your email address</b-form-invalid-feedback
+                >이메일을 입력해주세요.</b-form-invalid-feedback
               >
               <b-form-invalid-feedback v-else-if="!$v.form.email.email"
-                >Please enter a valid email address</b-form-invalid-feedback
+                >이메일을 입력해주세요.</b-form-invalid-feedback
               >
               <b-form-invalid-feedback v-else-if="!$v.form.email.minLength"
-                >Your email must be minimum 4
-                characters</b-form-invalid-feedback
+                >이메일은 4문자 이상 입력하세요</b-form-invalid-feedback
               >
             </b-form-group>
 
@@ -54,14 +47,13 @@
                 :state="!$v.form.password.$error"
               />
               <b-form-invalid-feedback v-if="!$v.form.password.required"
-                >Please enter your password</b-form-invalid-feedback
+                >비밀번호를 입력해주세요.</b-form-invalid-feedback
               >
               <b-form-invalid-feedback
                 v-else-if="
                   !$v.form.password.minLength || !$v.form.password.maxLength
                 "
-                >Your password must be between 4 and 16
-                characters</b-form-invalid-feedback
+                >비밀번호는 4~16자리 입니다.</b-form-invalid-feedback
               >
             </b-form-group>
             <div class="d-flex justify-content-between align-items-center">
@@ -91,7 +83,9 @@
                 <span class="icon fail">
                   <i class="simple-icon-exclamation"></i>
                 </span>
-                <span class="label">{{ $t("user.login-button") }}</span>
+                <span class="label" @click="login">{{
+                  $t("user.login-button")
+                }}</span>
               </b-button>
             </div>
           </b-form>
@@ -146,21 +140,22 @@ export default {
       this.form.email = "piaf-vue@coloredstrategies.com";
       this.form.password = "piaf123";
       this.$v.form.$touch();
-      // if (!this.$v.form.$anyError) {
       this.login({
         email: this.form.email,
         password: this.form.password
       });
-      //}
+    },
+    login() {
+      alert("login");
+      this.$router.push("/app/home");
     }
   },
   watch: {
     currentUser(val) {
-      if (val && val.uid && val.uid.length > 0) {
-        setTimeout(() => {
-          this.$router.push(adminRoot);
-        }, 200);
-      }
+      this.$router.push("/app/home");
+      // if (val && val.uid && val.uid.length > 0) {
+      //   setTimeout(() => {}, 200);
+      // }
     },
     loginError(val) {
       if (val != null) {
