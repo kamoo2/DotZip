@@ -3,11 +3,37 @@ import { setCurrentUser, getCurrentUser } from "../../utils";
 
 export default {
   state: {
-    currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
-    loginError: null,
-    processing: false,
-    forgotMailSuccess: null,
-    resetPasswordSuccess: null
+    // currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
+    // loginError: null,
+    // processing: false,
+    // forgotMailSuccess: null,
+    // resetPasswordSuccess: null
+    info: {
+      isLogin: false,
+      isKakao: false,
+      userSeq: 0,
+      userEmail: "",
+      userPassword: "",
+      userName: "",
+      userProfileImageUrl: ""
+    },
+    board: {
+      // list 관련
+      list: [],
+      limit: 10,
+      offset: 0,
+      searchWord: "",
+
+      // detail,update,delete
+      boardId: 0,
+      title: "",
+      content: "",
+      userName: "",
+      regDt: {},
+      readCount: 0,
+      fileList: [],
+      isOwner: false
+    }
   },
   getters: {
     currentUser: state => state.currentUser,
