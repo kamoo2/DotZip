@@ -3,51 +3,67 @@ package com.mycom.myapp.house.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.myapp.house.dto.HouseDealDetailDto;
+import com.mycom.myapp.house.dto.HouseDealParamDto;
 import com.mycom.myapp.house.dto.HouseDealSimpleDto;
 import com.mycom.myapp.house.service.HouseService;
 
-@RestController
+@RestController // controller + responsebody
+@CrossOrigin(
+		// localhost:5500 과 127.0.0.1 구분
+		origins = "http://localhost:5500", // allowCredentials = "true" 일 경우, orogins="*" 는 X
+		allowCredentials = "true", 
+		allowedHeaders = "*", 
+		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
+	)
+@RequestMapping("/houses")
 public class HouseController {
 	
 	@Autowired
 	HouseService service;
 	
-	@GetMapping(value="/houses")
-	public List<HouseDealSimpleDto> findHouseDealsByDongCode(String dong,int limit,int offset){
-		System.out.println(dong);
-		System.out.println(limit);
-		System.out.println(offset);
-		List<HouseDealSimpleDto> list = service.findHouseDealsByDongCode(dong, limit, offset);
-		
-		return list;
+	@GetMapping(value="/dong")
+	public List<HouseDealSimpleDto> findHouseDealsByDongCode(@RequestBody HouseDealParamDto houseDealParamDto){
+		System.out.println(houseDealParamDto.getDong());
+		if (houseDealParamDto.getDong().isEmpty()) {
+			System.out.println("지역 미선택");
+			return null;
+		} else {
+			return service.findHouseDealsByDongCode(houseDealParamDto);
+		}
 	}
 	
-	@GetMapping(value="/houses/count")
-	public int houseDealsByDongCodeTotalCnt(String dong){
+	@GetMapping(value="/dong/count/{dong}")
+	public int houseDealsByDongCodeTotalCnt(@PathVariable("dong") String dong){
 		int count = service.houseDealsByDongCodeTotalCnt(dong);
-		
-		return count;
+		return count; 
 	}
 	
-	@GetMapping(value="/houses/apts")
-	public List<HouseDealSimpleDto> findHouseDealsByAptName(String searchWord,int limit,int offset){
-		List<HouseDealSimpleDto> list = service.findHouseDealsByAptName(searchWord, limit, offset);
-		return list;
+	@GetMapping(value="/apts")
+	public List<HouseDealSimpleDto> findHouseDealsByAptName(@RequestBody HouseDealParamDto houseDealParamDto){
+		if (houseDealParamDto.getSearchWord().isEmpty()) {
+			System.out.println("아파트명 미입력");
+			return null;
+		} else {
+			return service.findHouseDealsByAptName(houseDealParamDto);
+		}
 	}
 	
-	@GetMapping(value="/houses/apts/count")
-	public int houseDealsByAptNameTotalCnt(String searchWord){
+	@GetMapping(value="/apts/count/{searchWord}")
+	public int houseDealsByAptNameTotalCnt(@PathVariable("searchWord") String searchWord){
 		int count = service.houseDealsByAptNameTotalCnt(searchWord);
-		
 		return count;
 	}
 	
-	@GetMapping(value="/houses/{no}")
+	@GetMapping(value="/{no}")
 	public HouseDealDetailDto findHouseDealDetail(@PathVariable int no){
 		HouseDealDetailDto dto = service.findHouseDealDetail(no);
 		return dto;
