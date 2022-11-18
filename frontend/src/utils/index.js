@@ -3,7 +3,6 @@ import {
   defaultColor,
   themeSelectedColorStorageKey,
   themeRadiusStorageKey,
-  localeOptions,
   defaultLocale
 } from "../constants/config";
 
