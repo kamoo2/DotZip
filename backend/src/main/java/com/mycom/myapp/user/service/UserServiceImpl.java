@@ -18,6 +18,21 @@ public class UserServiceImpl implements UserService {
 	private final int FAIL = -1;
 	
 	@Override
+	public UserResultDto userLogin(UserDto dto) {
+		UserDto userDto = userDao.userLogin(dto.getUserEmail());
+		UserResultDto userResultDto = new UserResultDto();
+		// userDtosms 테이블에서 조회한 데이터가 포함
+		// dto는 client가 전송한 데이터가 포함
+		if (userDto != null && userDto.getUserPassword().equals(dto.getUserPassword())) {
+			userResultDto.setDto(userDto);
+			userResultDto.setResult(SUCCESS);
+		}else {
+			userResultDto.setResult(FAIL);
+		}
+		return userResultDto;
+	}
+	
+	@Override
 	public UserResultDto userRegister(UserDto userDto) {
 		UserResultDto userResultDto = new UserResultDto();
 		if (userDao.userRegister(userDto) == SUCCESS) {

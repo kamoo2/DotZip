@@ -7,6 +7,7 @@ import com.mycom.myapp.user.dto.UserResultDto;
 
 @Mapper
 public interface UserDao {
+	UserDto userLogin(String userEmail);
 	int userRegister(UserDto userDto);
 	int userDupCheck(UserDto userDto);
 	int userChange(UserDto userDto);

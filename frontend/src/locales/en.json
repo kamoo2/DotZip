@@ -24,8 +24,6 @@
   "menu": {
     "home": "Home",
     "app": "Home",
-    "area": "지역 검색",
-    "name": "이름 검색",
     "dashboards": "Dashboards",
     "default": "Default",
     "analytics": "Analytics",
@@ -86,7 +84,6 @@
     "blog-detail": "Blog Detail",
     "careers": "Careers",
     "confirmation": "Confirmation",
-    "contact": "Contact",
     "docs": "Docs",
     "features": "Features",
     "prices": "Prices",
@@ -117,11 +114,15 @@
     "divided-table": "Divided Table",
     "scrollable": "Scrollable",
     "responsive": "Responsive",
-    "piaf": "Piaf",
-    "second-menu": "Second Menu",
-    "second": "Second",
-    "start": "Start",
-    "single": "Single"
+    "area": "지역 검색",
+    "name": "아파트명 검색",
+    "favs": "Bookmark",
+    "favs_area": "관심 지역",
+    "favs_house": "관심 매물",
+    "support": "Support",
+    "notice": "공지사항",
+    "QnA": "문의하기",
+    "contact": "Contact"
   },
   "dashboards": {
     "pending-orders": "Pending Orders",

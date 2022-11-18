@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.myapp.user.dto.UserDto;
 import com.mycom.myapp.user.dto.UserResultDto;
 import com.mycom.myapp.user.service.UserService;
 
-@Controller
+@RestController
 @CrossOrigin(
 		// localhost:5500 과 127.0.0.1 구분
 		origins = "http://localhost:5500", // allowCredentials = "true" 일 경우, orogins="*" 는 X
@@ -37,6 +38,44 @@ public class UserController {
 	private final int SUCCESS = 1;
 	private final int FAIL = -1;
 	private final int DUPLICATED = -2;
+	
+	@PostMapping(value="users/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto dto, HttpSession session){
+    	
+    	System.out.println("login:"+dto);
+    	
+        
+
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = null;
+        try {
+        	UserResultDto userResultDto = userService.userLogin(dto);
+        	System.out.println(userResultDto.getDto());
+            
+        	if(userResultDto.getDto() != null) {
+        		map.put("message", SUCCESS);
+        		map.put("user",userResultDto.getDto());
+        		status = HttpStatus.ACCEPTED;
+        	}else {
+        		map.put("message", FAIL);
+        		status = HttpStatus.ACCEPTED;
+        	}
+        }catch(Exception e){
+        	map.put("message", e.getMessage());
+        	status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+//        if( userDto != null ) {
+//            session.setAttribute("userDto", userDto);
+//            map.put("result", "success");
+//            map.put("userName", userDto.getUserName());
+//            map.put("userEmail", userDto.getUserEmail());
+//            map.put("userProfileImageUrl", userDto.getUserProfileImageUrl());
+//            return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+//        }
+
+        return new ResponseEntity<Map<String, Object>>(map, status);
+    }
+
 	
 	@PostMapping(value="/users")
 	public ResponseEntity<Map<String, String>> userRegister(@RequestBody UserDto dto) {

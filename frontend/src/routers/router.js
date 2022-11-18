@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AuthGuard from "@/utils/auth.guard";
 import { adminRoot } from "@/constants/config";
+import store from "../store";
 // import { UserRole } from "../utils/auth.roles";
 
 Vue.use(VueRouter);
@@ -10,17 +11,19 @@ const routes = [
   {
     path: "/",
     component: () => import(/* webpackChunkName: "home" */ "@/views/home")
-    // redirect: `${adminRoot}/piaf`,
   },
   {
     path: adminRoot,
     component: () => import(/* webpackChunkName: "app" */ "@/views/app"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.user.isLogin) {
+        next("/");
+      } else {
+        return next();
+      }
+    },
     redirect: `${adminRoot}/home`,
-    meta: { loginRequired: true },
-    /*
-   define with Authorization :
-   meta: { loginRequired: true, roles: [UserRole@Admin, UserRole@Editor] },
-   */
+    // meta: { loginRequired: true },
     children: [
       {
         path: "home",

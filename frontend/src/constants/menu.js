@@ -11,18 +11,18 @@ const data = [
   {
     id: "search",
     icon: "iconsminds-magnifi-glass",
-    label: "SEARCH",
+    label: "menu.search",
     to: `${adminRoot}/search`,
     subs: [
       {
         icon: "iconsminds-location-2",
-        label: "지역 검색",
+        label: "menu.area",
         to: `${adminRoot}/search/area`
         // roles: [UserRole.Admin, UserRole.Editor],
       },
       {
         icon: "iconsminds-letter-open",
-        label: "이름 검색",
+        label: "menu.name",
         to: `${adminRoot}/search/name`
         // roles: [UserRole.Admin, UserRole.Editor],
       }
@@ -32,17 +32,17 @@ const data = [
     id: "bookmark",
     // icon: "iconsminds-reverbnation",
     icon: "iconsminds-like",
-    label: "MY 관심",
+    label: "menu.favs",
     to: `${adminRoot}/bookmark`,
     subs: [
       {
         icon: "iconsminds-location-2",
-        label: "관심 지역",
+        label: "menu.favs_area",
         to: `${adminRoot}/bookmark/area`
       },
       {
         icon: "iconsminds-building",
-        label: "관심 매물",
+        label: "menu.favs_house",
         to: `${adminRoot}/bookmark/house`
       }
     ]
@@ -50,22 +50,22 @@ const data = [
   {
     id: "support",
     icon: "iconsminds-support",
-    label: "SUPPORT",
+    label: "menu.support",
     to: `${adminRoot}/support`,
     subs: [
       {
         icon: "simple-icon-user-following",
-        label: "공지사항",
+        label: "menu.notice",
         to: `${adminRoot}/support/notice`
       },
       {
         icon: "simple-icon-user-following",
-        label: "1:1 문의",
+        label: "menu.QnA",
         to: `${adminRoot}/support/QnA`
       },
       {
         icon: "simple-icon-user-following",
-        label: "Contact",
+        label: "menu.contact",
         to: `${adminRoot}/support/contact`
       }
     ]

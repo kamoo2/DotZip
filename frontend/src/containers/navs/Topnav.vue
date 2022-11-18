@@ -100,9 +100,12 @@
         >
           <!-- 로그인 시 현재 컴포넌트의 data인 currentUser을 변경해준다. -->
           <template slot="button-content">
-            <span class="name mr-1">{{ currentUser.title }}</span>
+            <span class="name mr-1">{{ currentUser.userName }}</span>
             <span>
-              <img :alt="currentUser.title" :src="currentUser.img" />
+              <img
+                :alt="currentUser.userName"
+                :src="currentUser.userProfileImageUrl"
+              />
             </span>
           </template>
           <b-dropdown-item>My Page</b-dropdown-item>

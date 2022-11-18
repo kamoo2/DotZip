@@ -1,6 +1,6 @@
 <template>
   <b-colxx xxs="12" md="4">
-    <b-form-group :label="$t(name)">
+    <b-form-group :label="name">
       <v-select
         v-model="vueSelectForm.single"
         :options="selectData"

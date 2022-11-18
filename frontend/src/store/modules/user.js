@@ -4,49 +4,52 @@ import { loginAPI } from "@/apis/user.js";
 
 export default {
   state: {
-    currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
+    // currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
     loginError: null,
     processing: false,
     // forgotMailSuccess: null,
     // resetPasswordSuccess: null
-    info: {
-      isLogin: false,
-      isKakao: false,
+    isLogin: false,
+    currentUser: {
       userSeq: 0,
-      userEmail: "",
-      userPassword: "",
       userName: "",
-      userClsf: "",
-      userProfileImageUrl: ""
+      userPassword: "",
+      userEmail: "",
+      userProfileImageUrl: "",
+      userRegisterDate: "",
+      userClsf: ""
     }
   },
   getters: {
-    isLogin: state => state.info.isLogin,
-    currentUser: state => state.info,
+    isLogin: state => state.isLogin,
+    currentUser: state => state.currentUser,
     processing: state => state.processing,
     loginError: state => state.loginError
   },
   mutations: {
     SET_LOGIN(state, payload) {
       console.log("로그인 성공");
-      state.info.isLogin = true;
+      state.isLogin = true;
+      state.currentUser = { ...payload };
+      state.processing = false;
+      state.loginError = null;
     },
     SET_LOGOUT(state) {
-      state.info.userSeq = 0;
-      state.info.isLogin = false;
-      state.info.isKakao = false;
-      state.info.userPassword = "";
-      state.info.userName = "";
-      state.info.userEmail = "";
-      state.info.userClsf = "";
+      state.currentUser.userSeq = 0;
+      state.currentUser.isLogin = false;
+      state.currentUser.isKakao = false;
+      state.currentUser.userPassword = "";
+      state.currentUser.userName = "";
+      state.currentUser.userEmail = "";
+      state.currentUser.userClsf = "";
     },
     SET_USER_INFO(state) {
-      state.info.userSeq = payload.userSeq;
-      state.info.userPassword = payload.userPassword;
-      state.info.userName = payload.userName;
-      state.info.userEmail = payload.userEmail;
-      state.info.userClsf = payload.userClsf;
-      state.info.userProfileImageUrl = payload.userProfileImageUrl;
+      state.currentUser.userSeq = payload.userSeq;
+      state.currentUser.userPassword = payload.userPassword;
+      state.currentUser.userName = payload.userName;
+      state.currentUser.userEmail = payload.userEmail;
+      state.currentUser.userClsf = payload.userClsf;
+      state.currentUser.userProfileImageUrl = payload.userProfileImageUrl;
     },
     SET_KAKAO(state) {
       state.info.isKakao = true;
@@ -86,11 +89,16 @@ export default {
           userEmail: email,
           userPassword: password
         },
-        ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_CLEAR_ERROR");
+        ({ data, status }) => {
+          console.log(data);
+          if (data.message === 1) {
+            commit("SET_LOGIN", { ...data.user });
           } else {
-            commit("SET_ERROR");
+            if (status === 202) {
+              commit("SET_ERROR", "아이디 또는 비밀번호가 틀렸습니다.");
+            } else {
+              commit("SET_ERROR", "서버에 문제가 발생했습니다.");
+            }
             setTimeout(() => {
               commit("SET_CLEAR_ERROR");
             }, 3000);

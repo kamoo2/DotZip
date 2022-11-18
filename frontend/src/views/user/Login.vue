@@ -137,24 +137,29 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentUser", "processing", "loginError"])
+    ...mapGetters(["isLogin", "currentUser", "processing", "loginError"])
   },
   methods: {
     ...mapActions(["login"]),
-    formSubmit() {
+    async formSubmit() {
       this.$v.$touch();
       this.$v.form.$touch();
       // if (!this.$v.form.$anyError) {
-      this.login({
+      await this.login({
         email: this.form.email,
         password: this.form.password
       });
       //}
+      // console.log(this.isLogin);
+      // if (this.isLogin) {
+      //   this.$router.push("/app");
+      // }
+      // console.log(this.currentUser);
     }
   },
   watch: {
-    currentUser(val) {
-      if (val && val.uid && val.uid.length > 0) {
+    currentUser(user) {
+      if (user && user.userSeq && user.userSeq !== 0) {
         setTimeout(() => {
           this.$router.push(adminRoot);
         }, 200);
