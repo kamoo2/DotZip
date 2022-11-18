@@ -22,10 +22,10 @@ public class RegionServiceImpl implements RegionService {
 	@Override
 	public RegionResultDto findGugunCodeList(String sidoName) {
 		RegionResultDto regionResultDto = new RegionResultDto();
-
+		System.out.println("impl:"+sidoName);
 		try {
-			// 해당 시에 해당하는 구군 리스트를 가져온다.
 			List<GugunCodeDto> list = regionDao.findGugunCodeList(sidoName);
+			System.out.println("service:"+list);
 			regionResultDto.setGugunList(list);
 			regionResultDto.setResult(SUCCESS);
 		} catch (Exception e) {
@@ -38,9 +38,8 @@ public class RegionServiceImpl implements RegionService {
 	@Override
 	public RegionResultDto findDongCodeList(String gugunName) {
 		RegionResultDto regionResultDto = new RegionResultDto();
-
+		
 		try {
-			// 해당 시에 해당하는 구군 리스트를 가져온다.
 			List<DongCodeDto> list = regionDao.findDongCodeList(gugunName);
 			regionResultDto.setDongList(list);
 			regionResultDto.setResult(SUCCESS);

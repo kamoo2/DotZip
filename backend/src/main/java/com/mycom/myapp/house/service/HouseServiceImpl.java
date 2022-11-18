@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycom.myapp.house.dao.HouseDao;
 import com.mycom.myapp.house.dto.HouseDealDetailDto;
+import com.mycom.myapp.house.dto.HouseDealParamDto;
 import com.mycom.myapp.house.dto.HouseDealSimpleDto;
 
 @Service
@@ -15,11 +16,11 @@ public class HouseServiceImpl implements HouseService{
 	HouseDao houseDao;
 	
 	@Override
-	public List<HouseDealSimpleDto> findHouseDealsByDongCode(String dong, int limit, int offset) {
+	public List<HouseDealSimpleDto> findHouseDealsByDongCode(HouseDealParamDto houseDealParamDto) {
 		List<HouseDealSimpleDto> list = null;
 			
 		try {
-			list = houseDao.findHouseDealsByDongCode(dong, limit, offset);
+			list = houseDao.findHouseDealsByDongCode(houseDealParamDto.getDong(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
 		}catch(Exception e) {
 			e.printStackTrace();
 			
@@ -37,14 +38,13 @@ public class HouseServiceImpl implements HouseService{
 		return count;
 	}
 	@Override
-	public List<HouseDealSimpleDto> findHouseDealsByAptName(String searchWord, int limit, int offset) {
+	public List<HouseDealSimpleDto> findHouseDealsByAptName(HouseDealParamDto houseDealParamDto) {
 		List<HouseDealSimpleDto> list = null;
 		
 		try {
-			list = houseDao.findHouseDealsByAptName(searchWord, limit, offset);
+			list = houseDao.findHouseDealsByAptName(houseDealParamDto.getSearchWord(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
 		}catch(Exception e) {
 			e.printStackTrace();
-			
 		}
 		return list;
 	}
