@@ -104,20 +104,20 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
+import { adminRoot } from "../../constants/config";
 const {
   required,
   maxLength,
   minLength,
   email
 } = require("vuelidate/lib/validators");
-import { adminRoot } from "../../constants/config";
 
 export default {
   data() {
     return {
       form: {
-        email: "test@coloredstrategies.com",
-        password: "xxxxxx"
+        email: "test@test.com",
+        password: "test"
       }
     };
   },
@@ -143,8 +143,6 @@ export default {
     ...mapActions(["login"]),
     formSubmit() {
       this.$v.$touch();
-      this.form.email = "piaf-vue@coloredstrategies.com";
-      this.form.password = "piaf123";
       this.$v.form.$touch();
       // if (!this.$v.form.$anyError) {
       this.login({
