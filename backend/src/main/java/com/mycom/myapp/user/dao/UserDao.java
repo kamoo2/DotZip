@@ -10,7 +10,7 @@ import com.mycom.myapp.user.dto.UserDto;
 @Mapper
 public interface UserDao {
 	UserDto userLogin(String userEmail);
-	String userRegister(UserDto userDto);
+	int userRegister(UserDto userDto);
 	int userDupCheck(UserDto userDto);
 	public UserDto userInfo(String userEmail) throws SQLException;
 	int userChange(UserDto userDto);

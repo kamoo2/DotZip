@@ -3,18 +3,19 @@ package com.mycom.myapp.region.dto;
 import java.util.List;
 
 public class RegionResultDto {
-		private int result;
+		private String result;
 		private GugunCodeDto gugunDto;
 		private DongCodeDto dongDto;
+		private List<SidoCodeDto> sidoList;
 		private List<GugunCodeDto> gugunList;
 		private List<DongCodeDto> dongList;
 		
-		public int getResult() {
+		public String getResult() {
 			return result;
 		}
 
 
-		public void setResult(int result) {
+		public void setResult(String result) {
 			this.result = result;
 		}
 
@@ -39,6 +40,15 @@ public class RegionResultDto {
 		}
 
 
+		public List<SidoCodeDto> getSidoList() {
+			return sidoList;
+		}
+
+
+		public void setSidoList(List<SidoCodeDto> sidoList) {
+			this.sidoList = sidoList;
+		}
+		
 		public List<GugunCodeDto> getGugunList() {
 			return gugunList;
 		}

@@ -16,8 +16,8 @@ import com.mycom.myapp.region.service.RegionService;
 
 @RestController
 @CrossOrigin(
-		// localhost:5500 °ú 127.0.0.1 ±¸ºÐ
-		origins = "http://localhost:5500", // allowCredentials = "true" ÀÏ °æ¿ì, orogins="*" ´Â X
+		// localhost:5500 ï¿½ï¿½ 127.0.0.1 ï¿½ï¿½ï¿½ï¿½
+		origins = "http://localhost:5500", // allowCredentials = "true" ï¿½ï¿½ ï¿½ï¿½ï¿½, orogins="*" ï¿½ï¿½ X
 		allowCredentials = "true", 
 		allowedHeaders = "*", 
 		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
@@ -28,7 +28,17 @@ public class RegionController {
 	@Autowired
 	RegionService service;
 	
-	private final int SUCCESS = 1;
+	private final String SUCCESS = "success";
+	
+	@GetMapping(value="/sido")
+	public ResponseEntity<RegionResultDto> sidoList(){
+		RegionResultDto regionResultDto = service.findSidoCodeList();
+		if(regionResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<RegionResultDto>(regionResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RegionResultDto>(regionResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@GetMapping(value="/gugun/{sidoName}")
 	public ResponseEntity<RegionResultDto> gugunList(@PathVariable("sidoName") String sidoName){

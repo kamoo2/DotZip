@@ -9,6 +9,7 @@ import com.mycom.myapp.region.dao.RegionDao;
 import com.mycom.myapp.region.dto.DongCodeDto;
 import com.mycom.myapp.region.dto.GugunCodeDto;
 import com.mycom.myapp.region.dto.RegionResultDto;
+import com.mycom.myapp.region.dto.SidoCodeDto;
 
 @Service
 public class RegionServiceImpl implements RegionService {
@@ -16,9 +17,23 @@ public class RegionServiceImpl implements RegionService {
 	@Autowired
 	RegionDao regionDao;
 
-	private final int SUCCESS = 1;
-	private final int FAIL = -1;
+	private final String SUCCESS = "success";
+	private final String FAIL = "fail";
 
+	@Override
+	public RegionResultDto findSidoCodeList() {
+		RegionResultDto regionResultDto = new RegionResultDto();
+		try {
+			List<SidoCodeDto> list = regionDao.findSidoCodeList();
+			regionResultDto.setSidoList(list);
+			regionResultDto.setResult(SUCCESS);
+		}catch(Exception e) {
+			e.printStackTrace();
+			regionResultDto.setResult(FAIL);
+		}
+		return regionResultDto;
+	}
+	
 	@Override
 	public RegionResultDto findGugunCodeList(String sidoName) {
 		RegionResultDto regionResultDto = new RegionResultDto();
@@ -49,5 +64,7 @@ public class RegionServiceImpl implements RegionService {
 		}
 		return regionResultDto;
 	}
+
+	
 
 }

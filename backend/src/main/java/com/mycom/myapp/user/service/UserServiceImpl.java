@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 	
-	private final String SUCCESS = "success";
-	private final String FAIL = "fail";
+	private final int SUCCESS = 1;
+	private final int FAIL = -1;
 	
 	@Override
 	public UserResultDto userLogin(UserDto dto) {
