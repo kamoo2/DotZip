@@ -1,6 +1,7 @@
-import { currentUser, isAuthGuardActive } from "../../constants/config";
-import { setCurrentUser, getCurrentUser } from "../../utils";
-import { loginAPI } from "@/apis/user.js";
+import { currentUser, isAuthGuardActive } from '../../constants/config';
+import { setCurrentUser, getCurrentUser } from '../../utils';
+import { signinAPI, signupAPI } from '@/apis/user.js';
+import data from '@/constants/menu';
 
 export default {
   state: {
@@ -10,38 +11,44 @@ export default {
     // forgotMailSuccess: null,
     // resetPasswordSuccess: null
     isLogin: false,
+    isKakao: false,
     currentUser: {
       userSeq: 0,
-      userName: "",
-      userPassword: "",
-      userEmail: "",
-      userProfileImageUrl: "",
-      userRegisterDate: "",
-      userClsf: ""
-    }
+      userName: '',
+      userPassword: '',
+      userEmail: '',
+      userProfileImageUrl: '',
+      userRegisterDate: '',
+      userClsf: '',
+    },
   },
   getters: {
     isLogin: state => state.isLogin,
     currentUser: state => state.currentUser,
     processing: state => state.processing,
-    loginError: state => state.loginError
+    loginError: state => state.loginError,
   },
   mutations: {
     SET_LOGIN(state, payload) {
-      console.log("로그인 성공");
+      console.log('로그인 성공');
       state.isLogin = true;
       state.currentUser = { ...payload };
       state.processing = false;
       state.loginError = null;
     },
+    SET_PROCESSING(state, payload) {
+      state.processing = payload;
+    },
     SET_LOGOUT(state) {
       state.currentUser.userSeq = 0;
-      state.currentUser.isLogin = false;
-      state.currentUser.isKakao = false;
-      state.currentUser.userPassword = "";
-      state.currentUser.userName = "";
-      state.currentUser.userEmail = "";
-      state.currentUser.userClsf = "";
+      state.isLogin = false;
+      state.isKakao = false;
+      state.currentUser.userPassword = '';
+      state.currentUser.userName = '';
+      state.currentUser.userEmail = '';
+      state.currentUser.userClsf = '';
+      state.currentUser.userProfileImageUrl = '';
+      state.currentUser.userRegisterDate = '';
     },
     SET_USER_INFO(state) {
       state.currentUser.userSeq = payload.userSeq;
@@ -54,10 +61,6 @@ export default {
     SET_KAKAO(state) {
       state.info.isKakao = true;
       state.info.isLogin = true;
-    },
-    SET_PROCESSING(state, payload) {
-      state.processing = payload;
-      state.loginError = null;
     },
     SET_ERROR(state, payload) {
       state.loginError = payload;
@@ -78,36 +81,37 @@ export default {
     // },
     SET_CLEAR_ERROR(state) {
       state.loginError = null;
-    }
+    },
   },
   actions: {
     async login({ commit }, { email, password }) {
-      commit("SET_CLEAR_ERROR");
-      commit("SET_PROCESSING", true);
-      await loginAPI(
+      commit('SET_CLEAR_ERROR');
+      commit('SET_PROCESSING', true);
+      await signinAPI(
         {
           userEmail: email,
-          userPassword: password
+          userPassword: password,
         },
         ({ data, status }) => {
           console.log(data);
           if (data.message === 1) {
-            commit("SET_LOGIN", { ...data.user });
+            commit('SET_LOGIN', { ...data.user });
           } else {
             if (status === 202) {
-              commit("SET_ERROR", "아이디 또는 비밀번호가 틀렸습니다.");
+              commit('SET_ERROR', '아이디 또는 비밀번호가 틀렸습니다.');
             } else {
-              commit("SET_ERROR", "서버에 문제가 발생했습니다.");
+              commit('SET_ERROR', '서버에 문제가 발생했습니다.');
             }
             setTimeout(() => {
-              commit("SET_CLEAR_ERROR");
+              commit('SET_CLEAR_ERROR');
             }, 3000);
           }
         }
       );
-
-      // 성공이면 commit("SET_LOGIN")
-    }
+    },
+    logout({ commit }) {
+      commit('SET_LOGOUT');
+    },
     // forgotPassword({ commit }, payload) {
     //   commit("clearError");
     //   commit("setProcessing", true);
@@ -146,7 +150,6 @@ export default {
     //     }
     //   )
     // },
-
     // signOut({ commit }) {
     // firebase
     //   .auth()
@@ -156,5 +159,5 @@ export default {
     //     commit('setLogout')
     //   }, _error => { })
     // }
-  }
+  },
 };

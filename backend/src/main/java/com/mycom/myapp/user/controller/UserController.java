@@ -77,12 +77,13 @@ public class UserController {
     }
 
 	
-	@PostMapping(value="/users")
-	public ResponseEntity<Map<String, String>> userRegister(@RequestBody UserDto dto) {
+	@PostMapping(value="/users/register")
+	public ResponseEntity<Map<String, String>> userRegister(@RequestBody UserDto dto,HttpSession session) {
 		System.out.println(dto);
 		Map<String, String> map = new HashMap<>();
 		
 		int res = userService.userDupCheck(dto);
+		System.out.println(res);
 		if (res == 0) {
 			UserResultDto userResultDto = userService.userRegister(dto);
 			if (userResultDto.getResult() == SUCCESS) {

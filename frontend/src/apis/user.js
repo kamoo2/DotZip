@@ -1,10 +1,17 @@
-import api from "./axios.js";
+import api from './axios.js';
 
-async function loginAPI(user, success, fail) {
+async function signinAPI(user, success, fail) {
   await api
-    .post("/users/login", user)
+    .post('/users/login', user)
     .then(success)
     .catch(fail);
 }
 
-export { loginAPI };
+async function signupAPI(user, success, fail) {
+  await api
+    .post('/users', user)
+    .then(success)
+    .catch(fail);
+}
+
+export { signinAPI, signupAPI };
