@@ -3,12 +3,14 @@ package com.mycom.myapp.user.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.myapp.user.dto.UserDto;
 import com.mycom.myapp.user.dto.UserResultDto;
+import com.mycom.myapp.user.service.JwtServiceImpl;
 import com.mycom.myapp.user.service.UserService;
 
 @RestController
@@ -32,20 +35,23 @@ import com.mycom.myapp.user.service.UserService;
 		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
 	)
 public class UserController {
+	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
-	private final int SUCCESS = 1;
-	private final int FAIL = -1;
-	private final int DUPLICATED = -2;
+	@Autowired
+	private JwtServiceImpl jwtService;
+	
+	private final String SUCCESS = "success";
+	private final String FAIL = "fail";
+	private final String DUPLICATED = "duplicated";
+	
 	
 	@PostMapping(value="users/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto dto, HttpSession session){
-    	
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto dto, HttpSession session){    	
     	System.out.println("login:"+dto);
     	
-        
-
         Map<String, Object> map = new HashMap<>();
         HttpStatus status = null;
         try {
@@ -53,6 +59,13 @@ public class UserController {
         	System.out.println(userResultDto.getDto());
             
         	if(userResultDto.getDto() != null) {
+        		String accessToken = jwtService.createAccessToken("userEmail", userResultDto.getDto().getUserEmail()); // key, data
+        		String refreshToken = jwtService.createRefreshToken("userEmail", userResultDto.getDto().getUserEmail());
+        		userService.saveRefreshToken(dto.getUserEmail(), refreshToken);
+        		logger.debug("로그인 accessToken 정보 : {}", accessToken);
+				logger.debug("로그인 refreshToken 정보 : {}", refreshToken);
+				map.put("access-token", accessToken);
+				map.put("refresh-token", refreshToken);
         		map.put("message", SUCCESS);
         		map.put("user",userResultDto.getDto());
         		status = HttpStatus.ACCEPTED;
@@ -61,17 +74,10 @@ public class UserController {
         		status = HttpStatus.ACCEPTED;
         	}
         }catch(Exception e){
+			logger.error("로그인 실패 : {}", e);
         	map.put("message", e.getMessage());
         	status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-//        if( userDto != null ) {
-//            session.setAttribute("userDto", userDto);
-//            map.put("result", "success");
-//            map.put("userName", userDto.getUserName());
-//            map.put("userEmail", userDto.getUserEmail());
-//            map.put("userProfileImageUrl", userDto.getUserProfileImageUrl());
-//            return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
-//        }
 
         return new ResponseEntity<Map<String, Object>>(map, status);
     }
@@ -98,6 +104,75 @@ public class UserController {
 			return new ResponseEntity<Map<String, String>>(map, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping("/users/info/{userEmail}")
+	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userEmail")String userEmail, HttpServletRequest request) {
+//		logger.debug("userid : {} ", userid);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		System.out.println(request.getHeader("access-token"));
+		if (jwtService.checkToken(request.getHeader("access-token"))) {
+			logger.info("사용 가능한 토큰!!!");
+			try {
+//				로그인 사용자 정보.
+				UserDto userDto = userService.userInfo(userEmail);
+				resultMap.put("userInfo", userDto);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} catch (Exception e) {
+				logger.error("정보조회 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			logger.error("사용 불가능 토큰!!!");
+			resultMap.put("message", FAIL);
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+
+	@GetMapping("/users/logout/{userEmail}")
+	public ResponseEntity<?> removeToken(@PathVariable("userEmail") String userEmail) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			userService.deleRefreshToken(userEmail);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			logger.error("로그아웃 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+	}
+
+	@PostMapping("/users/refresh")
+	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request)
+			throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String token = request.getHeader("refresh-token");
+		logger.debug("token : {}, memberDto : {}", token, userDto);
+		if (jwtService.checkToken(token)) {
+			if (token.equals(userService.getRefreshToken(userDto.getUserEmail()))) {
+				String accessToken = jwtService.createAccessToken("userid", userDto.getUserEmail());
+				logger.debug("token : {}", accessToken);
+				logger.debug("정상적으로 액세스토큰 재발급!!!");
+				resultMap.put("access-token", accessToken);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			}
+		} else {
+			logger.debug("리프레쉬토큰도 사용불!!!!!!!");
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
 	
 	@GetMapping(value="/users")
 	public ResponseEntity<UserResultDto> userDetail(HttpSession session) {

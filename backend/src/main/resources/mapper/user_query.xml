@@ -29,4 +29,29 @@
     	delete from users
     	where user_email= #{userEmail}
     </delete>
+    
+    <select id="userInfo" parameterType="string" resultType="com.mycom.myapp.user.dto.UserDto">
+		select user_seq, user_name, user_password, user_email, user_profile_image_url, user_register_date, user_clsf
+		from users
+		where user_email = #{userEmail}
+	</select>
+    
+    
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from users
+		where user_email= #{userEmail}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update users
+		set token = #{token}
+		where user_email= #{userEmail}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update users
+		set token = #{token, jdbcType=VARCHAR}
+		where user_email= #{userEmail}
+	</update>
 </mapper>

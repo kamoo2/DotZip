@@ -1,7 +1,7 @@
 package com.mycom.myapp.user.dto;
 
 public class UserResultDto {
-	private int result;
+	private String result;
 	private UserDto dto;
 
 	public UserDto getDto() {
@@ -12,11 +12,11 @@ public class UserResultDto {
 		this.dto = dto;
 	}
 
-	public int getResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(int result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 	
