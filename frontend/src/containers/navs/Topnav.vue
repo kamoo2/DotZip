@@ -119,9 +119,10 @@ export default {
   },
   methods: {
     ...mapMutations(['changeSideMenuStatus']),
-    ...mapActions(['logout']),
+    ...mapActions(['userLogout']),
     onClickLogout() {
-      this.$store.dispatch('logout');
+      console.log(this.currentUser);
+      this.userLogout({ userEmail: this.currentUser.userEmail });
       this.$router.push('/user/login');
     },
 
