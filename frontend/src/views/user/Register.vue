@@ -114,7 +114,7 @@ export default {
         .then(response => {
           if (response.data.result === 'success') {
             // 회원가입 성공
-            this.$router.push(`${adminRoot}/user/login`);
+            this.$router.push('/user/login');
           } else {
             // 회원가입 실패
             this.$notify('error', 'Register Error', '회원가입에 실패했습니다.', {
@@ -124,7 +124,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.data.result === 'duplicate') {
+          if (error.response.data.result === 'duplicated') {
             this.$notify('error', 'Register Error', '이미 존재하는 이메일 입니다.', {
               duration: 3000,
               permanent: false,

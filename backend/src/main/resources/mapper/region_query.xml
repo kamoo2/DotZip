@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycom.myapp.region.dao.RegionDao">
+	<select id="findSidoCodeList" resultType="com.mycom.myapp.region.dto.SidoCodeDto">
+    	select code,name
+		from sido_code;
+    </select>
+
     <select id="findGugunCodeList" parameterType="string" resultType="com.mycom.myapp.region.dto.GugunCodeDto">
     	select g.code, g.name, g.sido_code
 		from gugun_code g, sido_code s

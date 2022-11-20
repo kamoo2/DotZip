@@ -117,8 +117,8 @@
     "area": "지역 검색",
     "name": "아파트명 검색",
     "favs": "Bookmark",
-    "favs_area": "관심 지역",
-    "favs_house": "관심 매물",
+    "fArea": "관심 지역",
+    "fHouse": "관심 매물",
     "support": "Support",
     "notice": "공지사항",
     "QnA": "문의하기",
@@ -374,7 +374,11 @@
     "middle": "Middle",
     "right": "Right",
     "dropdown": "Dropdown",
-    "dropdown-link": "Dropdown Link"
+    "dropdown-link": "Dropdown Link",
+    "search": "검색",
+    "hospital": "병원",
+    "convenience": "편의점",
+    "bank": "은행"
   },
   "cards": {
     "icon-card": "Icon Card",

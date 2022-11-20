@@ -92,15 +92,15 @@ public class UserController {
 		System.out.println(res);
 		if (res == 0) {
 			UserResultDto userResultDto = userService.userRegister(dto);
-			if (userResultDto.getResult() == SUCCESS) {
-				map.put("result", "success");
+			if (userResultDto.getResult() == 1) {
+				map.put("result", SUCCESS);
 				return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
 			} else {
-				map.put("result", "fail");
+				map.put("result", FAIL);
 				return new ResponseEntity<Map<String, String>>(map, HttpStatus.NOT_FOUND);
 			}
 		} else {
-			map.put("result", "duplicate");
+			map.put("result", DUPLICATED);
 			return new ResponseEntity<Map<String, String>>(map, HttpStatus.NOT_FOUND);
 		}
 	}
@@ -184,11 +184,11 @@ public class UserController {
 		UserResultDto userResultDto = new UserResultDto();
 		
 		if (userDto != null) {
-			userResultDto.setResult(SUCCESS);
+			userResultDto.setResult(1);
 			userResultDto.setDto(userDto);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.OK);
 		} else {
-			userResultDto.setResult(FAIL);
+			userResultDto.setResult(-1);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.NOT_FOUND);
 		}
 	}
@@ -198,11 +198,11 @@ public class UserController {
 
 		UserResultDto userResultDto = userService.userUpdate(userDto, request);
 		
-		if (userResultDto.getResult() == SUCCESS) {
-			userResultDto.setResult(SUCCESS);
+		if (userResultDto.getResult() == 1) {
+			userResultDto.setResult(1);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.OK);
 		} else {
-			userResultDto.setResult(FAIL);
+			userResultDto.setResult(-1);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.NOT_FOUND);
 		}
 	}
@@ -212,11 +212,11 @@ public class UserController {
 
 		UserResultDto userResultDto = userService.userDelete(userDto);
 		
-		if (userResultDto.getResult() == SUCCESS) {
-			userResultDto.setResult(SUCCESS);
+		if (userResultDto.getResult() == 1) {
+			userResultDto.setResult(1);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.OK);
 		} else {
-			userResultDto.setResult(FAIL);
+			userResultDto.setResult(-1);
 			return new ResponseEntity<UserResultDto>(userResultDto, HttpStatus.NOT_FOUND);
 		}
 	}

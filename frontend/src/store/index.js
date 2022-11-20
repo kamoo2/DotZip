@@ -4,6 +4,7 @@ import { createVuexPersistedState } from 'vue-persistedstate';
 
 import menu from './modules/menu';
 import user from './modules/user';
+import house from './modules/house';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     menu,
     user,
+    house,
   },
   plugins: [
     createVuexPersistedState({
