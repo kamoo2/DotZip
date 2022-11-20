@@ -18,8 +18,7 @@ import com.mycom.myapp.house.service.HouseService;
 
 @RestController // controller + responsebody
 @CrossOrigin(
-		// localhost:5500 °ú 127.0.0.1 ±¸ºÐ
-		origins = "http://localhost:5500", // allowCredentials = "true" ÀÏ °æ¿ì, orogins="*" ´Â X
+		origins = "http://localhost:5500", // allowCredentials = "true" ï¿½ï¿½ ï¿½ï¿½ï¿½, orogins="*" ï¿½ï¿½ X
 		allowCredentials = "true", 
 		allowedHeaders = "*", 
 		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
@@ -34,7 +33,7 @@ public class HouseController {
 	public List<HouseDealSimpleDto> findHouseDealsByDongCode(@RequestBody HouseDealParamDto houseDealParamDto){
 		System.out.println(houseDealParamDto.getDong());
 		if (houseDealParamDto.getDong().isEmpty()) {
-			System.out.println("Áö¿ª ¹Ì¼±ÅÃ");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¼ï¿½ï¿½ï¿½");
 			return null;
 		} else {
 			return service.findHouseDealsByDongCode(houseDealParamDto);
@@ -50,7 +49,7 @@ public class HouseController {
 	@GetMapping(value="/apts")
 	public List<HouseDealSimpleDto> findHouseDealsByAptName(@RequestBody HouseDealParamDto houseDealParamDto){
 		if (houseDealParamDto.getSearchWord().isEmpty()) {
-			System.out.println("¾ÆÆÄÆ®¸í ¹ÌÀÔ·Â");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ô·ï¿½");
 			return null;
 		} else {
 			return service.findHouseDealsByAptName(houseDealParamDto);
