@@ -29,7 +29,6 @@ import com.mycom.myapp.user.dto.UserDto;
 		allowedHeaders = "*", 
 		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
 	)
-@RequestMapping("/interest")
 public class InterestController {
 
 	@Autowired
@@ -40,11 +39,11 @@ public class InterestController {
 	/**
 	 * area 
 	 */
-	@GetMapping("/area")
+	@GetMapping("/interest/area")
 	public ResponseEntity<InterestResultDto> interestAreaList(HttpSession session){
 
 		InterestParamDto interestParamDto = new InterestParamDto();
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -57,10 +56,10 @@ public class InterestController {
 		}		 
 	}
 	
-	@PostMapping("/area")
+	@PostMapping("/interest/area")
 	public ResponseEntity<InterestResultDto> interestAreaInsert(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -73,10 +72,10 @@ public class InterestController {
 		}
 	}
 	
-	@DeleteMapping("/area")
+	@DeleteMapping("/interest/area")
 	public ResponseEntity<InterestResultDto> interestAreaDelete(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -93,11 +92,11 @@ public class InterestController {
 	/**
 	 * house 
 	 */
-	@GetMapping("/house")
+	@GetMapping("/interest/house")
 	public ResponseEntity<InterestResultDto> interestHouseList(HttpSession session){
 
 		InterestParamDto interestParamDto = new InterestParamDto();
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -109,10 +108,10 @@ public class InterestController {
 			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}
-	@PostMapping("/house")
+	@PostMapping("/interest/house")
 	public ResponseEntity<InterestResultDto> interestHouseInsert(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -125,10 +124,10 @@ public class InterestController {
 		}
 	}
 	
-	@DeleteMapping("/house")
+	@DeleteMapping("/interest/house")
 	public ResponseEntity<InterestResultDto> interestHouseDelete(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 
-		System.out.println("now: "+session.getAttribute("userDto"));
+		System.out.println("session: "+session.getAttribute("userDto"));
 		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
@@ -141,4 +140,30 @@ public class InterestController {
 		}
 	}
 	
+	/**
+	 * popular
+	 */
+	@GetMapping("/popular/house")
+	public ResponseEntity<InterestResultDto> popularHouseList(){
+		
+		InterestResultDto interestResultDto = service.popularHouseList();
+		
+		if( interestResultDto.getResult() == SUCCESS ) {
+			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@GetMapping("/popular/area")
+	public ResponseEntity<InterestResultDto> popularAreaList(){
+		
+		InterestResultDto interestResultDto = service.popularAreaList();
+		
+		if( interestResultDto.getResult() == SUCCESS ) {
+			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
 }

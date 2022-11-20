@@ -10,6 +10,8 @@ import com.mycom.myapp.interest.dto.InterestAreaDto;
 import com.mycom.myapp.interest.dto.InterestHouseDto;
 import com.mycom.myapp.interest.dto.InterestParamDto;
 import com.mycom.myapp.interest.dto.InterestResultDto;
+import com.mycom.myapp.interest.dto.PopularAreaDto;
+import com.mycom.myapp.interest.dto.PopularHouseDto;
 
 @Service
 public class InterestServiceImpl implements InterestService{
@@ -120,6 +122,36 @@ public class InterestServiceImpl implements InterestService{
 	@Override
 	public int interestHouseListTotalCount(int userSeq) {
 		return dao.interestHouseListTotalCount(userSeq);
+	}
+
+	@Override
+	public InterestResultDto popularHouseList() {
+		InterestResultDto interestResultDto = new InterestResultDto();
+		
+		try {
+			List<PopularHouseDto> list = dao.popularHouseList();
+			interestResultDto.setPopularHouselist(list);
+			interestResultDto.setResult(SUCCESS);
+		} catch(Exception e) {
+			e.printStackTrace();
+			interestResultDto.setResult(FAIL);
+		}
+		return interestResultDto;
+	}
+
+	@Override
+	public InterestResultDto popularAreaList() {
+		InterestResultDto interestResultDto = new InterestResultDto();
+		
+		try {
+			List<PopularAreaDto> list = dao.popularAreaList();
+			interestResultDto.setPopularArealist(list);
+			interestResultDto.setResult(SUCCESS);
+		} catch(Exception e) {
+			e.printStackTrace();
+			interestResultDto.setResult(FAIL);
+		}
+		return interestResultDto;
 	}
 
 }

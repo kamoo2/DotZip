@@ -22,4 +22,7 @@ public class InterestResultDto {
 	private List<InterestAreaDto> arealist;
 	private List<InterestHouseDto> houselist;
 	private int count;
+	
+	private List<PopularAreaDto> popularArealist;
+	private List<PopularHouseDto> popularHouselist;
 }

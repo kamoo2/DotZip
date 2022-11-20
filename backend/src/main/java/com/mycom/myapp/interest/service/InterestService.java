@@ -17,4 +17,7 @@ public interface InterestService {
 	public InterestResultDto interestHouseDelete(InterestParamDto interestParamDto);
 	public int interestHouseListTotalCount(int userSeq);
 	
+	//popular
+	public InterestResultDto popularHouseList();
+	public InterestResultDto popularAreaList();
 }
