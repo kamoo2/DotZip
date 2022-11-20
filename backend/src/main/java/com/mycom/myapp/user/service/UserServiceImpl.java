@@ -1,5 +1,8 @@
 package com.mycom.myapp.user.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -14,8 +17,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 	
-	private final int SUCCESS = 1;
-	private final int FAIL = -1;
+	private final String SUCCESS = "success";
+	private final String FAIL = "fail";
 	
 	@Override
 	public UserResultDto userLogin(UserDto dto) {
@@ -42,19 +45,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return userResultDto;
 	}
-
 	@Override
-	public UserResultDto userInfo(UserDto userDto) { //안씀
-		UserResultDto userResultDto = new UserResultDto();
-		
-		try {
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-			userResultDto.setResult(FAIL);
-		}
-		
-		return userResultDto;
+	public UserDto userInfo(String userEmail) throws Exception {
+		return userDao.userInfo(userEmail);
 	}
 
 	@Override
@@ -92,5 +85,26 @@ public class UserServiceImpl implements UserService {
 		return userDao.userDupCheck(userDto);
 	}
 	
+	@Override
+	public void saveRefreshToken(String userEmail, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userEmail", userEmail);
+		map.put("token", refreshToken);
+		userDao.saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userEmail) throws Exception {
+		return userDao.getRefreshToken(userEmail);
+	}
+
+	@Override
+	public void deleRefreshToken(String userEmail) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userEmail", userEmail);
+		map.put("token", null);
+		userDao.deleteRefreshToken(map);
+	}
+
 
 }
