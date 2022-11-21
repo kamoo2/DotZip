@@ -3,7 +3,7 @@
     <b-colxx xxs="12" md="10" class="mx-auto my-auto">
       <b-card class="auth-card" no-body>
         <div class="position-relative image-side ">
-          <p class=" text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
+          <p class=" text-white h2">{{ $t("dashboards.magic-is-in-the-details") }}</p>
           <p class="white mb-0">
             Please use this form to register. <br />If you are a member, please
             <router-link to="/user/login" class="white">login</router-link>.
@@ -19,15 +19,21 @@
             </b-form-group>
             <b-form-group :label="$t('user.email')" class="has-float-label mb-4">
               <b-form-input type="text" v-model="$v.form.email.$model" :state="!$v.form.email.$error" />
-              <b-form-invalid-feedback v-if="!$v.form.email.required">Please enter your email address</b-form-invalid-feedback>
-              <b-form-invalid-feedback v-else-if="!$v.form.email.email">Please enter a valid email address</b-form-invalid-feedback>
+              <b-form-invalid-feedback v-if="!$v.form.email.required"
+                >Please enter your email address</b-form-invalid-feedback
+              >
+              <b-form-invalid-feedback v-else-if="!$v.form.email.email"
+                >Please enter a valid email address</b-form-invalid-feedback
+              >
               <b-form-invalid-feedback v-else-if="!$v.form.email.minLength"
                 >Your email must be minimum 4 characters</b-form-invalid-feedback
               >
             </b-form-group>
             <b-form-group :label="$t('user.password')" class="has-float-label mb-4">
               <b-form-input type="password" v-model="$v.form.password.$model" :state="!$v.form.password.$error" />
-              <b-form-invalid-feedback v-if="!$v.form.password.required">Please enter your password</b-form-invalid-feedback>
+              <b-form-invalid-feedback v-if="!$v.form.password.required"
+                >Please enter your password</b-form-invalid-feedback
+              >
               <b-form-invalid-feedback v-else-if="!$v.form.password.minLength || !$v.form.password.maxLength"
                 >Your password must be between 4 and 16 characters</b-form-invalid-feedback
               >
@@ -55,7 +61,7 @@
               <span class="icon fail">
                 <i class="simple-icon-exclamation"></i>
               </span>
-              <span class="label">{{ $t('user.register-button') }}</span>
+              <span class="label">{{ $t("user.register-button") }}</span>
             </b-button>
           </b-form>
         </div>
@@ -64,19 +70,19 @@
   </b-row>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import api from '@/apis/axios.js';
-import { adminRoot } from '../../constants/config';
-import { validationMixin } from 'vuelidate';
-const { required, maxLength, minLength, email } = require('vuelidate/lib/validators');
+import {mapGetters, mapActions} from "vuex";
+import api from "@/apis/axios.js";
+import {adminRoot} from "../../constants/config";
+import {validationMixin} from "vuelidate";
+const {required, maxLength, minLength, email} = require("vuelidate/lib/validators");
 
 export default {
   data() {
     return {
       form: {
-        name: '',
-        email: '',
-        password: '',
+        name: "",
+        email: "",
+        password: "",
       },
     };
   },
@@ -99,33 +105,33 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isLogin', 'currentUser', 'processing', 'loginError']),
+    ...mapGetters(["isLogin", "currentUser", "processing", "loginError"]),
   },
   methods: {
     formSubmit() {
       this.$v.$touch();
       this.$v.form.$touch();
       api
-        .post('/users/register', {
+        .post("/users/register", {
           userName: this.form.name,
           userEmail: this.form.email,
           userPassword: this.form.password,
         })
-        .then(response => {
-          if (response.data.result === 'success') {
+        .then((response) => {
+          if (response.data.result === "success") {
             // 회원가입 성공
-            this.$router.push('/user/login');
+            this.$router.push("/user/login");
           } else {
             // 회원가입 실패
-            this.$notify('error', 'Register Error', '회원가입에 실패했습니다.', {
+            this.$notify("error", "Register Error", "회원가입에 실패했습니다.", {
               duration: 3000,
               permanent: false,
             });
           }
         })
-        .catch(error => {
-          if (error.response.data.result === 'duplicated') {
-            this.$notify('error', 'Register Error', '이미 존재하는 이메일 입니다.', {
+        .catch((error) => {
+          if (error.response.data.result === "duplicated") {
+            this.$notify("error", "Register Error", "이미 존재하는 이메일 입니다.", {
               duration: 3000,
               permanent: false,
             });

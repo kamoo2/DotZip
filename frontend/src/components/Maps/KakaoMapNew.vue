@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       markers: [],
-      infowindow: null
+      infowindow: null,
     };
   },
   mounted() {
@@ -46,7 +46,7 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_MAP_SERVICE_KEY}&libraries=services`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_SERVICE_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
   },
@@ -54,7 +54,7 @@ export default {
     initMap() {
       const kakao = window.kakao;
       // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
-      var placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
+      var placeOverlay = new kakao.maps.CustomOverlay({zIndex: 1}),
         contentNode = document.createElement("div"), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
         markers = [], // 마커를 담을 배열입니다
         currCategory = ""; // 현재 선택된 카테고리를 가지고 있을 변수입니다
@@ -62,7 +62,7 @@ export default {
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-          level: 5 // 지도의 확대 레벨
+          level: 5, // 지도의 확대 레벨
         };
 
       // 지도를 생성합니다
@@ -120,7 +120,7 @@ export default {
         // 지도에 표시되고 있는 마커를 제거합니다
         removeMarker();
 
-        ps.categorySearch(currCategory, placesSearchCB, { useMapBounds: true });
+        ps.categorySearch(currCategory, placesSearchCB, {useMapBounds: true});
       }
 
       // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -139,16 +139,11 @@ export default {
       function displayPlaces(places) {
         // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
         // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
-        var order = document
-          .getElementById(currCategory)
-          .getAttribute("data-order");
+        var order = document.getElementById(currCategory).getAttribute("data-order");
 
         for (var i = 0; i < places.length; i++) {
           // 마커를 생성하고 지도에 표시합니다
-          var marker = addMarker(
-            new kakao.maps.LatLng(places[i].y, places[i].x),
-            order
-          );
+          var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
 
           // 마커와 검색결과 항목을 클릭 했을 때
           // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
@@ -162,22 +157,17 @@ export default {
 
       // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
       function addMarker(position, order) {
-        var imageSrc =
-            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
           imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
           imgOptions = {
             spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
             spriteOrigin: new kakao.maps.Point(46, order * 36), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+            offset: new kakao.maps.Point(11, 28), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
           },
-          markerImage = new kakao.maps.MarkerImage(
-            imageSrc,
-            imageSize,
-            imgOptions
-          ),
+          markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
           marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
-            image: markerImage
+            image: markerImage,
           });
 
         marker.setMap(map); // 지도 위에 마커를 표출합니다
@@ -219,20 +209,10 @@ export default {
             place.address_name +
             ")</span>";
         } else {
-          content +=
-            '    <span title="' +
-            place.address_name +
-            '">' +
-            place.address_name +
-            "</span>";
+          content += '    <span title="' + place.address_name + '">' + place.address_name + "</span>";
         }
 
-        content +=
-          '    <span class="tel">' +
-          place.phone +
-          "</span>" +
-          "</div>" +
-          '<div class="after"></div>';
+        content += '    <span class="tel">' + place.phone + "</span>" + "</div>" + '<div class="after"></div>';
 
         contentNode.innerHTML = content;
         placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
@@ -281,8 +261,8 @@ export default {
           el.className = "on";
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -350,8 +330,7 @@ button {
   height: 28px;
 }
 #category li .category_bg {
-  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png)
-    no-repeat;
+  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
 }
 #category li .bank {
   background-position: -10px 0;
@@ -428,9 +407,8 @@ button {
   padding: 10px;
   color: #fff;
   background: #d95050;
-  background: #d95050
-    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-    no-repeat right 14px center;
+  background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px
+    center;
 }
 .placeinfo .tel {
   color: #0f7833;
