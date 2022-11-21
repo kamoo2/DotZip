@@ -1,4 +1,4 @@
-import {getSido, getGuGun, getDong, getHouseByDong, getHouseByName} from "@/apis/house.js";
+import {getSido, getGuGun, getDong, getHouseByDong, getHouseByName, getHouseDetailByNo} from "@/apis/house.js";
 
 export default {
   state: {
@@ -6,7 +6,25 @@ export default {
     gugunList: [{value: null, label: "선택하세요"}],
     dongList: [{value: null, label: "선택하세요"}],
     houseList: [],
-    house: null,
+    house: {
+      aptName: "",
+      area: "",
+      buildYear: "",
+      cityName: "",
+      code: "",
+      dealAmount: "",
+      dealDay: "",
+      dealMonth: "",
+      dealYear: "",
+      dong: "",
+      floor: "",
+      gugunName: "",
+      houseNo: 0,
+      jibun: "",
+      lat: "",
+      lng: "",
+      no: 0,
+    },
   },
   mutations: {
     SET_SIDOLIST(state, payload) {
@@ -30,7 +48,7 @@ export default {
       state.houseList = {...houseList};
     },
     SET_HOUSE_DETAIL(state, house) {
-      state.house = house;
+      state.house = {...house};
     },
     CLEAR_SIDO_LIST(state) {
       state.sidoList = [{value: null, label: "선택하세요"}];
@@ -97,6 +115,18 @@ export default {
         ({data}) => {
           console.log(data);
           commit("SET_HOUSELIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouse: ({commit}, no) => {
+      getHouseDetailByNo(
+        no,
+        ({data}) => {
+          console.log(data);
+          commit("SET_HOUSE_DETAIL", data);
         },
         (error) => {
           console.log(error);

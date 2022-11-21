@@ -1,13 +1,24 @@
 <template>
   <div style="width:100%;height:100%">
     <div class="house-list-wrapper open">
-      <h1>리스트 보여줄 공간</h1>
+      <div class="result_list_wrapper">
+        <house-item-component v-for="(item, index) in houseList" :key="index" :item="item"></house-item-component>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import {mapGetters} from "vuex";
+import HouseItemComponent from "./HouseItemComponent.vue";
+
+export default {
+  components: {HouseItemComponent},
+
+  computed: {
+    ...mapGetters(["houseList", "house"]),
+  },
+};
 </script>
 
 <style>
@@ -29,5 +40,16 @@ export default {};
 
 .house-list-wrapper.open {
   left: 0;
+}
+
+.result_list_wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.result_list_wrapper::-webkit-scrollbar {
+  display: none;
 }
 </style>

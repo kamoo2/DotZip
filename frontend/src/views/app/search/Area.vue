@@ -11,6 +11,7 @@
         <b-card class="mb-4">
           <dong-search></dong-search>
           <kakao-map> </kakao-map>
+          <pagination></pagination>
         </b-card>
       </b-colxx>
     </b-row>
@@ -20,11 +21,13 @@
 <script>
 import KakaoMap from "@/components/Maps/KakaoMap.vue";
 import DongSearch from "@/components/SearchView/DongSearch.vue";
+import Pagination from "@/components/Common/Pagination.vue";
 export default {
   name: "Area",
   components: {
     KakaoMap,
     DongSearch,
+    Pagination,
   },
 };
 </script>
