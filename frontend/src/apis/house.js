@@ -36,4 +36,11 @@ async function getHouseByName(param, success, fail) {
     .then(success)
     .catch(fail);
 }
-export {getSido, getGuGun, getDong, getHouseByDong, getHouseByName};
+
+async function getHouseDetailByNo(no, success, fail) {
+  await api
+    .get(`/houses/${no}`)
+    .then(success)
+    .catch(fail);
+}
+export {getSido, getGuGun, getDong, getHouseByDong, getHouseByName, getHouseDetailByNo};

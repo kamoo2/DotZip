@@ -8,6 +8,7 @@
 
 <script>
 import HouseListComponent from "@/components/SearchView/HouseListComponent.vue";
+import {mapGetters} from "vuex";
 export default {
   name: "KakaoMap",
   components: {
@@ -19,6 +20,9 @@ export default {
       infowindow: null,
     };
   },
+  computed: {
+    ...mapGetters(["house", "houseList"]),
+  },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
@@ -29,6 +33,11 @@ export default {
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_SERVICE_KEY}`;
       document.head.appendChild(script);
     }
+  },
+  watch: {
+    house() {
+      this.map.setCenter(new kakao.maps.LatLng(this.house.lat, this.house.lng));
+    },
   },
   methods: {
     initMap() {
@@ -95,7 +104,7 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 600px;
+  height: 700px;
   border-radius: 8px;
   position: relative;
   top: 0;

@@ -101,13 +101,17 @@ export default {
       this.CLEAR_GUGUN_LIST();
       this.gugun = {value: null, label: "선택하세요"};
       this.dong = null;
-      this.getGugunList(this.sido.label);
+      if (this.sido.value !== null) {
+        this.getGugunList(this.sido.label);
+      }
     },
     onClickGugunSelect() {
       // dongList 가져오기
       this.CLEAR_DONG_LIST();
       this.dong = {value: null, label: "선택하세요"};
-      this.getDongList(this.gugun.label);
+      if (this.gugun.value !== null) {
+        this.getDongList(this.gugun.label);
+      }
     },
     onClickSearchBtn() {
       // 클릭시 현재 dong 이름으로 데이터 뽑아오기
