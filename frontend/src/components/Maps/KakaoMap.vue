@@ -1,16 +1,22 @@
 <template>
   <div>
-    <div id="map"></div>
+    <div id="map">
+      <house-list-component></house-list-component>
+    </div>
   </div>
 </template>
 
 <script>
+import HouseListComponent from "@/components/SearchView/HouseListComponent.vue";
 export default {
   name: "KakaoMap",
+  components: {
+    HouseListComponent,
+  },
   data() {
     return {
       markers: [],
-      infowindow: null
+      infowindow: null,
     };
   },
   mounted() {
@@ -20,7 +26,7 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_MAP_SERVICE_KEY}`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_SERVICE_KEY}`;
       document.head.appendChild(script);
     }
   },
@@ -29,7 +35,7 @@ export default {
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 5
+        level: 5,
       };
 
       //지도 객체를 등록합니다.
@@ -44,26 +50,21 @@ export default {
     },
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
-        this.markers.forEach(marker => marker.setMap(null));
+        this.markers.forEach((marker) => marker.setMap(null));
       }
 
-      const positions = markerPositions.map(
-        position => new kakao.maps.LatLng(...position)
-      );
+      const positions = markerPositions.map((position) => new kakao.maps.LatLng(...position));
 
       if (positions.length > 0) {
         this.markers = positions.map(
-          position =>
+          (position) =>
             new kakao.maps.Marker({
               map: this.map,
-              position
+              position,
             })
         );
 
-        const bounds = positions.reduce(
-          (bounds, latlng) => bounds.extend(latlng),
-          new kakao.maps.LatLngBounds()
-        );
+        const bounds = positions.reduce((bounds, latlng) => bounds.extend(latlng), new kakao.maps.LatLngBounds());
 
         this.map.setBounds(bounds);
       }
@@ -83,18 +84,19 @@ export default {
         map: this.map, // 인포윈도우가 표시될 지도
         position: iwPosition,
         content: iwContent,
-        removable: iwRemoveable
+        removable: iwRemoveable,
       });
 
       this.map.setCenter(iwPosition);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
 #map {
   width: 100%;
   height: 600px;
+  border-radius: 8px;
   position: relative;
   top: 0;
   left: 0;

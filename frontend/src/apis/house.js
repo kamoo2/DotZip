@@ -1,8 +1,8 @@
-import api from './axios.js';
+import api from "./axios.js";
 
 async function getSido(success, fail) {
   await api
-    .get('/regions/sido')
+    .get("/regions/sido")
     .then(success)
     .catch(fail);
 }
@@ -20,4 +20,20 @@ async function getDong(gugunName, success, fail) {
     .then(success)
     .catch(fail);
 }
-export { getSido, getGuGun, getDong };
+
+async function getHouseByDong(param, success, fail) {
+  // console.log(param);
+  await api
+    .post("/houses/dong", param)
+    .then(success)
+    .catch(fail);
+}
+
+async function getHouseByName(param, success, fail) {
+  // console.log(param);
+  await api
+    .get("/houses/apts", param)
+    .then(success)
+    .catch(fail);
+}
+export {getSido, getGuGun, getDong, getHouseByDong, getHouseByName};
