@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%">
-    <div class="house-list-wrapper open">
+    <div class="house-list-wrapper">
       <div class="result_list_wrapper">
         <house-item-component v-for="(item, index) in houseList" :key="index" :item="item"></house-item-component>
       </div>
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import HouseItemComponent from "./HouseItemComponent.vue";
+import { mapGetters } from 'vuex';
+import HouseItemComponent from './HouseItemComponent.vue';
 
 export default {
-  components: {HouseItemComponent},
+  components: { HouseItemComponent },
 
   computed: {
-    ...mapGetters(["houseList", "house"]),
+    ...mapGetters(['houseList', 'house']),
   },
 };
 </script>
@@ -32,14 +32,12 @@ export default {
   top: 0;
   left: 0;
   z-index: 999;
+  transition-duration: 2000ms;
 }
 
 .house-list-wrapper.close {
   left: -40%;
-}
-
-.house-list-wrapper.open {
-  left: 0;
+  transform: translateX(-400px);
 }
 
 .result_list_wrapper {

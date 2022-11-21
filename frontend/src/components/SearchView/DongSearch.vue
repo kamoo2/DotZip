@@ -27,28 +27,26 @@
                 class="mr-2 px-4"
                 @click="checkButtonCheck(1)"
                 :pressed="checkedCheckboxes.indexOf(1) !== -1"
-                >{{ $t("button.hospital") }}</b-button
+                >{{ $t('button.hospital') }}</b-button
               >
               <b-button
                 variant="outline-primary"
                 class="mr-2"
                 @click="checkButtonCheck(2)"
                 :pressed="checkedCheckboxes.indexOf(2) !== -1"
-                >{{ $t("button.convenience") }}</b-button
+                >{{ $t('button.convenience') }}</b-button
               >
               <b-button
                 variant="outline-primary"
                 class="mr-2 px-4"
                 @click="checkButtonCheck(3)"
                 :pressed="checkedCheckboxes.indexOf(3) !== -1"
-                >{{ $t("button.bank") }}</b-button
+                >{{ $t('button.bank') }}</b-button
               >
             </div>
 
             <div>
-              <b-button @click="onClickSearchBtn" class="mb-1" variant="secondary default">{{
-                $t("button.search")
-              }}</b-button>
+              <b-button @click="onClickSearchBtn" class="mb-1" variant="secondary default">{{ $t('button.search') }}</b-button>
             </div>
           </b-row>
         </b-form>
@@ -58,16 +56,16 @@
 </template>
 
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
-import vSelect from "vue-select";
-import "vue-select/dist/vue-select.css";
-import {defaultDirection} from "@/constants/config";
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+import { defaultDirection } from '@/constants/config';
 
 export default {
   data() {
     return {
       checkedCheckboxes: [],
-      sido: {value: null, label: "선택하세요"},
+      sido: { value: null, label: '선택하세요' },
       gugun: null,
       dong: null,
       direction: defaultDirection,
@@ -75,7 +73,7 @@ export default {
     };
   },
   components: {
-    "v-select": vSelect,
+    'v-select': vSelect,
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -85,21 +83,21 @@ export default {
     this.getSidoList();
   },
   computed: {
-    ...mapGetters(["sidoList", "gugunList", "dongList", "houseList", "house"]),
+    ...mapGetters(['sidoList', 'gugunList', 'dongList', 'houseList', 'house']),
   },
   watch: {
     houseList() {
-      return (this.curHouseList = {...this.houseList});
+      return (this.curHouseList = [...this.houseList]);
     },
   },
   methods: {
-    ...mapActions(["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
-    ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST", "CLEAR_HOUSE_LIST"]),
+    ...mapActions(['getSidoList', 'getGugunList', 'getDongList', 'getHouseList']),
+    ...mapMutations(['CLEAR_SIDO_LIST', 'CLEAR_GUGUN_LIST', 'CLEAR_DONG_LIST', 'CLEAR_HOUSE_LIST']),
 
     onClickSidoSelect() {
       // gugunList 가져오기
       this.CLEAR_GUGUN_LIST();
-      this.gugun = {value: null, label: "선택하세요"};
+      this.gugun = { value: null, label: '선택하세요' };
       this.dong = null;
       if (this.sido.value !== null) {
         this.getGugunList(this.sido.label);
@@ -108,14 +106,38 @@ export default {
     onClickGugunSelect() {
       // dongList 가져오기
       this.CLEAR_DONG_LIST();
-      this.dong = {value: null, label: "선택하세요"};
+      this.dong = { value: null, label: '선택하세요' };
       if (this.gugun.value !== null) {
         this.getDongList(this.gugun.label);
       }
     },
-    onClickSearchBtn() {
+    async onClickSearchBtn() {
       // 클릭시 현재 dong 이름으로 데이터 뽑아오기
-      this.getHouseList(this.dong.label);
+      if (this.dong === null) {
+        this.$notify('error', 'Search Error', '구를 선택해주세요.', {
+          duration: 3000,
+          permanent: false,
+        });
+      } else if (this.dong.value === null) {
+        this.$notify('error', 'Search Error', '동을 선택해주세요', {
+          duration: 3000,
+          permanent: false,
+        });
+      } else {
+        await this.getHouseList(this.dong.label);
+        // 이미 검색 창이 열려있다면 토글 작동 할 필요 없다.
+        // 닫혀 있는
+        if (this.curHouseList.length === 0) {
+          // 없는 경우에는
+          this.$notify('error', 'Search Error', '검색 결과가 존재하지 않습니다.', {
+            duration: 3000,
+            permanent: false,
+          });
+          document.querySelector('.house-list-wrapper').classList.add('close');
+        } else {
+          document.querySelector('.house-list-wrapper').classList.remove('close');
+        }
+      }
     },
     checkButtonCheck(i) {
       const index = this.checkedCheckboxes.indexOf(i);
