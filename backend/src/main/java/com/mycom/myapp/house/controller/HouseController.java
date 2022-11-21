@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,11 +30,10 @@ public class HouseController {
 	@Autowired
 	HouseService service;
 	
-	@GetMapping(value="/dong")
+	@PostMapping(value="/dong")
 	public List<HouseDealSimpleDto> findHouseDealsByDongCode(@RequestBody HouseDealParamDto houseDealParamDto){
-		System.out.println(houseDealParamDto.getDong());
+		System.out.println("검색 동이름 : " + houseDealParamDto.getDong());
 		if (houseDealParamDto.getDong().isEmpty()) {
-			System.out.println("���� �̼���");
 			return null;
 		} else {
 			return service.findHouseDealsByDongCode(houseDealParamDto);
@@ -46,7 +46,7 @@ public class HouseController {
 		return count; 
 	}
 	
-	@GetMapping(value="/apts")
+	@PostMapping(value="/apts")
 	public List<HouseDealSimpleDto> findHouseDealsByAptName(@RequestBody HouseDealParamDto houseDealParamDto){
 		if (houseDealParamDto.getSearchWord().isEmpty()) {
 			System.out.println("����Ʈ�� ���Է�");

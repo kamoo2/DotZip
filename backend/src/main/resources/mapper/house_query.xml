@@ -6,7 +6,7 @@
     	select no, dong, AptName, code, dealAmount, buildYear, dealYear, dealMonth, dealDay, area, floor, jibun, house_no
 		from housedeal 
 		where dong = #{dong} 			
-		limit #{limit} offset #{limit} 
+		limit #{limit} offset #{offset} 
     </select>
     
     
