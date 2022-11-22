@@ -3,12 +3,12 @@
 
 <mapper namespace="com.mycom.myapp.house.dao.HouseDao">
     <select id="findHouseDealsByDongCode" parameterType="map" resultType="com.mycom.myapp.house.dto.HouseDealSimpleDto">
-    	SELECT d.no,d.dong,d.AptName,d.dealAmount,i.lat,i.lng, is_bookmark(d.no, 62) bookmarked
+    	SELECT d.no,d.dong,d.AptName,d.dealAmount,d.area,d.dealYear,d.dealMonth,d.dealDay,i.lat,i.lng, is_bookmark(d.no, #{no}) bookmarked
 		FROM housedeal d, houseinfo i
-		WHERE d.no=i.no
-		AND d.dong = "사직동"
+		WHERE d.house_no=i.no
+		AND d.dong = #{dong}
 		order by d.no
-		limit 10 offset 0;
+		limit #{limit} offset #{offset};
     </select>
     
     

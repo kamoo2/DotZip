@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.myapp.board.dto.BoardParamDto;
@@ -108,12 +109,11 @@ public class InterestController {
 			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}
-	@PostMapping("/interest/house")
-	public ResponseEntity<InterestResultDto> interestHouseInsert(@RequestBody InterestParamDto interestParamDto, HttpSession session){
-
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
+	@PostMapping("/interest/house/add")
+	public ResponseEntity<InterestResultDto> interestHouseInsert(@RequestParam("houseNo") int houseNo,@RequestParam("userSeq") int userSeq){
+		InterestParamDto interestParamDto = new InterestParamDto();
 		interestParamDto.setUserSeq(userSeq);
+		interestParamDto.setHouseNo(houseNo);
 		
 		InterestResultDto interestResultDto = service.interestHouseInsert(interestParamDto);
 		
@@ -124,12 +124,12 @@ public class InterestController {
 		}
 	}
 	
-	@DeleteMapping("/interest/house")
-	public ResponseEntity<InterestResultDto> interestHouseDelete(@RequestBody InterestParamDto interestParamDto, HttpSession session){
+	@PostMapping("/interest/house/delete")
+	public ResponseEntity<InterestResultDto> interestHouseDelete(@RequestParam("houseNo") int houseNo,@RequestParam("userSeq") int userSeq){
 
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
+		InterestParamDto interestParamDto = new InterestParamDto();
 		interestParamDto.setUserSeq(userSeq);
+		interestParamDto.setHouseNo(houseNo);
 		
 		InterestResultDto interestResultDto = service.interestHouseDelete(interestParamDto);
 		

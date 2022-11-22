@@ -2,53 +2,59 @@
   <div class="house_card">
     <div class="house_info">
       <h3 class="house_info_title">
-        {{ item.aptName }} <i class="simple-icon-location-pin moveHouseLocation" @click="onClickMoveHouseLocation"></i>
+        {{ item.aptName }}
       </h3>
       <div class="house_info_description">
-        <span>거래 금액 : {{ item.dealAmount }}</span>
+        <span>거래 금액 : {{ item.dealAmount }}만원</span>
         <span>전용 면적 : {{ item.area }}</span>
         <span>거래일 : {{ item.dealYear }}.{{ item.dealMonth }}.{{ item.dealDay }}</span>
       </div>
     </div>
-    <div class="house_favs_btn_wrapper">
-      <font-awesome-icon class="favs_btn" :class="{bookmarked: getIsBookmarked()}" icon="fa-solid fa-star" />
+    <div class="list_item_btn_wrapper">
+      <i class="simple-icon-location-pin moveHouseLocation" @click="onClickMoveHouseLocation"></i>
+      <font-awesome-icon
+        @click="onClickAddBookMarkHouse"
+        class="favs_btn"
+        :class="{ bookmarked: getIsBookmarked() }"
+        icon="fa-solid fa-star"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 export default {
   components: {},
   data() {
     return {
       curHouse: {
-        aptName: "",
-        area: "",
-        buildYear: "",
-        cityName: "",
-        code: "",
-        dealAmount: "",
-        dealDay: "",
-        dealMonth: "",
-        dealYear: "",
-        dong: "",
-        floor: "",
-        gugunName: "",
+        aptName: '',
+        area: '',
+        buildYear: '',
+        cityName: '',
+        code: '',
+        dealAmount: '',
+        dealDay: '',
+        dealMonth: '',
+        dealYear: '',
+        dong: '',
+        floor: '',
+        gugunName: '',
         houseNo: 0,
-        jibun: "",
-        lat: "",
-        lng: "",
+        jibun: '',
+        lat: '',
+        lng: '',
         no: 0,
       },
     };
   },
-  props: ["item"],
+  props: ['item'],
   computed: {
-    ...mapGetters(["house"]),
+    ...mapGetters(['house', 'currentUser']),
   },
   methods: {
-    ...mapActions(["getHouse"]),
+    ...mapActions(['getHouse', 'addBookMarkHouseAction', 'deleteBookMarkHouseAction']),
     onClickMoveHouseLocation() {
       // 1. 클릭시 해당 위치로 마커 이동
       // 1.1 현재 선택된 위치를 store에 저장하고 , 클릭시 해당 값을 변경
@@ -59,6 +65,25 @@ export default {
     },
     onClickDetailHouseBtn() {
       // 클릭시 Detail 정보 가져 오고 가공해서 화면에 보여주기
+    },
+    onClickAddBookMarkHouse() {
+      // 클릭시 BookMark에 해당 집을 추가하고 , 즉각적으로 색변경 (야매로도 가능)
+
+      // 클릭 시 부모에 이벤트 전달
+      // 부모에서 해야할 일
+      // 만약 현재 북마크가 체크된 상태라면 관심매물 해제 함수를 진행
+      if (this.getIsBookmarked()) {
+        this.deleteBookMarkHouseAction({ houseNo: this.item.no, userSeq: this.currentUser.userSeq });
+      } else {
+        // 북마크가 아닌 상태라면 관심매물 추가 함수를 진행
+        this.addBookMarkHouseAction({ houseNo: this.item.no, userSeq: this.currentUser.userSeq });
+      }
+
+      if (this.getIsBookmarked()) {
+        this.item.bookmarked = 0;
+      } else {
+        this.item.bookmarked = 1;
+      }
     },
     getIsBookmarked() {
       if (this.item.bookmarked === 1) {
@@ -73,11 +98,15 @@ export default {
       this.curHouse = this.house;
     },
   },
+  mounted() {
+    console.log(this.item);
+  },
 };
 </script>
 
 <style>
 .house_card {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,10 +123,13 @@ export default {
   font-weight: 500;
 }
 .moveHouseLocation {
-  font-size: 24px;
-  margin-left: 6px;
-  transition-duration: 500ms;
+  font-size: 25px;
+  transition-duration: 800ms;
   cursor: pointer;
+  position: absolute;
+  right: 21px;
+  top: 17px;
+  color: #ffa502;
 }
 
 .moveHouseLocation:hover {
@@ -116,10 +148,16 @@ export default {
   margin-bottom: 0;
 }
 
+.list_item_btn_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .favs_btn {
   font-size: 25px;
   cursor: pointer;
-  transition-duration: 500ms;
+  transition-duration: 800ms;
   margin-bottom: 20px;
 }
 

@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import HouseListComponent from "@/components/SearchView/HouseListComponent.vue";
-import {mapGetters} from "vuex";
+import HouseListComponent from '@/components/SearchView/HouseListComponent.vue';
+import { mapGetters } from 'vuex';
 export default {
-  name: "KakaoMap",
+  name: 'KakaoMap',
   components: {
     HouseListComponent,
   },
@@ -21,13 +21,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["house", "houseList"]),
+    ...mapGetters(['house', 'houseList']),
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_SERVICE_KEY}`;
@@ -38,10 +38,22 @@ export default {
     house() {
       this.map.setCenter(new kakao.maps.LatLng(this.house.lat, this.house.lng));
     },
+    houseList() {
+      this.removeMarker();
+      if (this.houseList.length > 0) {
+        this.makeMaker();
+      }
+    },
   },
   methods: {
+    removeMarker() {
+      this.markers.forEach(marker => {
+        marker.setMap(null);
+      });
+      this.markers = [];
+    },
     initMap() {
-      const container = document.getElementById("map");
+      const container = document.getElementById('map');
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 5,
@@ -51,19 +63,19 @@ export default {
       this.map = new kakao.maps.Map(container, options);
     },
     changeSize(size) {
-      const container = document.getElementById("map");
+      const container = document.getElementById('map');
       container.style.width = `${size}px`;
       container.style.height = `${size}px`;
       this.map.relayout();
     },
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
-        this.markers.forEach((marker) => marker.setMap(null));
+        this.markers.forEach(marker => marker.setMap(null));
       }
-      const positions = markerPositions.map((position) => new kakao.maps.LatLng(...position));
+      const positions = markerPositions.map(position => new kakao.maps.LatLng(...position));
       if (positions.length > 0) {
         this.markers = positions.map(
-          (position) =>
+          position =>
             new kakao.maps.Marker({
               map: this.map,
               position,
@@ -89,6 +101,23 @@ export default {
         removable: iwRemoveable,
       });
       this.map.setCenter(iwPosition);
+    },
+    makeMaker() {
+      let bounds = new kakao.maps.LatLngBounds();
+
+      console.log('houseLIst:' + this.houseList);
+      Array.from(this.houseList).forEach(house => {
+        console.log(house);
+        const position = new kakao.maps.LatLng(house.lat, house.lng);
+        const marker = new kakao.maps.Marker({ position });
+
+        this.markers.push(marker);
+        marker.setMap(this.map);
+        bounds.extend(position);
+      });
+
+      // 센터 위치 이동
+      this.map.setBounds(bounds);
     },
   },
 };

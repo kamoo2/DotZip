@@ -60,6 +60,7 @@ public class UserController {
             
         	if(userResultDto.getDto() != null) {
         		session.setAttribute("userDto", userResultDto.getDto());
+        		System.out.println("session : " + session.getAttribute("userDto"));
         		String accessToken = jwtService.createAccessToken("userEmail", userResultDto.getDto().getUserEmail()); // key, data
         		String refreshToken = jwtService.createRefreshToken("userEmail", userResultDto.getDto().getUserEmail());
         		userService.saveRefreshToken(dto.getUserEmail(), refreshToken);
