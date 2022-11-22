@@ -20,7 +20,7 @@ public class HouseServiceImpl implements HouseService{
 		List<HouseDealSimpleDto> list = null;
 			
 		try {
-			list = houseDao.findHouseDealsByDongCode(houseDealParamDto.getDong(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
+			list = houseDao.findHouseDealsByDongCode(houseDealParamDto.getDong(),houseDealParamDto.getNo(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
 		}catch(Exception e) {
 			e.printStackTrace();
 			
