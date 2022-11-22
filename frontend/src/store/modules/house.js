@@ -112,15 +112,19 @@ export default {
         }
       );
     },
-    getHouseList: async ({commit}, dongName) => {
+    getHouseList: async ({commit}, dongName, no) => {
+      console.log(no);
+      console.log(dongName);
       const params = {
+        no: 62,
         dong: dongName,
-        limit: 10,
+        limit: 0,
         offset: 0,
       };
       await getHouseByDong(
         params,
         ({data}) => {
+          console.log(data);
           commit("SET_HOUSELIST", data);
         },
         (error) => {

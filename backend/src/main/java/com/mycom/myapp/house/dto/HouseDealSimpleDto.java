@@ -16,6 +16,7 @@ public class HouseDealSimpleDto {
 	private String type;
 	private String rentMoney;
 	private int houseNo;
+	private int bookmarked;
 	@Override
 	public String toString() {
 		return "HouseDealDto [no=" + no + ", dong=" + dong + ", aptName=" + aptName + ", code=" + code + ", dealAmount="
@@ -113,4 +114,11 @@ public class HouseDealSimpleDto {
 	public void setHouseNo(int houseNo) {
 		this.houseNo = houseNo;
 	}
+	public int getBookmarked() {
+		return bookmarked;
+	}
+	public void setBookmarked(int bookmarked) {
+		this.bookmarked = bookmarked;
+	}
+	
 }
