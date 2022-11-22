@@ -15,6 +15,8 @@ public class HouseDealSimpleDto {
 	private String jibun;
 	private String type;
 	private String rentMoney;
+	private String lat;
+	private String lng;
 	private int houseNo;
 	private int bookmarked;
 	@Override
@@ -120,5 +122,18 @@ public class HouseDealSimpleDto {
 	public void setBookmarked(int bookmarked) {
 		this.bookmarked = bookmarked;
 	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+	
 	
 }
