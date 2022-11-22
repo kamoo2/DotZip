@@ -54,7 +54,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 999;
-  transition-duration: 2000ms;
+  transition-duration: 1500ms;
   -webkit-box-shadow: 2px 0px 6px 1px #3d3d3d;
   box-shadow: 2px 0px 6px 1px #3d3d3d;
 }

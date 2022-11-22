@@ -86,7 +86,7 @@ export default {
     this.getSidoList();
   },
   computed: {
-    ...mapGetters(["sidoList", "gugunList", "dongList", "houseList", "house"]),
+    ...mapGetters(["sidoList", "gugunList", "dongList", "houseList", "house", "currentUser"]),
   },
   watch: {
     houseList() {
@@ -134,9 +134,9 @@ export default {
           permanent: false,
         });
       } else {
-        await this.getHouseList(this.dong.label);
+        console.log(this.currentUser.userSeq);
+        await this.getHouseList(this.dong.label, this.currentUser.userSeq);
         // 이미 검색 창이 열려있다면 토글 작동 할 필요 없다.
-        // 닫혀 있는
         if (this.curHouseList.length === 0) {
           // 없는 경우에는
           this.$notify("error", "Search Error", "검색 결과가 존재하지 않습니다.", {

@@ -50,6 +50,12 @@ export default {
       document.head.appendChild(script);
     }
   },
+  watch: {
+    house() {
+      this.map.setCenter(new kakao.maps.LatLng(this.house.lat, this.house.lng));
+      // 이동 하고 마커 생성
+    },
+  },
   methods: {
     initMap() {
       const kakao = window.kakao;

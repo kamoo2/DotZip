@@ -9,22 +9,17 @@
         <span>전용 면적 : {{ item.area }}</span>
         <span>거래일 : {{ item.dealYear }}.{{ item.dealMonth }}.{{ item.dealDay }}</span>
       </div>
-      <b-button class="mb-1" @click="onClickDetailHouseBtn" variant="primary">상세 보기</b-button>
     </div>
     <div class="house_favs_btn_wrapper">
-      <i class="favs_btn simple-icon-like"></i>
+      <font-awesome-icon class="favs_btn" :class="{bookmarked: getIsBookmarked()}" icon="fa-solid fa-star" />
     </div>
-    <house-detail-modal></house-detail-modal>
   </div>
 </template>
 
 <script>
-import HouseDetailModal from "@/components/Modal/HouseDetailModal.vue";
 import {mapActions, mapGetters} from "vuex";
 export default {
-  components: {
-    HouseDetailModal,
-  },
+  components: {},
   data() {
     return {
       curHouse: {
@@ -65,6 +60,13 @@ export default {
     onClickDetailHouseBtn() {
       // 클릭시 Detail 정보 가져 오고 가공해서 화면에 보여주기
     },
+    getIsBookmarked() {
+      if (this.item.bookmarked === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   watch: {
     house() {
@@ -79,8 +81,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
+  padding: 15px 20px 6px 20px;
   border-bottom: 1px solid lightgray;
+}
+.house_info {
+  flex-basis: 80%;
 }
 .house_info_title {
   display: flex;
@@ -96,7 +101,6 @@ export default {
 }
 
 .moveHouseLocation:hover {
-  font-size: 32px;
   color: #ffa502;
 }
 
@@ -119,7 +123,11 @@ export default {
   margin-bottom: 20px;
 }
 
+.favs_btn.bookmarked {
+  color: #fff200;
+}
+
 .favs_btn:hover {
-  color: #0056b3;
+  color: #fff200;
 }
 </style>
