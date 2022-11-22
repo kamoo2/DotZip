@@ -105,7 +105,6 @@ export default {
 #map {
   width: 100%;
   height: 700px;
-  border-radius: 8px;
   position: relative;
   top: 0;
   left: 0;
