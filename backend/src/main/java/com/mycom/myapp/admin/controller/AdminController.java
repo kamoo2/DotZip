@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -37,8 +38,10 @@ public class AdminController {
 	public ResponseEntity<BoardResultDto> boardInsert(
 			BoardDto boardDto,
 			MultipartHttpServletRequest request) {
+		System.out.println("insert"+boardDto.getUserSeq());
 		
-		boardDto.setUserSeq( ((UserDto) request.getSession().getAttribute("userDto")).getUserSeq());
+		boardDto.setUserSeq( boardDto.getUserSeq());
+		
 		BoardResultDto boardResultDto = service.boardInsert(boardDto, request);
 		
 		if( boardResultDto.getResult() == SUCCESS ) {
@@ -52,9 +55,8 @@ public class AdminController {
 	public ResponseEntity<BoardResultDto> boardUpdate(
 			BoardDto boardDto, 
 			MultipartHttpServletRequest request){
-
+		System.out.println("update");
 		BoardResultDto boardResultDto = service.boardUpdate(boardDto, request);
-		boardDto.setUserSeq( ((UserDto) request.getSession().getAttribute("userDto")).getUserSeq());
 		
 		if( boardResultDto.getResult() == SUCCESS ) {
 			return new ResponseEntity<BoardResultDto>(boardResultDto, HttpStatus.OK);
@@ -65,6 +67,7 @@ public class AdminController {
 	
 	@DeleteMapping(value="/boards/{boardId}") 
 	public ResponseEntity<BoardResultDto> boardDelete(@PathVariable(value="boardId") int boardId){
+		System.out.println("delete"+boardId);
 		BoardResultDto boardResultDto = service.boardDelete(boardId);
 		
 		if( boardResultDto.getResult() == SUCCESS ) {

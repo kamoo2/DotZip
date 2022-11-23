@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -19,6 +20,7 @@ import com.mycom.myapp.board.dto.BoardDto;
 import com.mycom.myapp.board.dto.BoardParamDto;
 import com.mycom.myapp.board.dto.BoardResultDto;
 import com.mycom.myapp.board.service.BoardService;
+import com.mycom.myapp.interest.dto.InterestParamDto;
 import com.mycom.myapp.user.dto.UserDto;
 
 @RestController
@@ -36,7 +38,7 @@ public class BoardController {
 	private static final int SUCCESS = 1;
 	
 	@GetMapping(value="/boards")
-	public ResponseEntity<BoardResultDto> boardList(@RequestBody BoardParamDto boardParamDto){
+	public ResponseEntity<BoardResultDto> boardList(BoardParamDto boardParamDto){
 		
 		BoardResultDto boardResultDto;
 
@@ -55,16 +57,17 @@ public class BoardController {
 	}
 
 	
-	@GetMapping(value="/boards/{boardId}")
-	public ResponseEntity<BoardResultDto> boardDetail(@PathVariable int boardId, HttpSession session){
-
+	@PostMapping(value="/boards")
+	public ResponseEntity<BoardResultDto> boardDetail(@RequestBody BoardParamDto dto){//@RequestParam("userSeq")
+		
+		int userSeq = dto.getUserSeq();
+		int boardId = dto.getBoardId();
 		BoardParamDto boardParamDto = new BoardParamDto();
-		System.out.println("-->"+session.getAttribute("userDto"));
-		boardParamDto.setUserSeq( ((UserDto) session.getAttribute("userDto")).getUserSeq());
+		boardParamDto.setUserSeq(userSeq);
 		boardParamDto.setBoardId(boardId);
 
 		BoardResultDto boardResultDto = service.boardDetail(boardParamDto);
-		if( ((UserDto) session.getAttribute("userDto")).getUserSeq() == boardResultDto.getDto().getUserSeq() ) {
+		if( userSeq == boardResultDto.getDto().getUserSeq() ) {
 			boardResultDto.getDto().setSameUser(true);
 		}
 				
