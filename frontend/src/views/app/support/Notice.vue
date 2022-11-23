@@ -10,7 +10,7 @@
       <b-colxx xxs="12">
         <b-card class="mb-4" :title="$t('menu.notice')">
           <!-- <b-table striped hover :items="list"></b-table> -->
-          <table class="table table-hover">
+          <table class="table table-hover" id="list">
             <thead>
               <tr>
                 <th scope="col">No</th>
@@ -31,15 +31,17 @@
               </tr>
             </tbody>
           </table>
-          <pagination
+          <pagination-u-i
             v-bind:listRowCount="listRowCount"
             v-bind:pageLinkCount="pageLinkCount"
             v-bind:currentPageIndex="currentPageIndex"
             v-bind:totalListItemCount="totalListItemCount"
             v-on:call-parent-move-page="movePage"
-          ></pagination>
+          ></pagination-u-i>
+          <button v-show="userClsf == '003'" class="btn btn-success" type="button" @click="showInsertModal">
+            글쓰기
+          </button>
 
-          <button class="btn btn-success" type="button" @click="showInsertModal">글쓰기</button>
           <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
           <detail-modal
             v-bind:board="board"
@@ -56,24 +58,16 @@
 import {mapGetters} from "vuex";
 import http from "@/apis/axios.js"; //axios객체
 import util from "@/apis/util.js";
-import Pagination from "@/components/Common/Pagination.vue";
+import PaginationUI from "@/components/Common/PaginationUI.vue";
+// import Pagination from "@/components/Common/Pagination.vue";
 import InsertModal from "@/components/Modal/BoardInsertModal.vue"; //vue 컴포넌트
 import DetailModal from "@/components/Modal/BoardDetailModal.vue"; //vue 컴포넌트
 import UpdateModal from "@/components/Modal/BoardUpdateModal.vue";
 import {Modal} from "bootstrap";
 export default {
-  // data() {
-  //   return {
-  //     items: [
-  //       {writer: "작성자1", title: "제목1"},
-  //       {writer: "작성자1", title: "제목1"},
-  //       {writer: "작성자1", title: "제목1"},
-  //       {writer: "작성자1", title: "제목1"},
-  //     ],
-  //   };
-  // },
   components: {
-    Pagination,
+    PaginationUI,
+    // Pagination,
     InsertModal,
     DetailModal,
     UpdateModal,
@@ -83,6 +77,8 @@ export default {
   },
   data() {
     return {
+      userClsf: "",
+
       boardId: 0,
       userSeq: 0,
 
@@ -157,6 +153,7 @@ export default {
       }
     },
     async boardList() {
+      console.log(this.userClsf);
       let params = {
         limit: this.limit,
         offset: this.offset,
@@ -232,6 +229,7 @@ export default {
     },
   },
   created() {
+    this.userClsf = this.currentUser.userClsf;
     this.boardList();
   },
   mounted() {
@@ -252,3 +250,8 @@ export default {
   },
 };
 </script>
+<style>
+#list {
+  text-align: center;
+}
+</style>
