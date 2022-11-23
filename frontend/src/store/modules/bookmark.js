@@ -5,13 +5,13 @@ import {
   addBookMarkArea,
   deleteBookMarkArea,
   getBookMarkAreaList,
-  getBookMarkArea,
+  getBookMarkArea
 } from "@/apis/bookmark.js";
 export default {
   state: {
     bookmarkAreaList: [],
     bookmarkHouseList: [],
-    isBookmarkedArea: false,
+    isBookmarkedArea: false
   },
   mutations: {
     SET_BOOKMARK_AREA_LIST(state, payload) {
@@ -23,98 +23,102 @@ export default {
     },
     SET_BOOKMARK_HOUSE_LIST(state, payload) {
       state.bookmarkHouseList = [...payload.houselist];
-    },
+    }
   },
   getters: {
-    bookmarkHouseList: (state) => state.bookmarkHouseList,
-    bookmarkAreaList: (state) => state.bookmarkAreaList,
-    isBookmarkedArea: (state) => state.isBookmarkedArea,
+    bookmarkHouseList: state => state.bookmarkHouseList,
+    bookmarkAreaList: state => state.bookmarkAreaList,
+    isBookmarkedArea: state => state.isBookmarkedArea
   },
   actions: {
-    addBookMarkHouseAction: ({commit}, payload) => {
+    addBookMarkHouseAction: ({ commit }, payload) => {
       addBookMarkHouse(
         payload,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
     },
 
-    deleteBookMarkHouseAction: ({commit, dispatch}, payload) => {
+    deleteBookMarkHouseAction: ({ commit, dispatch }, payload) => {
       console.log(payload);
       deleteBookMarkHouse(
         payload,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
           dispatch("getBookMarkHouseListAction", payload.userSeq);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
     },
 
-    getBookMarkHouseListAction: ({commit}, userSeq) => {
+    getBookMarkHouseListAction: ({ commit }, userSeq) => {
       getBookMarkHouseList(
         userSeq,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
           commit("SET_BOOKMARK_HOUSE_LIST", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
     },
 
-    addBookMarkAreaAction: ({commit}, payload) => {
+    addBookMarkAreaAction: ({ commit }, payload) => {
       addBookMarkArea(
         payload,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
     },
 
-    deleteBookMarkAreaAction: ({commit, dispatch}, payload) => {
+    deleteBookMarkAreaAction: ({ commit, dispatch }, payload) => {
+      console.log(payload);
       deleteBookMarkArea(
         payload,
-        ({data}) => {},
-        (error) => {
+        ({ data }) => {
+          console.log(data);
+          dispatch("getBookMarkAreaListAction", payload.userSeq);
+        },
+        error => {
           console.log(error);
         }
       );
     },
-    getBookMarkAreaListAction: ({commit}, userSeq) => {
+    getBookMarkAreaListAction: ({ commit }, userSeq) => {
       getBookMarkAreaList(
         userSeq,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
           commit("SET_BOOKMARK_AREA_LIST", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
     },
-    getBookMarkAreaAction: ({commit}, payload) => {
+    getBookMarkAreaAction: ({ commit }, payload) => {
       console.log(`action : ${payload}`);
       getBookMarkArea(
         payload,
-        ({data}) => {
+        ({ data }) => {
           console.log(data);
           commit("SET_IS_BOOKMARK_AREA", data);
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
-    },
-  },
+    }
+  }
 };

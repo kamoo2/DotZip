@@ -8,7 +8,9 @@
     </b-row>
     <b-row>
       <b-colxx xxs="12">
-        <name-search></name-search>
+        <b-card class="mb-3">
+          <name-search></name-search>
+        </b-card>
         <b-card>
           <kakao-map> </kakao-map>
         </b-card>
@@ -24,8 +26,8 @@ export default {
   name: "Area",
   components: {
     KakaoMap,
-    NameSearch,
-  },
+    NameSearch
+  }
 };
 </script>
 
