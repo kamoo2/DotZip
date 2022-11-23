@@ -2,7 +2,9 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li v-if="prev" class="page-item">
-        <a class="page-link" @click="paginationChanged(startPageIndex - 1)">Previous</a>
+        <a class="page-link" @click="paginationChanged(startPageIndex - 1)">
+          <img src="@/assets/img/board/left.png" alt="left" />
+        </a>
       </li>
 
       <li v-for="index in endPageIndex - startPageIndex + 1" :key="index" class="page-item">
@@ -14,7 +16,11 @@
         >
       </li>
 
-      <li v-if="next" class="page-item"><a class="page-link" @click="paginationChanged(endPageIndex + 1)">Next</a></li>
+      <li v-if="next" class="page-item">
+        <a class="page-link " @click="paginationChanged(endPageIndex + 1)">
+          <img src="@/assets/img/board/right.png" alt="right" />
+        </a>
+      </li>
     </ul>
   </nav>
 </template>
@@ -73,4 +79,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.page-item {
+  cursor: pointer;
+}
+</style>
