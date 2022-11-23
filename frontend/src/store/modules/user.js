@@ -30,7 +30,6 @@ export default {
   },
   mutations: {
     SET_LOGIN(state) {
-      console.log("로그인 성공");
       state.isLogin = true;
       state.processing = false;
       state.loginError = null;

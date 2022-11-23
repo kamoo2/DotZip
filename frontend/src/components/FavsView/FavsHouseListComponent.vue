@@ -1,46 +1,34 @@
 <template>
   <div style="width:100%;height:100%">
-    <div class="house-list-wrapper close">
+    <div class="house-list-wrapper">
       <div class="result_list_wrapper">
-        <house-item-component v-for="(item, index) in houseList" :key="index" :item="item"></house-item-component>
+        <favs-house-item-component
+          v-for="(item, index) in bookmarkHouseList"
+          :key="index"
+          :item="item"
+        ></favs-house-item-component>
       </div>
-      <button @click="onClickOpenListBtn" class="open_list_btn">
-        <i v-if="isOpen" class="simple-icon-arrow-left"></i>
-        <i v-else class="simple-icon-arrow-right"></i>
-      </button>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
-import HouseItemComponent from "./HouseItemComponent.vue";
+import {mapActions, mapGetters} from "vuex";
+import FavsHouseItemComponent from "./FavsHouseItemComponent.vue";
 
 export default {
-  components: {HouseItemComponent},
+  components: {FavsHouseItemComponent},
   computed: {
-    ...mapMutations(["CLEAR_TOGGLE_LIST"]),
-    ...mapGetters(["houseList", "house", "isOpen"]),
+    ...mapGetters(["house", "currentUser", "bookmarkHouseList"]),
   },
   methods: {
-    ...mapActions(["toggleList"]),
-    onClickOpenListBtn() {
-      if (this.isOpen) {
-        document.querySelector(".house-list-wrapper").classList.add("close");
-        this.toggleList(false);
-      } else {
-        document.querySelector(".house-list-wrapper").classList.remove("close");
-        this.toggleList(true);
-      }
+    ...mapActions(["getBookMarkHouseListAction"]),
+    favsHouseList() {
+      this.getBookMarkHouseListAction(this.currentUser.userSeq);
     },
   },
-  watch: {
-    isOpen() {
-      console.log(this.isOpen);
-    },
-  },
-  mounted() {
-    this.$store.commit("CLEAR_TOGGLE_LIST");
+  created() {
+    this.favsHouseList();
   },
 };
 </script>

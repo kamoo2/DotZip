@@ -311,5 +311,10 @@ export default {
 <style scope>
 body .sidebar .sub-menu {
   width: 200px;
+  z-index: 500;
+}
+
+body .sidebar .main-menu {
+  z-index: 600;
 }
 </style>

@@ -1,18 +1,18 @@
 <template>
   <div>
     <div id="map">
-      <house-list-component></house-list-component>
+      <favs-house-list-component></favs-house-list-component>
     </div>
   </div>
 </template>
 
 <script>
-import HouseListComponent from "@/components/SearchView/HouseListComponent.vue";
+import FavsHouseListComponent from "@/components/FavsView/FavsHouseListComponent.vue";
 import {mapGetters} from "vuex";
 export default {
-  name: "KakaoMap",
+  name: "FavsMap",
   components: {
-    HouseListComponent,
+    FavsHouseListComponent,
   },
   data() {
     return {
@@ -20,9 +20,8 @@ export default {
       overlays: [],
     };
   },
-  props: ["listType"],
   computed: {
-    ...mapGetters(["house", "houseList", "bookmarkHouseList"]),
+    ...mapGetters(["house", "bookmarkHouseList"]),
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -38,22 +37,6 @@ export default {
   watch: {
     house() {
       this.map.setCenter(new kakao.maps.LatLng(this.house.lat, this.house.lng));
-    },
-    houseList() {
-      this.removeMarker();
-      this.removeOverlay();
-      if (this.houseList.length > 0) {
-        this.makeMaker(this.houseList);
-        this.makeOverlay(this.houseList);
-      }
-    },
-    bookmarkHouseList() {
-      this.removeMarker();
-      this.removeOverlay();
-      if (this.bookmarkHouseList.length > 0) {
-        this.makeMaker(this.bookmarkHouseList);
-        this.makeOverlay(this.bookmarkHouseList);
-      }
     },
   },
   methods: {
@@ -89,6 +72,10 @@ export default {
       // // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
       // const zoomControl = new kakao.maps.ZoomControl();
       // this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+      if (this.bookmarkHouseList.length > 0) {
+        this.makeMaker();
+        this.makeOverlay();
+      }
     },
     changeSize(size) {
       const container = document.getElementById("map");
@@ -130,11 +117,11 @@ export default {
       });
       this.map.setCenter(iwPosition);
     },
-    makeMaker(list) {
+    makeMaker() {
       let bounds = new kakao.maps.LatLngBounds();
 
-      console.log("houseLIst:" + this.houseList);
-      Array.from(list).forEach((house) => {
+      Array.from(this.bookmarkHouseList).forEach((house) => {
+        console.log("map" + house);
         const position = new kakao.maps.LatLng(house.lat, house.lng);
         const imageSrc = "https://img.icons8.com/plasticine/100/null/order-delivered.png"; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(64, 69); // 마커이미지의 크기입니다
@@ -153,8 +140,8 @@ export default {
       // 센터 위치 이동
       this.map.setBounds(bounds);
     },
-    makeOverlay(list) {
-      Array.from(list).forEach((house) => {
+    makeOverlay() {
+      Array.from(this.bookmarkHouseList).forEach((house) => {
         const position = new kakao.maps.LatLng(house.lat, house.lng);
         const content =
           '<div class="customoverlay">' +
