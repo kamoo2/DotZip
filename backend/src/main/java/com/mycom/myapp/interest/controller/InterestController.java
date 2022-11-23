@@ -6,22 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.myapp.board.dto.BoardParamDto;
-import com.mycom.myapp.board.dto.BoardResultDto;
+import com.mycom.myapp.interest.dto.InterestAreaDto;
 import com.mycom.myapp.interest.dto.InterestParamDto;
 import com.mycom.myapp.interest.dto.InterestResultDto;
 import com.mycom.myapp.interest.service.InterestService;
-import com.mycom.myapp.user.dto.UserDto;
 
 @RestController 
 @CrossOrigin(
@@ -40,12 +36,12 @@ public class InterestController {
 	/**
 	 * area 
 	 */
-	@GetMapping("/interest/area")
-	public ResponseEntity<InterestResultDto> interestAreaList(HttpSession session){
+	@GetMapping("/interest/area/{userSeq}")
+	public ResponseEntity<InterestResultDto> interestAreaList(@PathVariable int userSeq){
 
 		InterestParamDto interestParamDto = new InterestParamDto();
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
+//		System.out.println("session: "+session.getAttribute("userDto"));
+//		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
 		InterestResultDto interestResultDto = service.interestAreaList(interestParamDto);
@@ -56,13 +52,22 @@ public class InterestController {
 			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}		 
 	}
-	
-	@PostMapping("/interest/area")
-	public ResponseEntity<InterestResultDto> interestAreaInsert(@RequestBody InterestParamDto interestParamDto, HttpSession session){
+	@PostMapping("/interest/area/bookmark")
+	public ResponseEntity<Boolean> getBookmarkArea(@RequestParam("dongCode") String dongCode,@RequestParam("userSeq") int userSeq) {
+		System.out.println("SELECT bookmark!!!!");
+		InterestAreaDto interestAreaDto = new InterestAreaDto();
+		interestAreaDto.setUserSeq(userSeq);
+		interestAreaDto.setDongCode(dongCode);
+		System.out.println("userSeq : " + interestAreaDto.getUserSeq());
+		System.out.println("dongCode : " + interestAreaDto.getDongCode());
 
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
-		interestParamDto.setUserSeq(userSeq);
+		boolean ret = service.getBookmarkArea(interestAreaDto);
+		return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/interest/area/add")
+	public ResponseEntity<InterestResultDto> interestAreaInsert(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 		
 		InterestResultDto interestResultDto = service.interestAreaInsert(interestParamDto);
 		
@@ -73,12 +78,9 @@ public class InterestController {
 		}
 	}
 	
-	@DeleteMapping("/interest/area")
+	@PostMapping("/interest/area/delete")
 	public ResponseEntity<InterestResultDto> interestAreaDelete(@RequestBody InterestParamDto interestParamDto, HttpSession session){
 
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
-		interestParamDto.setUserSeq(userSeq);
 		
 		InterestResultDto interestResultDto = service.interestAreaDelete(interestParamDto);
 		
@@ -93,12 +95,12 @@ public class InterestController {
 	/**
 	 * house 
 	 */
-	@GetMapping("/interest/house")
-	public ResponseEntity<InterestResultDto> interestHouseList(HttpSession session){
+	@GetMapping("/interest/house/{userSeq}")
+	public ResponseEntity<InterestResultDto> interestHouseList(@PathVariable int userSeq){
 
 		InterestParamDto interestParamDto = new InterestParamDto();
-		System.out.println("session: "+session.getAttribute("userDto"));
-		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
+//		System.out.println("session: "+session.getAttribute("userDto"));
+//		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
 		
 		InterestResultDto interestResultDto = service.interestHouseList(interestParamDto);
@@ -114,7 +116,7 @@ public class InterestController {
 		InterestParamDto interestParamDto = new InterestParamDto();
 		interestParamDto.setUserSeq(userSeq);
 		interestParamDto.setHouseNo(houseNo);
-		
+		System.out.println(userSeq);
 		InterestResultDto interestResultDto = service.interestHouseInsert(interestParamDto);
 		
 		if( interestResultDto.getResult() == SUCCESS ) {

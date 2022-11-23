@@ -15,7 +15,7 @@ public class InterestAreaDto {
 
 	private int interestAreaId;
 	private int userSeq;
-	private int dongCode;
+	private String dongCode;
 	
 	private String cityName;//sido
 	private String gugunName;//gugun

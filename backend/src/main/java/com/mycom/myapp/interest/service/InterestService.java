@@ -1,5 +1,6 @@
 package com.mycom.myapp.interest.service;
 
+import com.mycom.myapp.interest.dto.InterestAreaDto;
 import com.mycom.myapp.interest.dto.InterestParamDto;
 import com.mycom.myapp.interest.dto.InterestResultDto;
 
@@ -9,6 +10,8 @@ public interface InterestService {
 	public InterestResultDto interestAreaList(InterestParamDto interestParamDto);
 	public InterestResultDto interestAreaInsert(InterestParamDto interestParamDto);
 	public InterestResultDto interestAreaDelete(InterestParamDto interestParamDto);
+	public boolean getBookmarkArea(InterestAreaDto interestAreaDto);
+	
 	public int interestAreaListTotalCount(int userSeq);
 
 	//interest house
