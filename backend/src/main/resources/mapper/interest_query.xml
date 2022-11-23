@@ -11,7 +11,11 @@
     	SELECT count(*) from interest_area
 		WHERE user_seq = #{userSeq}
     </select>
-    
+    <select id="interestArea" parameterType="com.mycom.myapp.interest.dto.InterestAreaDto" resultType="boolean">
+		SELECT CASE WHEN EXISTS(
+				  SELECT 1 FROM interest_area b WHERE USER_SEQ=#{userSeq} AND DONG_CODE=#{dongCode})
+			  THEN true ELSE false END
+	</select>
     <insert id="interestAreaInsert" parameterType="map">
 		INSERT INTO interest_area ( user_seq, dong_code )
 		            VALUES ( #{userSeq}, #{dongCode} )
@@ -22,9 +26,13 @@
 	
 	
 	<select id="interestHouseList" parameterType="map" resultType="com.mycom.myapp.interest.dto.InterestHouseDto">
-		SELECT h.interest_house_id, h.house_no, d.dong, d.aptName
-		FROM interest_house h, housedeal d
-		WHERE h.user_seq = #{userSeq} and h.house_no=d.no
+		SELECT h.interest_house_id, h.house_no,b.no, b.dong, b.aptName,b.dealAmount,b.dealYear,b.dealMonth,b.dealDay,b.area,b.lat,b.lng,true bookmarked
+		FROM interest_house h, (
+			SELECT d.no,d.dong, d.aptName,d.dealAmount,d.dealYear,d.dealMonth,d.dealDay,d.area,i.lat,i.lng
+			FROM housedeal d, houseinfo i
+			WHERE d.house_no = i.no
+        ) b
+		WHERE h.user_seq = #{userSeq} and h.house_no=b.no;
     </select>
     
     <select id="interestHouseListTotalCount" parameterType="int" resultType="int">

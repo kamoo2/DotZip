@@ -60,7 +60,7 @@ export default {
       // 1.1 현재 선택된 위치를 store에 저장하고 , 클릭시 해당 값을 변경
       // 2. 클릭시 상세 정보 데이터를 가져온다.
       // 2.1 그 안에 위도 경도 데이터가 담겨져 있기 때문에
-      this.getHouse(this.item.no);
+      this.getHouse(this.item.houseNo);
       console.log(this.house);
     },
     onClickDetailHouseBtn() {
@@ -74,13 +74,14 @@ export default {
       // 만약 현재 북마크가 체크된 상태라면 관심매물 해제 함수를 진행
       if (this.getIsBookmarked()) {
         try {
-          this.deleteBookMarkHouseAction({houseNo: this.item.no, userSeq: this.currentUser.userSeq});
-          this.$notify("error", "BOOKMARK DELETE", "MY 관심 매물에서 제거 했습니다.", {
+          this.deleteBookMarkHouseAction({houseNo: this.item.houseNo, userSeq: this.currentUser.userSeq});
+
+          this.$notify("success", "BOOKMARK DELETE", "MY 관심 매물에서 제거 했습니다.", {
             duration: 3000,
             permanent: false,
           });
         } catch (error) {
-          this.$notify("error ", "BOOKMARK ERROR", "해당 지역을 관심 매물에서 제거하지 못했습니다.", {
+          this.$notify("error", "BOOKMARK ERROR", "해당 지역을 관심 매물에서 제거하지 못했습니다.", {
             duration: 3000,
             permanent: false,
           });
@@ -88,13 +89,13 @@ export default {
       } else {
         // 북마크가 아닌 상태라면 관심매물 추가 함수를 진행
         try {
-          this.addBookMarkHouseAction({houseNo: this.item.no, userSeq: this.currentUser.userSeq});
+          this.addBookMarkHouseAction({houseNo: this.item.houseNo, userSeq: this.currentUser.userSeq});
           this.$notify("success", "BOOKMARK ADD", "MY 관심 매물을 추가 했습니다.", {
             duration: 3000,
             permanent: false,
           });
         } catch (error) {
-          this.$notify("error ", "BOOKMARK ERROR", "해당 지역을 관심 매물에 추가하지 못했습니다.", {
+          this.$notify("error", "BOOKMARK ERROR", "해당 지역을 관심 매물에 추가하지 못했습니다.", {
             duration: 3000,
             permanent: false,
           });
@@ -181,7 +182,6 @@ export default {
   cursor: pointer;
   transition-duration: 800ms;
   margin-bottom: 20px;
-  color: #dcdde1;
 }
 
 .favs_btn.bookmarked {

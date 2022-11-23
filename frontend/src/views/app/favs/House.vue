@@ -8,8 +8,25 @@
     </b-row>
     <b-row>
       <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('menu.fHouse')"> </b-card>
+        <b-card>
+          <favs-map> </favs-map>
+        </b-card>
       </b-colxx>
     </b-row>
   </div>
 </template>
+<script>
+import FavsMap from "@/components/Maps/FavsMap.vue";
+import {mapGetters} from "vuex";
+export default {
+  name: "FavHouse",
+  components: {
+    FavsMap,
+  },
+  computed: {
+    ...mapGetters(["currentUser"]),
+  },
+};
+</script>
+
+<style></style>

@@ -19,7 +19,7 @@ public interface InterestDao {
 	int interestAreaListTotalCount(int userSeq);
 	int interestAreaInsert(InterestParamDto interestParamDto);
 	int interestAreaDelete(InterestParamDto interestParamDto);
-	
+	boolean interestArea(InterestAreaDto interestAreaDto);
 	//interest house
 	List<InterestHouseDto> interestHouseList(InterestParamDto interestParamDto);
 	int interestHouseListTotalCount(int userSeq);

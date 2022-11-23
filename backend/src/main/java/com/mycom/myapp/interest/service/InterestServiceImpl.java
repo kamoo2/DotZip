@@ -154,4 +154,9 @@ public class InterestServiceImpl implements InterestService{
 		return interestResultDto;
 	}
 
+	@Override
+	public boolean getBookmarkArea(InterestAreaDto interestAreaDto) {
+		return dao.interestArea(interestAreaDto);
+	}
+
 }
