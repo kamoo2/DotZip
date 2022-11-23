@@ -1,31 +1,38 @@
-import { getSido, getGuGun, getDong, getHouseByDong, getHouseByName, getHouseDetailByNo } from '@/apis/house.js';
+import {
+  getSido,
+  getGuGun,
+  getDong,
+  getHouseByDong,
+  getHouseByName,
+  getHouseDetailByNo
+} from "@/apis/house.js";
 
 export default {
   state: {
-    sidoList: [{ value: null, label: '선택하세요' }],
-    gugunList: [{ value: null, label: '선택하세요' }],
-    dongList: [{ value: null, label: '선택하세요' }],
+    sidoList: [{ value: null, label: "선택하세요" }],
+    gugunList: [{ value: null, label: "선택하세요" }],
+    dongList: [{ value: null, label: "선택하세요" }],
     houseList: [],
     isOpen: false,
     house: {
-      aptName: '',
-      area: '',
-      buildYear: '',
-      cityName: '',
-      code: '',
-      dealAmount: '',
-      dealDay: '',
-      dealMonth: '',
-      dealYear: '',
-      dong: '',
-      floor: '',
-      gugunName: '',
+      aptName: "",
+      area: "",
+      buildYear: "",
+      cityName: "",
+      code: "",
+      dealAmount: "",
+      dealDay: "",
+      dealMonth: "",
+      dealYear: "",
+      dong: "",
+      floor: "",
+      gugunName: "",
       houseNo: 0,
-      jibun: '',
-      lat: '',
-      lng: '',
-      no: 0,
-    },
+      jibun: "",
+      lat: "",
+      lng: "",
+      no: 0
+    }
   },
   mutations: {
     SET_SIDOLIST(state, payload) {
@@ -55,13 +62,13 @@ export default {
       state.house = { ...house };
     },
     CLEAR_SIDO_LIST(state) {
-      state.sidoList = [{ value: null, label: '선택하세요' }];
+      state.sidoList = [{ value: null, label: "선택하세요" }];
     },
     CLEAR_GUGUN_LIST(state) {
-      state.gugunList = [{ value: null, label: '선택하세요' }];
+      state.gugunList = [{ value: null, label: "선택하세요" }];
     },
     CLEAR_DONG_LIST(state) {
-      state.dongList = [{ value: null, label: '선택하세요' }];
+      state.dongList = [{ value: null, label: "선택하세요" }];
     },
     CLEAR_HOUSE_LIST(state) {
       state.houseList = [];
@@ -69,7 +76,7 @@ export default {
     },
     CLEAR_TOGGLE_LIST(state) {
       state.isOpen = false;
-    },
+    }
   },
   getters: {
     isOpen: state => state.isOpen,
@@ -77,13 +84,13 @@ export default {
     gugunList: state => state.gugunList,
     dongList: state => state.dongList,
     houseList: state => state.houseList,
-    house: state => state.house,
+    house: state => state.house
   },
   actions: {
     getSidoList: ({ commit }) => {
       getSido(
         ({ data }) => {
-          commit('SET_SIDOLIST', data);
+          commit("SET_SIDOLIST", data);
         },
         error => {
           console.log(error);
@@ -94,7 +101,7 @@ export default {
       getGuGun(
         sidoName,
         ({ data }) => {
-          commit('SET_GUGUNLIST', data);
+          commit("SET_GUGUNLIST", data);
         },
         error => {
           console.log(error);
@@ -105,25 +112,43 @@ export default {
       getDong(
         gugunName,
         ({ data }) => {
-          commit('SET_DONGLIST', data);
+          commit("SET_DONGLIST", data);
         },
         error => {
           console.log(error);
         }
       );
     },
-    getHouseList: async ({ commit }, { dong, userSeq }) => {
+    getHouseListByDong: async ({ commit }, { dong, userSeq }) => {
       const params = {
         no: userSeq,
         dong: dong,
         limit: 10,
-        offset: 0,
+        offset: 0
       };
       await getHouseByDong(
         params,
         ({ data }) => {
           console.log(data);
-          commit('SET_HOUSELIST', data);
+          commit("SET_HOUSELIST", data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseListByName: async ({ commit }, { searchWord, userSeq }) => {
+      const params = {
+        no: userSeq,
+        searchWord: searchWord,
+        limit: 10,
+        offset: 0
+      };
+      await getHouseByName(
+        params,
+        ({ data }) => {
+          console.log(data);
+          commit("SET_HOUSELIST", data);
         },
         error => {
           console.log(error);
@@ -135,7 +160,7 @@ export default {
         no,
         ({ data }) => {
           console.log(data);
-          commit('SET_HOUSE_DETAIL', data);
+          commit("SET_HOUSE_DETAIL", data);
         },
         error => {
           console.log(error);
@@ -143,7 +168,7 @@ export default {
       );
     },
     toggleList: ({ commit }, flag) => {
-      commit('SET_TOGGLE_LIST', flag);
-    },
-  },
+      commit("SET_TOGGLE_LIST", flag);
+    }
+  }
 };

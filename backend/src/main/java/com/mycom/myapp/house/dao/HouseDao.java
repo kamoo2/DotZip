@@ -12,7 +12,7 @@ import com.mycom.myapp.house.dto.HouseDealSimpleDto;
 public interface HouseDao {
 	List<HouseDealSimpleDto> findHouseDealsByDongCode(@Param("dong") String dong,@Param("no") int no,@Param("limit") int limit,@Param("offset") int offset);
 	int houseDealsByDongCodeTotalCnt(String dong);
-	List<HouseDealSimpleDto> findHouseDealsByAptName(@Param("word") String searchWord,@Param("limit") int limit,@Param("offset") int offset);
+	List<HouseDealSimpleDto> findHouseDealsByAptName(@Param("searchWord") String searchWord,@Param("no") int no,@Param("limit") int limit,@Param("offset") int offset);
 	int houseDealsByAptNameTotalCnt(String searchWord);
 	
 	HouseDealDetailDto findHouseDealDetail(int no);

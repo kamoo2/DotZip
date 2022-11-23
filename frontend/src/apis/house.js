@@ -30,9 +30,9 @@ async function getHouseByDong(param, success, fail) {
 }
 
 async function getHouseByName(param, success, fail) {
-  // console.log(param);
+  console.log(param);
   await api
-    .get("/houses/apts", param)
+    .post("/houses/apts", param)
     .then(success)
     .catch(fail);
 }
@@ -43,4 +43,11 @@ async function getHouseDetailByNo(no, success, fail) {
     .then(success)
     .catch(fail);
 }
-export {getSido, getGuGun, getDong, getHouseByDong, getHouseByName, getHouseDetailByNo};
+export {
+  getSido,
+  getGuGun,
+  getDong,
+  getHouseByDong,
+  getHouseByName,
+  getHouseDetailByNo
+};

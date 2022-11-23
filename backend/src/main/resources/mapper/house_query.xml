@@ -18,10 +18,12 @@
     </select>
     
     <select id="findHouseDealsByAptName" parameterType="map" resultType="com.mycom.myapp.house.dto.HouseDealSimpleDto">
-    	select no, dong, AptName, code, dealAmount, buildYear, dealYear, dealMonth, dealDay, area, floor, jibun, house_no
-		from housedeal
-		where AptName like concat('%', #{word},'%')
-		limit #{limit} offset #{offset}
+    	SELECT d.no,d.dong,d.AptName,d.dealAmount,d.area,d.dealYear,d.dealMonth,d.dealDay,i.lat,i.lng, is_bookmark(d.no, #{no}) bookmarked
+		FROM housedeal d, houseinfo i
+		WHERE d.house_no=i.no
+		AND d.AptName like concat('%',#{searchWord},'%')
+		order by d.no
+		limit #{limit} offset #{offset};
     </select>
     
      <select id="houseDealsByAptNameTotalCnt" parameterType="string" resultType="int">

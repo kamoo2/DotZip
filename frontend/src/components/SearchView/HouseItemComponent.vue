@@ -7,15 +7,22 @@
       <div class="house_info_description">
         <span>거래 금액 : {{ item.dealAmount }}만원</span>
         <span>전용 면적 : {{ item.area }}</span>
-        <span>거래일 : {{ item.dealYear }}.{{ item.dealMonth }}.{{ item.dealDay }}</span>
+        <span
+          >거래일 : {{ item.dealYear }}.{{ item.dealMonth }}.{{
+            item.dealDay
+          }}</span
+        >
       </div>
     </div>
     <div class="list_item_btn_wrapper">
-      <i class="simple-icon-location-pin moveHouseLocation" @click="onClickMoveHouseLocation"></i>
+      <i
+        class="simple-icon-location-pin moveHouseLocation"
+        @click="onClickMoveHouseLocation"
+      ></i>
       <font-awesome-icon
         @click="onClickAddBookMarkHouse"
         class="favs_btn"
-        :class="{bookmarked: getIsBookmarked()}"
+        :class="{ bookmarked: getIsBookmarked() }"
         icon="fa-solid fa-star"
       />
     </div>
@@ -23,7 +30,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {},
   data() {
@@ -45,16 +52,20 @@ export default {
         jibun: "",
         lat: "",
         lng: "",
-        no: 0,
-      },
+        no: 0
+      }
     };
   },
   props: ["item"],
   computed: {
-    ...mapGetters(["house", "currentUser"]),
+    ...mapGetters(["house", "currentUser"])
   },
   methods: {
-    ...mapActions(["getHouse", "addBookMarkHouseAction", "deleteBookMarkHouseAction"]),
+    ...mapActions([
+      "getHouse",
+      "addBookMarkHouseAction",
+      "deleteBookMarkHouseAction"
+    ]),
     onClickMoveHouseLocation() {
       // 1. 클릭시 해당 위치로 마커 이동
       // 1.1 현재 선택된 위치를 store에 저장하고 , 클릭시 해당 값을 변경
@@ -74,30 +85,56 @@ export default {
       // 만약 현재 북마크가 체크된 상태라면 관심매물 해제 함수를 진행
       if (this.getIsBookmarked()) {
         try {
-          this.deleteBookMarkHouseAction({houseNo: this.item.no, userSeq: this.currentUser.userSeq});
-          this.$notify("error", "BOOKMARK DELETE", "MY 관심 매물에서 제거 했습니다.", {
-            duration: 3000,
-            permanent: false,
+          this.deleteBookMarkHouseAction({
+            houseNo: this.item.no,
+            userSeq: this.currentUser.userSeq
           });
+          this.$notify(
+            "error",
+            "BOOKMARK DELETE",
+            "MY 관심 매물에서 제거 했습니다.",
+            {
+              duration: 3000,
+              permanent: false
+            }
+          );
         } catch (error) {
-          this.$notify("error ", "BOOKMARK ERROR", "해당 지역을 관심 매물에서 제거하지 못했습니다.", {
-            duration: 3000,
-            permanent: false,
-          });
+          this.$notify(
+            "error ",
+            "BOOKMARK ERROR",
+            "해당 지역을 관심 매물에서 제거하지 못했습니다.",
+            {
+              duration: 3000,
+              permanent: false
+            }
+          );
         }
       } else {
         // 북마크가 아닌 상태라면 관심매물 추가 함수를 진행
         try {
-          this.addBookMarkHouseAction({houseNo: this.item.no, userSeq: this.currentUser.userSeq});
-          this.$notify("success", "BOOKMARK ADD", "MY 관심 매물을 추가 했습니다.", {
-            duration: 3000,
-            permanent: false,
+          this.addBookMarkHouseAction({
+            houseNo: this.item.no,
+            userSeq: this.currentUser.userSeq
           });
+          this.$notify(
+            "success",
+            "BOOKMARK ADD",
+            "MY 관심 매물을 추가 했습니다.",
+            {
+              duration: 3000,
+              permanent: false
+            }
+          );
         } catch (error) {
-          this.$notify("error ", "BOOKMARK ERROR", "해당 지역을 관심 매물에 추가하지 못했습니다.", {
-            duration: 3000,
-            permanent: false,
-          });
+          this.$notify(
+            "error ",
+            "BOOKMARK ERROR",
+            "해당 지역을 관심 매물에 추가하지 못했습니다.",
+            {
+              duration: 3000,
+              permanent: false
+            }
+          );
         }
       }
 
@@ -113,16 +150,14 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   watch: {
     house() {
       this.curHouse = this.house;
-    },
+    }
   },
-  mounted() {
-    console.log(this.item);
-  },
+  mounted() {}
 };
 </script>
 

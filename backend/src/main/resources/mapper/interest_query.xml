@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mycom.myapp.interest.dao.InterestDao">
 	<select id="interestAreaList" parameterType="map" resultType="com.mycom.myapp.interest.dto.InterestAreaDto">
-    	SELECT a.interest_area_id, a.dong_code, d.city_name, d.gugun_name, d.name
+    	SELECT a.interest_area_id, a.dong_code, d.city_name,d.city_code,d.gugun_code, d.gugun_name, d.name,true bookmarked
 		FROM interest_area a, dong_code d
 		WHERE a.user_seq = #{userSeq} and a.dong_code=d.code
     </select>

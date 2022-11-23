@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import AuthGuard from "@/utils/auth.guard";
-import {adminRoot} from "@/constants/config";
+import { adminRoot } from "@/constants/config";
 import store from "../store";
 // import { UserRole } from "../utils/auth.roles";
 
@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: () => import(/* webpackChunkName: "home" */ "@/views/home"),
+    component: () => import(/* webpackChunkName: "home" */ "@/views/home")
   },
   {
     path: adminRoot,
@@ -27,7 +27,7 @@ const routes = [
     children: [
       {
         path: "home",
-        component: () => import("@/views/app/home"),
+        component: () => import("@/views/app/home")
       },
       {
         path: "search",
@@ -35,16 +35,17 @@ const routes = [
         redirect: `${adminRoot}/search/area`,
         children: [
           {
+            name: "SearchDong",
             path: "area",
-            component: () => import("@/views/app/search/Area"),
+            component: () => import("@/views/app/search/Area")
             // meta: { roles: [UserRole@Admin, UserRole@Editor] },
           },
           {
             path: "name",
-            component: () => import("@/views/app/search/Name"),
+            component: () => import("@/views/app/search/Name")
             // meta: { roles: [UserRole@Admin, UserRole@Editor] },
-          },
-        ],
+          }
+        ]
       },
       {
         path: "favs",
@@ -53,13 +54,13 @@ const routes = [
         children: [
           {
             path: "fArea",
-            component: () => import("@/views/app/favs/Area"),
+            component: () => import("@/views/app/favs/Area")
           },
           {
             path: "fHouse",
-            component: () => import("@/views/app/favs/House"),
-          },
-        ],
+            component: () => import("@/views/app/favs/House")
+          }
+        ]
       },
 
       {
@@ -69,23 +70,23 @@ const routes = [
         children: [
           {
             path: "notice",
-            component: () => import("@/views/app/support/Notice"),
+            component: () => import("@/views/app/support/Notice")
           },
           {
             path: "QnA",
-            component: () => import("@/views/app/support/QnA"),
+            component: () => import("@/views/app/support/QnA")
           },
           {
             path: "contact",
-            component: () => import("@/views/app/support/Contact"),
-          },
-        ],
-      },
-    ],
+            component: () => import("@/views/app/support/Contact")
+          }
+        ]
+      }
+    ]
   },
   {
     path: "/error",
-    component: () => import("@/views/Error"),
+    component: () => import("@/views/Error")
   },
   {
     path: "/user",
@@ -94,32 +95,32 @@ const routes = [
     children: [
       {
         path: "login",
-        component: () => import("@/views/user/Login"),
+        component: () => import("@/views/user/Login")
       },
       {
         path: "register",
-        component: () => import("@/views/user/Register"),
+        component: () => import("@/views/user/Register")
       },
       {
         path: "forgot-password",
-        component: () => import("@/views/user/ForgotPassword"),
+        component: () => import("@/views/user/ForgotPassword")
       },
       {
         path: "reset-password",
-        component: () => import("@/views/user/ResetPassword"),
-      },
-    ],
+        component: () => import("@/views/user/ResetPassword")
+      }
+    ]
   },
   {
     path: "*",
-    component: () => import("@/views/Error"),
-  },
+    component: () => import("@/views/Error")
+  }
 ];
 
 const router = new VueRouter({
   linkActiveClass: "active",
   routes,
-  mode: "history",
+  mode: "history"
 });
 router.beforeEach(AuthGuard);
 export default router;
