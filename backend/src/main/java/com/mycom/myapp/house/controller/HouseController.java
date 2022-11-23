@@ -50,8 +50,8 @@ public class HouseController {
 	
 	@PostMapping(value="/apts")
 	public List<HouseDealSimpleDto> findHouseDealsByAptName(@RequestBody HouseDealParamDto houseDealParamDto){
+		System.out.println("검색 이름 : " + houseDealParamDto.getSearchWord());
 		if (houseDealParamDto.getSearchWord().isEmpty()) {
-			System.out.println("����Ʈ�� ���Է�");
 			return null;
 		} else {
 			return service.findHouseDealsByAptName(houseDealParamDto);

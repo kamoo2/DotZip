@@ -42,7 +42,7 @@ public class HouseServiceImpl implements HouseService{
 		List<HouseDealSimpleDto> list = null;
 		
 		try {
-			list = houseDao.findHouseDealsByAptName(houseDealParamDto.getSearchWord(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
+			list = houseDao.findHouseDealsByAptName(houseDealParamDto.getSearchWord(),houseDealParamDto.getNo(), houseDealParamDto.getLimit(), houseDealParamDto.getOffset());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

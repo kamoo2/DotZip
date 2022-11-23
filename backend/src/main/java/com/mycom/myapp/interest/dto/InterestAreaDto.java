@@ -16,9 +16,11 @@ public class InterestAreaDto {
 	private int interestAreaId;
 	private int userSeq;
 	private String dongCode;
-	
+	private String cityCode;
+	private String gugunCode;
 	private String cityName;//sido
 	private String gugunName;//gugun
 	private String name;//dong
+	private int bookmarked;
 	
 }
