@@ -1,21 +1,28 @@
-import api from './axios.js';
+import api from "./axios.js";
 
 async function signinAPI(user, success, fail) {
   await api
-    .post('/users/login', user)
+    .post("/users/login", user)
+    .then(success)
+    .catch(fail);
+}
+
+async function getUsers(success, fail) {
+  await api
+    .get("/users/all")
     .then(success)
     .catch(fail);
 }
 
 async function signupAPI(user, success, fail) {
   await api
-    .post('/users', user)
+    .post("/users", user)
     .then(success)
     .catch(fail);
 }
 
 async function findByEmail(userEmail, success, fail) {
-  api.defaults.headers['access-token'] = sessionStorage.getItem('access-token');
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await api
     .get(`/users/info/${userEmail}`)
     .then(success)
@@ -23,7 +30,9 @@ async function findByEmail(userEmail, success, fail) {
 }
 
 async function tokenRegeneration(user, success, fail) {
-  api.defaults.headers['refresh-token'] = sessionStorage.getItem('refresh-token'); //axios header에 refresh-token 셋팅
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem(
+    "refresh-token"
+  ); //axios header에 refresh-token 셋팅
   await api
     .post(`/users/refresh`, user)
     .then(success)
@@ -36,4 +45,12 @@ async function logout(userEmail, success, fail) {
     .then(success)
     .catch(fail);
 }
-export { signinAPI, signupAPI, findByEmail, tokenRegeneration, logout };
+
+export {
+  signinAPI,
+  signupAPI,
+  findByEmail,
+  tokenRegeneration,
+  logout,
+  getUsers
+};

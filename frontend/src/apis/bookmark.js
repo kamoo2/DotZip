@@ -1,24 +1,24 @@
 import api from "./axios.js";
 
-async function addBookMarkHouse({userSeq, houseNo}, success, fail) {
+async function addBookMarkHouse({ userSeq, houseNo }, success, fail) {
   await api
     .post("/interest/house/add", null, {
       params: {
         userSeq,
-        houseNo,
-      },
+        houseNo
+      }
     })
     .then(success)
     .catch(fail);
 }
 
-async function deleteBookMarkHouse({userSeq, houseNo}, success, fail) {
+async function deleteBookMarkHouse({ userSeq, houseNo }, success, fail) {
   await api
     .post("/interest/house/delete", null, {
       params: {
         userSeq,
-        houseNo,
-      },
+        houseNo
+      }
     })
     .then(success)
     .catch(fail);
@@ -31,35 +31,41 @@ async function getBookMarkHouseList(userSeq, success, fail) {
     .catch(fail);
 }
 
-async function addBookMarkArea({userSeq, dongCode}, success, fail) {
+async function addBookMarkArea({ userSeq, dongCode }, success, fail) {
   await api
-    .post("/interest/area/add", {userSeq, dongCode})
+    .post("/interest/area/add", { userSeq, dongCode })
     .then(success)
     .catch(fail);
 }
 
-async function deleteBookMarkArea({userSeq, dongCode}, success, fail) {
+async function deleteBookMarkArea({ userSeq, dongCode }, success, fail) {
   await api
-    .post("/interest/area/delete", {userSeq, dongCode})
+    .post("/interest/area/delete", { userSeq, dongCode })
     .then(success)
     .catch(fail);
 }
 
-async function getBookMarkAreaList(userSeq, success, fail) {
+async function getBookMarkAreaList({ userSeq, limit, offset }, success, fail) {
   await api
-    .get(`/interest/area/${userSeq}`)
+    .get(`/interest/area`, {
+      params: {
+        userSeq,
+        limit,
+        offset
+      }
+    })
     .then(success)
     .catch(fail);
 }
 
-async function getBookMarkArea({userSeq, dongCode}, success, fail) {
+async function getBookMarkArea({ userSeq, dongCode }, success, fail) {
   console.log(userSeq, dongCode);
   await api
     .post("/interest/area/bookmark", null, {
       params: {
         userSeq,
-        dongCode,
-      },
+        dongCode
+      }
     })
     .then(success)
     .catch(fail);
@@ -72,5 +78,5 @@ export {
   addBookMarkArea,
   deleteBookMarkArea,
   getBookMarkAreaList,
-  getBookMarkArea,
+  getBookMarkArea
 };

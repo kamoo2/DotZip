@@ -101,7 +101,11 @@ export default {
     }
   },
   created() {
-    this.getBookMarkAreaListAction(this.currentUser.userSeq);
+    this.getBookMarkAreaListAction({
+      userSeq: this.currentUser.userSeq,
+      limit: 10,
+      offset: 0
+    });
   }
 };
 </script>

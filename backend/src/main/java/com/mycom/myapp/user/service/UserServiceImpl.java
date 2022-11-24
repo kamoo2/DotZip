@@ -1,6 +1,7 @@
 package com.mycom.myapp.user.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,11 @@ public class UserServiceImpl implements UserService {
 		map.put("userEmail", userEmail);
 		map.put("token", null);
 		userDao.deleteRefreshToken(map);
+	}
+
+	@Override
+	public List<UserDto> getUsers() {
+		return userDao.getUsers();
 	}
 
 

@@ -36,13 +36,15 @@ public class InterestController {
 	/**
 	 * area 
 	 */
-	@GetMapping("/interest/area/{userSeq}")
-	public ResponseEntity<InterestResultDto> interestAreaList(@PathVariable int userSeq){
+	@GetMapping("/interest/area")
+	public ResponseEntity<InterestResultDto> interestAreaList( int userSeq, int limit, int offset){
 
 		InterestParamDto interestParamDto = new InterestParamDto();
 //		System.out.println("session: "+session.getAttribute("userDto"));
 //		int userSeq = ((UserDto) session.getAttribute("userDto")).getUserSeq();
 		interestParamDto.setUserSeq(userSeq);
+		interestParamDto.setLimit(limit);
+		interestParamDto.setOffset(offset);
 		
 		InterestResultDto interestResultDto = service.interestAreaList(interestParamDto);
 		
