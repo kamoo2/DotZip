@@ -11,14 +11,12 @@ public interface InterestService {
 	public InterestResultDto interestAreaInsert(InterestParamDto interestParamDto);
 	public InterestResultDto interestAreaDelete(InterestParamDto interestParamDto);
 	public boolean getBookmarkArea(InterestAreaDto interestAreaDto);
-	
-	public int interestAreaListTotalCount(int userSeq);
-
+	public int getInterestAreaCountOfCurrentUser(int userSeq);
 	//interest house
 	public InterestResultDto interestHouseList(InterestParamDto interestParamDto);
 	public InterestResultDto interestHouseInsert(InterestParamDto interestParamDto);
 	public InterestResultDto interestHouseDelete(InterestParamDto interestParamDto);
-	public int interestHouseListTotalCount(int userSeq);
+	public int getInterestHouseCountOfCurrentUser(int userSeq);
 	
 	//popular
 	public InterestResultDto popularHouseList();

@@ -108,8 +108,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> getUsers() {
-		return userDao.getUsers();
+	public List<UserDto> getUsers(int userSeq) {
+		return userDao.getUsers(userSeq);
 	}
 
 

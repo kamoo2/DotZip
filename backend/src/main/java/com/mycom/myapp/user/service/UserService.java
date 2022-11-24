@@ -10,7 +10,7 @@ import com.mycom.myapp.user.dto.UserResultDto;
 public interface UserService {
 	UserResultDto userLogin(UserDto dto);
 	UserResultDto userRegister(UserDto userDto); //post
-	List<UserDto> getUsers();
+	List<UserDto> getUsers(int userSeq);
 	public UserDto userInfo(String userEmail) throws Exception;
 	UserResultDto userUpdate(UserDto userDto, MultipartHttpServletRequest request); //put
 	UserResultDto userDelete(UserDto userDto); //delete

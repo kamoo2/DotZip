@@ -8,8 +8,9 @@
     		where user_email = #{userEmail}
     </select>
     <select id="getUsers" resultType="com.mycom.myapp.user.dto.UserDto">
-    	select user_seq, user_name, user_password, user_email, user_profile_image_url, user_register_date, user_clsf
-    	from users;
+    	select *
+		from users
+		where user_seq NOT IN (select user_id_to from friend where user_id_from = ${userSeq})
     </select>
     
     <insert id="userRegister" parameterType="com.mycom.myapp.user.dto.UserDto">

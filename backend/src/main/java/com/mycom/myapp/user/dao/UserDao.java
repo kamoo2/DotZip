@@ -13,7 +13,7 @@ public interface UserDao {
 	UserDto userLogin(String userEmail);
 	int userRegister(UserDto userDto);
 	int userDupCheck(UserDto userDto);
-	List<UserDto> getUsers();
+	List<UserDto> getUsers(int userSeq);
 	public UserDto userInfo(String userEmail) throws SQLException;
 	int userChange(UserDto userDto);
 	int userUnregist(UserDto userDto);

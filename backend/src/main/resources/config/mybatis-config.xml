@@ -15,5 +15,6 @@
 		<mapper resource="mapper/interest_query.xml"></mapper>
 		<mapper resource="mapper/oauth_query.xml"></mapper>
 		<mapper resource="mapper/qna_query.xml"></mapper>
+		<mapper resource="mapper/friend_query.xml"></mapper>
 	</mappers>
 </configuration>

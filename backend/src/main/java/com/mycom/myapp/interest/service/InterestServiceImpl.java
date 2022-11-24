@@ -68,11 +68,6 @@ public class InterestServiceImpl implements InterestService{
 		return interestResultDto;
 	}
 
-	@Override
-	public int interestAreaListTotalCount(int userSeq) {
-		return dao.interestAreaListTotalCount(userSeq);
-	}
-
 	/*
 	 * interest house
 	 * */
@@ -119,10 +114,6 @@ public class InterestServiceImpl implements InterestService{
 		return interestResultDto;
 	}
 
-	@Override
-	public int interestHouseListTotalCount(int userSeq) {
-		return dao.interestHouseListTotalCount(userSeq);
-	}
 
 	@Override
 	public InterestResultDto popularHouseList() {
@@ -157,6 +148,16 @@ public class InterestServiceImpl implements InterestService{
 	@Override
 	public boolean getBookmarkArea(InterestAreaDto interestAreaDto) {
 		return dao.interestArea(interestAreaDto);
+	}
+
+	@Override
+	public int getInterestAreaCountOfCurrentUser(int userSeq) {
+		return dao.getInterestAreaCountOfCurrentUser(userSeq);
+	}
+
+	@Override
+	public int getInterestHouseCountOfCurrentUser(int userSeq) {
+		return dao.getInterestHouseCountOfCurrentUser(userSeq);
 	}
 
 }

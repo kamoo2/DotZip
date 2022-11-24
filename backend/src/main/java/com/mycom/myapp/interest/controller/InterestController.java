@@ -54,6 +54,16 @@ public class InterestController {
 			return new ResponseEntity<InterestResultDto>(interestResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}		 
 	}
+	@GetMapping(value="/interest/area/count/{userSeq}")
+	public int getInterestAreaCountOfCurrentUser(@PathVariable("userSeq") int userSeq){
+		int count = service.getInterestAreaCountOfCurrentUser(userSeq);
+		return count; 
+	}
+	@GetMapping(value="/interest/house/count/{userSeq}")
+	public int getInterestHouseCountOfCurrentUser(@PathVariable("userSeq") int userSeq){
+		int count = service.getInterestHouseCountOfCurrentUser(userSeq);
+		return count; 
+	}
 	@PostMapping("/interest/area/bookmark")
 	public ResponseEntity<Boolean> getBookmarkArea(@RequestParam("dongCode") String dongCode,@RequestParam("userSeq") int userSeq) {
 		System.out.println("SELECT bookmark!!!!");
