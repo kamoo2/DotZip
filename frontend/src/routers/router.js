@@ -27,7 +27,50 @@ const routes = [
     children: [
       {
         path: "home",
-        component: () => import("@/views/app/home")
+        component: () => import("@/views/app/home"),
+        redirect: `${adminRoot}/home/dashboard`,
+        children: [
+          {
+            name: "DashBoard",
+            path: "dashboard",
+            redirect: `${adminRoot}/home/dashboard/users`,
+            component: () => import("@/views/app/home/DashBoard"),
+            children: [
+              {
+                name: "FollowList",
+                path: "follower",
+                component: () => import("@/components/Follow/FollowList")
+              },
+              {
+                name: "FollowingList",
+                path: "following",
+                component: () => import("@/components/Follow/FollowingList")
+              },
+              {
+                name: "UserList",
+                path: "users",
+                component: () => import("@/components/Follow/UserList")
+              }
+            ]
+          },
+          {
+            name: "EditProfile",
+            path: "edit",
+            component: () => import("@/views/app/home/EditProfile")
+          }
+        ]
+      },
+      {
+        path: "my",
+        component: () => import("@/views/app/my"),
+        redirect: `${adminRoot}/my/profile`,
+        children: [
+          {
+            name: "Profile",
+            path: "profile",
+            component: () => import("@/views/app/my/Profile")
+          }
+        ]
       },
       {
         path: "search",
@@ -53,10 +96,12 @@ const routes = [
         redirect: `${adminRoot}/favs/fArea`,
         children: [
           {
+            name: "FavsArea",
             path: "fArea",
             component: () => import("@/views/app/favs/Area")
           },
           {
+            name: "FavsHouse",
             path: "fHouse",
             component: () => import("@/views/app/favs/House")
           }

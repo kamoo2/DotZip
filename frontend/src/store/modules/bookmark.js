@@ -11,12 +11,16 @@ export default {
   state: {
     bookmarkAreaList: [],
     bookmarkHouseList: [],
+    selectedArea: "",
     isBookmarkedArea: false
   },
   mutations: {
     SET_BOOKMARK_AREA_LIST(state, payload) {
-      console.log(payload.arealist);
       state.bookmarkAreaList = [...payload.arealist];
+    },
+    SET_SELECTED_AREA(state, payload) {
+      console.log(payload);
+      state.selectedArea = payload;
     },
     SET_IS_BOOKMARK_AREA(state, payload) {
       state.isBookmarkedArea = payload;
@@ -28,7 +32,8 @@ export default {
   getters: {
     bookmarkHouseList: state => state.bookmarkHouseList,
     bookmarkAreaList: state => state.bookmarkAreaList,
-    isBookmarkedArea: state => state.isBookmarkedArea
+    isBookmarkedArea: state => state.isBookmarkedArea,
+    selectedArea: state => state.selectedArea
   },
   actions: {
     addBookMarkHouseAction: ({ commit }, payload) => {
@@ -88,16 +93,24 @@ export default {
         payload,
         ({ data }) => {
           console.log(data);
-          dispatch("getBookMarkAreaListAction", payload.userSeq);
+          dispatch("getBookMarkAreaListAction", {
+            userSeq: payload.userSeq,
+            limit: 10,
+            offset: 0
+          });
         },
         error => {
           console.log(error);
         }
       );
     },
-    getBookMarkAreaListAction: ({ commit }, userSeq) => {
+    getBookMarkAreaListAction: ({ commit }, { userSeq, limit, offset }) => {
       getBookMarkAreaList(
-        userSeq,
+        {
+          userSeq,
+          limit,
+          offset
+        },
         ({ data }) => {
           console.log(data);
           commit("SET_BOOKMARK_AREA_LIST", data);

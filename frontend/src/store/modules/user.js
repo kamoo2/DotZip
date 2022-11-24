@@ -1,6 +1,13 @@
 import jwtDecode from "jwt-decode";
-import {signinAPI, signupAPI, findByEmail, tokenRegeneration, logout} from "@/apis/user.js";
-import {adminRoot} from "@/constants/config";
+import {
+  signinAPI,
+  signupAPI,
+  findByEmail,
+  tokenRegeneration,
+  logout,
+  getUsers
+} from "@/apis/user.js";
+import { adminRoot } from "@/constants/config";
 
 export default {
   state: {
@@ -8,6 +15,7 @@ export default {
     loginError: null,
     processing: false,
     isValidToken: false,
+    userList: [],
     // forgotMailSuccess: null,
     // resetPasswordSuccess: null
     isLogin: false,
@@ -19,16 +27,20 @@ export default {
       userEmail: "",
       userProfileImageUrl: "",
       userRegisterDate: "",
-      userClsf: "",
-    },
+      userClsf: ""
+    }
   },
   getters: {
-    isLogin: (state) => state.isLogin,
-    currentUser: (state) => state.currentUser,
-    processing: (state) => state.processing,
-    loginError: (state) => state.loginError,
+    userList: state => state.userList,
+    isLogin: state => state.isLogin,
+    currentUser: state => state.currentUser,
+    processing: state => state.processing,
+    loginError: state => state.loginError
   },
   mutations: {
+    SET_USER_LIST(state, payload) {
+      state.userList = [...payload];
+    },
     SET_LOGIN(state) {
       state.isLogin = true;
       state.processing = false;
@@ -55,7 +67,7 @@ export default {
       state.currentUser.userRegisterDate = "";
     },
     SET_USER_INFO(state, payload) {
-      state.currentUser = {...payload};
+      state.currentUser = { ...payload };
       state.isLogin = true;
     },
     SET_KAKAO(state) {
@@ -81,18 +93,28 @@ export default {
     // },
     SET_CLEAR_ERROR(state) {
       state.loginError = null;
-    },
+    }
   },
   actions: {
-    async login({commit}, {email, password}) {
+    async getUsersAction({ commit }) {
+      await getUsers(
+        ({ data }) => {
+          commit("SET_USER_LIST", data);
+        },
+        error => {
+          console.lor(error);
+        }
+      );
+    },
+    async login({ commit }, { email, password }) {
       commit("SET_CLEAR_ERROR");
       commit("SET_PROCESSING", true);
       await signinAPI(
         {
           userEmail: email,
-          userPassword: password,
+          userPassword: password
         },
-        ({data, status}) => {
+        ({ data, status }) => {
           if (data.message === "success") {
             let accessToken = data["access-token"];
             let refreshToken = data["refresh-token"];
@@ -114,12 +136,12 @@ export default {
         }
       );
     },
-    async getUserInfo({commit, dispatch}, token) {
+    async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
       // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findByEmail(
         decodeToken.userEmail,
-        ({data}) => {
+        ({ data }) => {
           if (data.message === "success") {
             console.log(data);
             commit("SET_USER_INFO", data.userInfo);
@@ -128,18 +150,24 @@ export default {
             console.log("유저 정보 없음!!!!");
           }
         },
-        async (error) => {
-          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+        async error => {
+          console.log(
+            "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
+            error.response.status
+          );
           commit("SET_IS_VALID_TOKEN", false);
           await dispatch("tokenRegeneration");
         }
       );
     },
-    async tokenRegeneration({commit, state}) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+    async tokenRegeneration({ commit, state }) {
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        sessionStorage.getItem("access-token")
+      );
       await tokenRegeneration(
         JSON.stringify(state.userInfo),
-        ({data}) => {
+        ({ data }) => {
           if (data.message === "success") {
             let accessToken = data["access-token"];
             console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
@@ -147,14 +175,14 @@ export default {
             commit("SET_IS_VALID_TOKEN", true);
           }
         },
-        async (error) => {
+        async error => {
           // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
           if (error.response.status === 401) {
             console.log("갱신 실패");
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
               state.userInfo.userEmail,
-              ({data}) => {
+              ({ data }) => {
                 if (data.message === "success") {
                   console.log("리프레시 토큰 제거 성공");
                 } else {
@@ -165,7 +193,7 @@ export default {
                 commit("SET_IS_VALID_TOKEN", false);
                 router.push(`${adminRoot}/user/login`);
               },
-              (error) => {
+              error => {
                 console.log(error);
                 commit("SET_IS_LOGIN", false);
                 commit("SET_USER_INFO", null);
@@ -175,10 +203,10 @@ export default {
         }
       );
     },
-    async userLogout({commit}, {userEmail}) {
+    async userLogout({ commit }, { userEmail }) {
       await logout(
         userEmail,
-        ({data}) => {
+        ({ data }) => {
           if (data.message === "success") {
             commit("SET_LOGOUT");
             commit("SET_IS_VALID_TOKEN", false);
@@ -188,12 +216,12 @@ export default {
             console.log("유저 정보 없음!!!!");
           }
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
-    },
-  },
+    }
+  }
   // logout({ commit }) {
   //   commit('SET_LOGOUT');
   // },

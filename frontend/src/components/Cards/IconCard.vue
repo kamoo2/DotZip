@@ -1,7 +1,7 @@
 <template>
   <div class="icon-row-item">
-    <b-card class="mb-4 text-center">
-      <i :class="icon"/>
+    <b-card @click="onClickItem" class="home-icon-wrap mb-4 text-center">
+      <i :class="icon" />
       <p class="card-text font-weight-semibold mb-0">{{ title }}</p>
       <p class="lead text-center">{{ value }}</p>
     </b-card>
@@ -10,9 +10,39 @@
 <script>
 export default {
   props: {
-    title: { type: String, default: 'icon-card-title' },
-    icon: { type: String, default: 'iconsminds-clock' },
-    value: { type: Number, default: 0 }
+    title: { type: String, default: "icon-card-title" },
+    icon: { type: String, default: "iconsminds-clock" },
+    value: { type: Number, default: 0 },
+    code: { type: String }
+  },
+  methods: {
+    onClickItem() {
+      console.log();
+      if (this.code === "follower") {
+        console.log(this.code);
+        this.$router.push({
+          name: "FollowList"
+        });
+      } else if (this.code === "following") {
+        this.$router.push({
+          name: "FollowingList"
+        });
+      } else if (this.code === "area") {
+        this.$router.push({
+          name: "FavsArea"
+        });
+      } else if (this.code === "house") {
+        this.$router.push({
+          name: "FavsHouse"
+        });
+      }
+    }
   }
-}
+};
 </script>
+
+<style scope>
+.home-icon-wrap {
+  font-size: 24px;
+}
+</style>
