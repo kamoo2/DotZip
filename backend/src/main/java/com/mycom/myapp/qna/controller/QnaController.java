@@ -73,7 +73,7 @@ public class QnaController {
 	public ResponseEntity<QnaResultDto> qnaAnswerDetail(@PathVariable int qnaNum){//@RequestParam("userSeq")
 		System.out.println("qnaAnswerDetail ³Ñ¾î¿È");
 		QnaResultDto qnaResultDto = service.qnaAnswerDetail(qnaNum);
-		System.out.println(qnaResultDto.getDto().getContent());
+
 		if( qnaResultDto.getResult() == SUCCESS ) {
 			return new ResponseEntity<QnaResultDto>(qnaResultDto, HttpStatus.OK);
 		}else {
@@ -101,8 +101,7 @@ public class QnaController {
 			QnaDto qnaDto) {
 		System.out.println("insert"+qnaDto.getUserSeq());
 		
-		QnaResultDto qnaResultDto = service.qnaAnswerInsert(qnaDto); //boardInsert(qnaDto, request);
-		System.out.println(qnaResultDto.getDto().getContent());
+		QnaResultDto qnaResultDto = service.qnaAnswerInsert(qnaDto);
 		
 		if( qnaResultDto.getResult() == SUCCESS ) {
 			return new ResponseEntity<QnaResultDto>(qnaResultDto, HttpStatus.OK);

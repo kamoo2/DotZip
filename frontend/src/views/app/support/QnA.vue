@@ -2,14 +2,13 @@
   <div>
     <b-row>
       <b-colxx xxs="12">
-        <piaf-breadcrumb :heading="$t('menu.qna')" />
+        <piaf-breadcrumb :heading="$t('menu.QnA')" />
         <div class="separator mb-5"></div>
       </b-colxx>
     </b-row>
     <b-row>
       <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('menu.qna')">
-          <!-- <b-table striped hover :items="list"></b-table> -->
+        <b-card class="mb-4" :title="$t('menu.QnA')">
           <table class="table table-hover" id="list">
             <colgroup>
               <col width="10%" />
