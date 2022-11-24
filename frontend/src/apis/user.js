@@ -7,9 +7,9 @@ async function signinAPI(user, success, fail) {
     .catch(fail);
 }
 
-async function getUsers(success, fail) {
+async function getUsers(userSeq, success, fail) {
   await api
-    .get("/users/all")
+    .get(`/users/all/${userSeq}`)
     .then(success)
     .catch(fail);
 }

@@ -186,11 +186,11 @@ export default {
   position: absolute;
   right: 21px;
   top: 17px;
-  color: #ffa502;
+  color: #f15b6c;
 }
 
 .moveHouseLocation:hover {
-  color: #ffa502;
+  color: #f15b6c;
 }
 
 .house_info_description {

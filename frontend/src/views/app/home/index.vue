@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-colxx xxs="12">
-        <piaf-breadcrumb :heading="$t('menu.profile')" />
+        <piaf-breadcrumb :heading="$t('menu.home')" />
         <div class="separator mb-5"></div>
       </b-colxx>
     </b-row>
@@ -11,7 +11,7 @@
         <b-card no-body class="profile-wrap">
           <div class="position-absolute card-top-buttons profile-info-wrap">
             <b-button
-              @click="onClickToggleEditContainer"
+              @click="onClickOpenEditModal"
               variant="outline-white"
               class="icon-button"
             >
@@ -24,26 +24,48 @@
             class-name="card-img-top"
           />
           <b-card-body>
-            <p class="text-muted text-small mb-2">{{ $t("menu.userName") }}</p>
-            <p class="mb-3">
-              {{ this.currentUser.userName }}
-            </p>
-            <!-- <p class="text-muted text-small mb-2">{{ $t("pages.location") }}</p>
-            <p class="mb-3">Nairobi, Kenya</p> -->
-            <p class="text-muted text-small mb-2">
-              {{ $t("pages.area-title") }}
-            </p>
-            <p class="mb-3">
+            <div class="user__info__wrap">
               <b-badge
-                v-for="(item, index) in bookmarkAreaList"
-                :key="index"
-                variant="outline-secondary"
-                class="mb-1 mr-1 home__area"
-                @click="onClickBookmarkArea(item.name)"
+                v-if="getUserType"
+                class="user__type"
                 pill
-                >{{ item.name }}</b-badge
+                variant="warning"
+                >일반회원</b-badge
               >
-            </p>
+
+              <b-badge v-else class="user__type" pill variant="dark"
+                >관리자</b-badge
+              >
+
+              <p class="text-muted home__area__title mb-2">
+                {{ $t("menu.userName") }}
+              </p>
+              <p class="mb-3 home__username">
+                {{ this.currentUser.userName }}
+              </p>
+              <p class="text-muted home__area__title mb-2">
+                {{ $t("menu.email") }}
+              </p>
+              <p class="mb-3 home__username">
+                {{ this.currentUser.userEmail }}
+              </p>
+              <!-- <p class="text-muted text-small mb-2">{{ $t("pages.location") }}</p>
+            <p class="mb-3">Nairobi, Kenya</p> -->
+              <p class="text-muted mb-2 home__area__title">
+                {{ $t("pages.area-title") }}
+              </p>
+              <p class="mb-3">
+                <b-badge
+                  v-for="(item, index) in bookmarkAreaList"
+                  :key="index"
+                  variant="primary"
+                  class="mr-2 home__area"
+                  @click="onClickBookmarkArea(item.name)"
+                  pill
+                  >{{ item.name }}</b-badge
+                >
+              </p>
+            </div>
           </b-card-body>
         </b-card>
         <b-card class="rightContent">
@@ -66,32 +88,35 @@ export default {
   data() {
     return {
       repAreaList: [],
-      isNotExistBookmarkArea: false,
-      isPageDashBoard: false
+      isNotExistBookmarkArea: false
     };
   },
   computed: {
-    ...mapGetters(["currentUser", "bookmarkAreaList"])
+    ...mapGetters([
+      "currentUser",
+      "bookmarkAreaList",
+      "bookmarkedHouseCountOfUser",
+      "bookmarkedAreaCountOfUser"
+    ])
   },
   methods: {
     ...mapMutations(["SET_SELECTED_AREA"]),
-    ...mapActions(["getBookMarkAreaListAction"]),
+    ...mapActions([
+      "getBookMarkAreaListAction",
+      "getBookMarkAreaCountAction",
+      "getBookMarkHouseCountAction"
+    ]),
+    getUserType() {
+      if (this.currentUser.userClsf === "001") {
+        return true;
+      } else if (this.currentUser.userClsf === "003") {
+        return false;
+      }
+    },
     onClickBookmarkArea(name) {
       this.SET_SELECTED_AREA(name);
     },
-    onClickToggleEditContainer() {
-      if (this.isPageDashBoard) {
-        // 대시보드 페이지라면 -> 수정 페이지로 이동
-        this.$router.push({
-          name: "EditProfile"
-        });
-      } else {
-        this.$router.push({
-          name: "DashBoard"
-        });
-      }
-      this.isPageDashBoard = !this.isPageDashBoard;
-    }
+    onClickOpenEditModal() {}
   },
   components: {
     "single-lightbox": SingleLightbox
@@ -99,10 +124,12 @@ export default {
   created() {
     this.getBookMarkAreaListAction({
       userSeq: this.currentUser.userSeq,
-      limit: 2,
+      limit: 5,
       offset: 0
     });
-    console.log(this.currentUser);
+
+    this.getBookMarkAreaCountAction(this.currentUser.userSeq);
+    this.getBookMarkHouseCountAction(this.currentUser.userSeq);
   },
   watch: {
     bookmarkAreaList() {
@@ -126,7 +153,25 @@ export default {
   flex-basis: 20%;
 }
 
+.user__info__wrap {
+  position: relative;
+}
+
+.user__type {
+  font-size: 13px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.home__username {
+  font-size: 20px;
+}
+.home__area__title {
+  font-size: 15px;
+  font-weight: 500;
+}
 .home__area {
+  font-size: 14px;
   cursor: pointer;
 }
 

@@ -20,21 +20,29 @@ export default {
       console.log();
       if (this.code === "follower") {
         console.log(this.code);
-        this.$router.push({
-          name: "FollowList"
-        });
+        this.$router
+          .push({
+            name: "FollowList"
+          })
+          .catch(() => {});
       } else if (this.code === "following") {
-        this.$router.push({
-          name: "FollowingList"
-        });
+        this.$router
+          .push({
+            name: "FollowingList"
+          })
+          .catch(() => {});
       } else if (this.code === "area") {
-        this.$router.push({
-          name: "FavsArea"
-        });
+        this.$router
+          .push({
+            name: "FavsArea"
+          })
+          .catch(() => {});
       } else if (this.code === "house") {
-        this.$router.push({
-          name: "FavsHouse"
-        });
+        this.$router
+          .push({
+            name: "FavsHouse"
+          })
+          .catch(() => {});
       }
     }
   }

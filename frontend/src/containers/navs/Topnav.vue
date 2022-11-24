@@ -30,47 +30,6 @@
         />
       </div>
       <div class="header-icons d-inline-block align-middle">
-        <!-- <div class="position-relative d-none d-sm-inline-block">
-          <b-dropdown
-            variant="empty"
-            size="sm"
-            right
-            toggle-class="header-icon"
-            menu-class="position-absolute mt-3 iconMenuDropdown"
-            no-caret
-          >
-            <template slot="button-content">
-              <i class="simple-icon-grid" />
-            </template>
-            <div>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-shop-4 d-block" />
-                {{ $t("menu.dashboards") }}
-              </router-link>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-pantone d-block" />
-                {{ $t("menu.ui") }}
-              </router-link>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-bar-chart-4 d-block" />
-                {{ $t("menu.charts") }}
-              </router-link>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-speach-bubble d-block" />
-                {{ $t("menu.chat") }}
-              </router-link>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-formula d-block" />
-                {{ $t("menu.survey") }}
-              </router-link>
-              <router-link to="#" class="icon-menu-item">
-                <i class="iconsminds-check d-block" />
-                {{ $t("menu.todo") }}
-              </router-link>
-            </div>
-          </b-dropdown>
-        </div> -->
-
         <div class="position-relative d-none d-sm-inline-block">
           <div class="btn-group">
             <b-button
@@ -108,8 +67,6 @@
               />
             </span>
           </template>
-          <b-dropdown-item @click="onClickMoveMyPage">My Page</b-dropdown-item>
-          <b-dropdown-divider />
           <b-dropdown-item @click="onClickLogout">Sign out</b-dropdown-item>
         </b-dropdown>
       </div>
