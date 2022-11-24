@@ -16,16 +16,16 @@ public interface InterestDao {
 
 	//interest area
 	List<InterestAreaDto> interestAreaList(InterestParamDto interestParamDto);
-	int interestAreaListTotalCount(int userSeq);
+	int getInterestAreaCountOfCurrentUser(int userSeq);
 	int interestAreaInsert(InterestParamDto interestParamDto);
 	int interestAreaDelete(InterestParamDto interestParamDto);
 	boolean interestArea(InterestAreaDto interestAreaDto);
 	//interest house
 	List<InterestHouseDto> interestHouseList(InterestParamDto interestParamDto);
-	int interestHouseListTotalCount(int userSeq);
+	int getInterestHouseCountOfCurrentUser(int userSeq);
 	int interestHouseInsert(InterestParamDto interestParamDto);
 	int interestHouseDelete(InterestParamDto interestParamDto);
-	
+
 	//popular
 	List<PopularHouseDto> popularHouseList();
 	List<PopularAreaDto> popularAreaList();

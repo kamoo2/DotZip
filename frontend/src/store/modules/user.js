@@ -96,13 +96,14 @@ export default {
     }
   },
   actions: {
-    async getUsersAction({ commit }) {
+    async getUsersAction({ commit }, userSeq) {
       await getUsers(
+        userSeq,
         ({ data }) => {
           commit("SET_USER_LIST", data);
         },
         error => {
-          console.lor(error);
+          console.log(error);
         }
       );
     },

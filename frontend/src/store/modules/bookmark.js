@@ -5,18 +5,28 @@ import {
   addBookMarkArea,
   deleteBookMarkArea,
   getBookMarkAreaList,
-  getBookMarkArea
+  getBookMarkArea,
+  getBookMarkAreaCount,
+  getBookMarkHouseCount
 } from "@/apis/bookmark.js";
 export default {
   state: {
     bookmarkAreaList: [],
     bookmarkHouseList: [],
     selectedArea: "",
-    isBookmarkedArea: false
+    isBookmarkedArea: false,
+    bookmarkedAreaCountOfUser: 0,
+    bookmarkedHouseCountOfUser: 0
   },
   mutations: {
     SET_BOOKMARK_AREA_LIST(state, payload) {
       state.bookmarkAreaList = [...payload.arealist];
+    },
+    SET_AREA_COUNT(state, payload) {
+      state.bookmarkedAreaCountOfUser = payload;
+    },
+    SET_HOUSE_COUNT(state, payload) {
+      state.bookmarkedHouseCountOfUser = payload;
     },
     SET_SELECTED_AREA(state, payload) {
       console.log(payload);
@@ -33,9 +43,34 @@ export default {
     bookmarkHouseList: state => state.bookmarkHouseList,
     bookmarkAreaList: state => state.bookmarkAreaList,
     isBookmarkedArea: state => state.isBookmarkedArea,
-    selectedArea: state => state.selectedArea
+    selectedArea: state => state.selectedArea,
+    bookmarkedAreaCountOfUser: state => state.bookmarkedAreaCountOfUser,
+    bookmarkedHouseCountOfUser: state => state.bookmarkedHouseCountOfUser
   },
   actions: {
+    getBookMarkAreaCountAction: ({ commit }, payload) => {
+      getBookMarkAreaCount(
+        payload,
+        ({ data }) => {
+          commit("SET_AREA_COUNT", data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
+    getBookMarkHouseCountAction: ({ commit }, payload) => {
+      getBookMarkHouseCount(
+        payload,
+        ({ data }) => {
+          console.log(data);
+          commit("SET_HOUSE_COUNT", data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
     addBookMarkHouseAction: ({ commit }, payload) => {
       addBookMarkHouse(
         payload,

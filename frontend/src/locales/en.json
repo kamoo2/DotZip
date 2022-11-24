@@ -22,10 +22,11 @@
     "username": "Username"
   },
   "menu": {
+    "email": "이메일",
     "my": "My page",
     "home": "Home",
     "app": "Home",
-    "dashboards": "Dashboards",
+    "dashboard": "Dashboard",
     "default": "Default",
     "analytics": "Analytics",
     "ecommerce": "Ecommerce",
@@ -162,7 +163,7 @@
     "top-viewed-posts": "Top Viewed Posts",
     "posts": "Posts",
     "pending-for-publish": "Pending for publish",
-    "users": "Users",
+    "user": "User",
     "on-approval-process": "On approval process",
     "alerts": "Alerts",
     "waiting-for-notice": "Waiting for notice",

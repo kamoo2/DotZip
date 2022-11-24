@@ -7,28 +7,28 @@
           class="follow__wrap__item"
           :title="$t('dashboards.follower')"
           icon="simple-icon-user"
-          :value="6"
+          :value="followerCount"
           :code="follower"
         />
         <icon-card
           class="follow__wrap__item"
           :title="$t('dashboards.following')"
           icon="simple-icon-user"
-          :value="9"
+          :value="followingCount"
           :code="following"
         />
         <icon-card
           class="follow__wrap__item"
           :title="$t('dashboards.area-count')"
           icon="iconsminds-map2"
-          :value="11"
+          :value="bookmarkedAreaCountOfUser"
           :code="area"
         />
         <icon-card
           class="follow__wrap__item"
           :title="$t('dashboards.house-count')"
           icon="iconsminds-home"
-          :value="14"
+          :value="bookmarkedHouseCountOfUser"
           :code="house"
         />
       </div>
@@ -73,26 +73,42 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["selectedArea", "userList"])
+    ...mapGetters([
+      "selectedArea",
+      "userList",
+      "bookmarkedHouseCountOfUser",
+      "bookmarkedAreaCountOfUser",
+      "followingCount",
+      "followerCount",
+      "currentUser"
+    ])
   },
   components: {
     IconCard,
     "line-chart": LineChart
   },
   methods: {
-    ...mapActions(["getUsersAction"])
+    ...mapActions([
+      "getUsersAction",
+      "getFriendCountAction",
+      "getFollowerListAction",
+      "getFollowingListAction"
+    ])
   },
   created() {
     this.isNone = true;
     this.name = "관심 지역 클릭해주세요.";
-    this.getUsersAction();
+    this.getUsersAction(this.currentUser.userSeq);
+    this.getFriendCountAction(this.currentUser.userSeq);
+    this.getFollowerListAction(this.currentUser.userSeq);
+    this.getFollowingListAction(this.currentUser.userSeq);
   },
   watch: {
     selectedArea() {
       if (this.name === "") {
         this.name = "관심 지역을 클릭해주세요";
       } else {
-        this.name = `${this.selectedArea}의 거래량 최근 동향`;
+        this.name = `${this.selectedArea} 거래량`;
         this.isNone = false;
       }
     }
@@ -109,7 +125,7 @@ export default {
 }
 
 .dashboard__main {
-  flex-basis: 70%;
+  width: 70%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -148,7 +164,7 @@ export default {
 }
 
 .dashboard__aside {
-  flex-basis: 28%;
+  width: 28%;
   padding: 10px;
 }
 .aside__list__wrap {
@@ -172,6 +188,7 @@ export default {
 }
 .aside__list__scroll {
   height: 580px;
+  padding: 0 20px;
   overflow-y: scroll;
 }
 

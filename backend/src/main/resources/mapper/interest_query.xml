@@ -8,7 +8,7 @@
 		limit #{limit} offset #{offset}
     </select>
     
-    <select id="interestAreaListTotalCount" parameterType="int" resultType="int">
+    <select id="getInterestAreaCountOfCurrentUser" parameterType="int" resultType="int">
     	SELECT count(*) from interest_area
 		WHERE user_seq = #{userSeq}
     </select>
@@ -36,7 +36,7 @@
 		WHERE h.user_seq = #{userSeq} and h.house_no=b.no;
     </select>
     
-    <select id="interestHouseListTotalCount" parameterType="int" resultType="int">
+    <select id="getInterestHouseCountOfCurrentUser" parameterType="int" resultType="int">
     	SELECT count(*) from interest_house
 		WHERE user_seq = #{userSeq}
     </select>

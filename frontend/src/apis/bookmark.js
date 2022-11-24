@@ -45,6 +45,20 @@ async function deleteBookMarkArea({ userSeq, dongCode }, success, fail) {
     .catch(fail);
 }
 
+async function getBookMarkAreaCount(userSeq, success, fail) {
+  await api
+    .get(`/interest/area/count/${userSeq}`)
+    .then(success)
+    .catch(fail);
+}
+
+async function getBookMarkHouseCount(userSeq, success, fail) {
+  await api
+    .get(`/interest/house/count/${userSeq}`)
+    .then(success)
+    .catch(fail);
+}
+
 async function getBookMarkAreaList({ userSeq, limit, offset }, success, fail) {
   await api
     .get(`/interest/area`, {
@@ -78,5 +92,7 @@ export {
   addBookMarkArea,
   deleteBookMarkArea,
   getBookMarkAreaList,
-  getBookMarkArea
+  getBookMarkArea,
+  getBookMarkHouseCount,
+  getBookMarkAreaCount
 };

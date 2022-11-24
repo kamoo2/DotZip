@@ -52,11 +52,6 @@ const routes = [
                 component: () => import("@/components/Follow/UserList")
               }
             ]
-          },
-          {
-            name: "EditProfile",
-            path: "edit",
-            component: () => import("@/views/app/home/EditProfile")
           }
         ]
       },

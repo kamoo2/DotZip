@@ -8,21 +8,21 @@
 
 <script>
 import HouseListComponent from "@/components/SearchView/HouseListComponent.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "KakaoMap",
   components: {
-    HouseListComponent,
+    HouseListComponent
   },
   data() {
     return {
       markers: [],
-      overlays: [],
+      overlays: []
     };
   },
   props: ["listType"],
   computed: {
-    ...mapGetters(["house", "houseList", "bookmarkHouseList"]),
+    ...mapGetters(["house", "houseList", "bookmarkHouseList"])
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -41,30 +41,30 @@ export default {
     },
     houseList() {
       this.removeMarker();
-      this.removeOverlay();
+      // this.removeOverlay();
       if (this.houseList.length > 0) {
         this.makeMaker(this.houseList);
-        this.makeOverlay(this.houseList);
+        // this.makeOverlay(this.houseList);
       }
     },
     bookmarkHouseList() {
       this.removeMarker();
-      this.removeOverlay();
+      // this.removeOverlay();
       if (this.bookmarkHouseList.length > 0) {
         this.makeMaker(this.bookmarkHouseList);
-        this.makeOverlay(this.bookmarkHouseList);
+        // this.makeOverlay(this.bookmarkHouseList);
       }
-    },
+    }
   },
   methods: {
     removeMarker() {
-      this.markers.forEach((marker) => {
+      this.markers.forEach(marker => {
         marker.setMap(null);
       });
       this.markers = [];
     },
     removeOverlay() {
-      this.overlays.forEach((overlay) => {
+      this.overlays.forEach(overlay => {
         overlay.setMap(null);
       });
       this.overlays = [];
@@ -73,7 +73,7 @@ export default {
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 5,
+        level: 5
       };
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
@@ -98,18 +98,23 @@ export default {
     },
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
-        this.markers.forEach((marker) => marker.setMap(null));
+        this.markers.forEach(marker => marker.setMap(null));
       }
-      const positions = markerPositions.map((position) => new kakao.maps.LatLng(...position));
+      const positions = markerPositions.map(
+        position => new kakao.maps.LatLng(...position)
+      );
       if (positions.length > 0) {
         this.markers = positions.map(
-          (position) =>
+          position =>
             new kakao.maps.Marker({
               map: this.map,
-              position,
+              position
             })
         );
-        const bounds = positions.reduce((bounds, latlng) => bounds.extend(latlng), new kakao.maps.LatLngBounds());
+        const bounds = positions.reduce(
+          (bounds, latlng) => bounds.extend(latlng),
+          new kakao.maps.LatLngBounds()
+        );
         this.map.setBounds(bounds);
       }
     },
@@ -126,7 +131,7 @@ export default {
         map: this.map, // 인포윈도우가 표시될 지도
         position: iwPosition,
         content: iwContent,
-        removable: iwRemoveable,
+        removable: iwRemoveable
       });
       this.map.setCenter(iwPosition);
     },
@@ -134,15 +139,20 @@ export default {
       let bounds = new kakao.maps.LatLngBounds();
 
       console.log("houseLIst:" + this.houseList);
-      Array.from(list).forEach((house) => {
+      Array.from(list).forEach(house => {
         const position = new kakao.maps.LatLng(house.lat, house.lng);
-        const imageSrc = "https://img.icons8.com/plasticine/100/null/order-delivered.png"; // 마커이미지의 주소입니다
+        const imageSrc =
+          "https://img.icons8.com/plasticine/100/null/order-delivered.png"; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(64, 69); // 마커이미지의 크기입니다
-        const imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        const imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
         // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-        const marker = new kakao.maps.Marker({position, image: markerImage});
+        const markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
+        const marker = new kakao.maps.Marker({ position, image: markerImage });
 
         this.markers.push(marker);
         marker.setMap(this.map);
@@ -154,7 +164,7 @@ export default {
       this.map.setBounds(bounds);
     },
     makeOverlay(list) {
-      Array.from(list).forEach((house) => {
+      Array.from(list).forEach(house => {
         const position = new kakao.maps.LatLng(house.lat, house.lng);
         const content =
           '<div class="customoverlay">' +
@@ -168,14 +178,14 @@ export default {
           map: this.map,
           position: position,
           content: content,
-          yAnchor: 1,
+          yAnchor: 1
         });
 
         overlay.setMap(this.map);
         this.overlays.push(overlay);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
@@ -214,8 +224,9 @@ button {
   font-size: 14px;
   font-weight: bold;
   overflow: hidden;
-  background: #3188ff url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px
-    center;
+  background: #3188ff
+    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    no-repeat right 14px center;
 }
 .customoverlay .title {
   display: block;

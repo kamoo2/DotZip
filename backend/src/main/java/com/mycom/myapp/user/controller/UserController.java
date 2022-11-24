@@ -85,9 +85,9 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(map, status);
     }
 	
-	@GetMapping(value="/users/all")
-	public List<UserDto> getUsers(){
-		List<UserDto> userList = userService.getUsers();
+	@GetMapping(value="/users/all/{userSeq}")
+	public List<UserDto> getUsers(@PathVariable int userSeq){
+		List<UserDto> userList = userService.getUsers(userSeq);
 		return userList;
 	}
 	

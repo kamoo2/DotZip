@@ -7,6 +7,7 @@ import user from "./modules/user";
 import house from "./modules/house";
 import bookmark from "./modules/bookmark";
 import QnA from "./modules/QnA";
+import friend from "./modules/friend";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     user,
     house,
     bookmark,
-    QnA
+    QnA,
+    friend
   },
   plugins: [
     createVuexPersistedState({

@@ -5,17 +5,29 @@
     <!-- aside__list__scroll : 현재 팔로잉한 회원을 리스트로 보여줌 -->
     <!-- aside__list__scroll : 팔로잉 할 수 있는 전체 회원 유저를 리스트로 보여줌 -->
     <div class="aside__list__scroll">
-      <div v-for="(item, index) in userList" :key="index">
-        {{ item.userName }}
-      </div>
+      <list-with-user-item
+        v-for="(item, index) in userList"
+        :item="item"
+        :key="index"
+        :listType="user"
+      >
+      </list-with-user-item>
     </div>
   </div>
 </template>
 
 <script>
+import ListWithUserItem from "@/components/Listing/ListWithUserItem";
 import { mapGetters } from "vuex";
-
 export default {
+  data() {
+    return {
+      user: "user"
+    };
+  },
+  components: {
+    ListWithUserItem
+  },
   computed: {
     ...mapGetters(["userList"])
   }
