@@ -5,6 +5,7 @@
     	SELECT a.interest_area_id, a.dong_code, d.city_name,d.city_code,d.gugun_code, d.gugun_name, d.name,true bookmarked
 		FROM interest_area a, dong_code d
 		WHERE a.user_seq = #{userSeq} and a.dong_code=d.code
+		limit #{limit} offset #{offset}
     </select>
     
     <select id="interestAreaListTotalCount" parameterType="int" resultType="int">

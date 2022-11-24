@@ -13,8 +13,8 @@ import lombok.ToString;
 @ToString
 public class InterestParamDto {
 	
-	//private int limit;
-	//private int offset;
+	private int limit;
+	private int offset;
 
 	private int dongCode;
 	private int houseNo;

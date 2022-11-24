@@ -13,7 +13,7 @@
             <b-button
               @click="onClickToggleEditContainer"
               variant="outline-white"
-              class="icon-button"
+              class="icon-button openEditSlideBtn"
             >
               <i class="simple-icon-pencil" />
             </b-button>
@@ -38,17 +38,34 @@
                 v-for="(item, index) in bookmarkAreaList"
                 :key="index"
                 variant="outline-secondary"
-                class="mb-1 mr-1 home__area"
-                @click="onClickBookmarkArea(item.name)"
+                class="mb-1 mr-1"
                 pill
                 >{{ item.name }}</b-badge
               >
             </p>
+            <p class="text-muted text-small mb-2">{{ $t("menu.contact") }}</p>
+            <div class="social-icons">
+              <ul class="list-unstyled list-inline">
+                <li class="list-inline-item">
+                  <router-link to="#"
+                    ><i class="simple-icon-social-facebook"></i
+                  ></router-link>
+                </li>
+                <li class="list-inline-item">
+                  <router-link to="#"
+                    ><i class="simple-icon-social-twitter"></i
+                  ></router-link>
+                </li>
+                <li class="list-inline-item">
+                  <router-link to="#"
+                    ><i class="simple-icon-social-instagram"></i
+                  ></router-link>
+                </li>
+              </ul>
+            </div>
           </b-card-body>
         </b-card>
-        <b-card class="rightContent">
-          <router-view></router-view>
-        </b-card>
+        <b-card class="profile-edit-wrap close"> </b-card>
       </b-colxx>
     </b-row>
   </div>
@@ -56,7 +73,7 @@
 
 <script>
 import SingleLightbox from "@/components/Profile/SingleLightbox";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   // 얻어야 하는 데이터
@@ -67,30 +84,23 @@ export default {
     return {
       repAreaList: [],
       isNotExistBookmarkArea: false,
-      isPageDashBoard: false
+      isOpen: false
     };
   },
   computed: {
     ...mapGetters(["currentUser", "bookmarkAreaList"])
   },
   methods: {
-    ...mapMutations(["SET_SELECTED_AREA"]),
     ...mapActions(["getBookMarkAreaListAction"]),
-    onClickBookmarkArea(name) {
-      this.SET_SELECTED_AREA(name);
-    },
     onClickToggleEditContainer() {
-      if (this.isPageDashBoard) {
-        // 대시보드 페이지라면 -> 수정 페이지로 이동
-        this.$router.push({
-          name: "EditProfile"
-        });
+      if (this.isOpen) {
+        // 열린 상태 -> 닫아야 함 -> close 클래스를 추가
+        document.querySelector(".profile-edit-wrap").classList.add("close");
       } else {
-        this.$router.push({
-          name: "DashBoard"
-        });
+        // 닫힌 상태 -> 열어야 함 -> close 클래스를 제거
+        document.querySelector(".profile-edit-wrap").classList.remove("close");
       }
-      this.isPageDashBoard = !this.isPageDashBoard;
+      this.isOpen = !this.isOpen;
     }
   },
   components: {
@@ -121,17 +131,27 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 }
 .profile-wrap {
-  flex-basis: 20%;
+  flex-basis: 30%;
+  position: relative;
+  z-index: 3;
 }
 
-.home__area {
-  cursor: pointer;
-}
-
-.rightContent {
-  flex-basis: 78%;
+.profile-edit-wrap {
+  flex-basis: 68%;
+  transition-duration: 2000ms;
   background-color: white;
+}
+.profile-edit-wrap.close {
+  background-color: transparent;
+  transform: translateX(-2000px);
+}
+
+.profile-info-wrap {
+}
+
+.openEditSlideBtn {
 }
 </style>

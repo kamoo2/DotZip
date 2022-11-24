@@ -22,6 +22,7 @@
     "username": "Username"
   },
   "menu": {
+    "my": "My page",
     "home": "Home",
     "app": "Home",
     "dashboards": "Dashboards",
@@ -123,6 +124,7 @@
     "notice": "공지사항",
     "QnA": "Q & A",
     "contact": "Social"
+    "userName": "이름"
   },
   "dashboards": {
     "pending-orders": "Pending Orders",
@@ -175,9 +177,14 @@
     "type": "Type",
     "keyword": "Keyword",
     "search": "Search",
-    "top-rated-items": "Top Rated Items"
+    "top-rated-items": "Top Rated Items",
+    "follower": "FOLLOWER",
+    "following": "FOLLOWING",
+    "area-count": "관심지역",
+    "house-count": "관심매물"
   },
   "pages": {
+    "area-title": "관심 지역",
     "add-new": "ADD NEW",
     "add-new-modal-title": "Add New Item",
     "display-options": "Display Options",

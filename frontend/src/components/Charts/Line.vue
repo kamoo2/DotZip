@@ -29,7 +29,7 @@ export default {
           Chart.controllers.line.prototype.draw.call(this, ease);
           const chartCtx = this.chart.ctx;
           chartCtx.save();
-          chartCtx.shadowColor = 'rgba(0,0,0,0.15)';
+          chartCtx.shadowColor = "rgba(0,0,0,0.15)";
           chartCtx.shadowBlur = 10;
           chartCtx.shadowOffsetX = 0;
           chartCtx.shadowOffsetY = 10;
@@ -50,3 +50,4 @@ export default {
 };
 </script>
 
+<style></style>
