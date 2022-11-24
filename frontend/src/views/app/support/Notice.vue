@@ -11,21 +11,32 @@
         <b-card class="mb-4" :title="$t('menu.notice')">
           <!-- <b-table striped hover :items="list"></b-table> -->
           <table class="table table-hover" id="list">
+            <colgroup>
+              <col width="10%" />
+              <col width="40%" />
+              <col width="10%" />
+              <col width="15%" />
+              <col width="8%" />
+            </colgroup>
             <thead>
               <tr>
                 <th scope="col">No</th>
-                <th scope="col">작성자</th>
                 <th scope="col">제목</th>
+                <th scope="col">작성자</th>
                 <th scope="col">작성일자</th>
                 <th scope="col">조회수</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(row, index) in list" :key="index" @click="boardDetail(row.boardId)" style="cursor: pointer">
+              <tr
+                v-for="(row, index) in list"
+                :key="index"
+                @click="boardDetail(row.boardId)"
+                style="cursor: pointer"
+              >
                 <td>{{ row.boardId }}</td>
-                <td>{{ row.userName }}</td>
                 <td>{{ row.title }}</td>
-                <!-- <td>{{ row.regDt.date | makeDateStr('.') }}</td> -->
+                <td>{{ row.userName }}</td>
                 <td>{{ row.regDt.date | makeDateStr(".") }}</td>
                 <td>{{ row.readCount }}</td>
               </tr>
@@ -38,24 +49,34 @@
             v-bind:totalListItemCount="totalListItemCount"
             v-on:call-parent-move-page="movePage"
           ></pagination-u-i>
-          <button v-show="userClsf == '003'" class="btn btn-success" type="button" @click="showInsertModal">
+          <button
+            v-show="userClsf == '003'"
+            class="btn btn-success"
+            type="button"
+            @click="showInsertModal"
+          >
             글쓰기
           </button>
 
-          <insert-modal v-on:call-parent-insert="closeAfterInsert"></insert-modal>
+          <insert-modal
+            v-on:call-parent-insert="closeAfterInsert"
+          ></insert-modal>
           <detail-modal
             v-bind:board="board"
             v-on:call-parent-change-to-update="changeToUpdate"
             v-on:call-parent-change-to-delete="changeToDelete"
           ></detail-modal>
-          <update-modal v-bind:board="board" v-on:call-parent-update="closeAfterUpdate"></update-modal>
+          <update-modal
+            v-bind:board="board"
+            v-on:call-parent-update="closeAfterUpdate"
+          ></update-modal>
         </b-card>
       </b-colxx>
     </b-row>
   </div>
 </template>
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import http from "@/apis/axios.js"; //axios객체
 import util from "@/apis/util.js";
 import PaginationUI from "@/components/Common/PaginationUI.vue";
@@ -63,17 +84,17 @@ import PaginationUI from "@/components/Common/PaginationUI.vue";
 import InsertModal from "@/components/Modal/BoardInsertModal.vue"; //vue 컴포넌트
 import DetailModal from "@/components/Modal/BoardDetailModal.vue"; //vue 컴포넌트
 import UpdateModal from "@/components/Modal/BoardUpdateModal.vue";
-import {Modal} from "bootstrap";
+import { Modal } from "bootstrap";
 export default {
   components: {
     PaginationUI,
     // Pagination,
     InsertModal,
     DetailModal,
-    UpdateModal,
+    UpdateModal
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser"])
   },
   data() {
     return {
@@ -108,8 +129,8 @@ export default {
         regTime: "",
         readCount: 0,
         fileList: [],
-        sameUser: false,
-      },
+        sameUser: false
+      }
     };
   },
   methods: {
@@ -125,9 +146,9 @@ export default {
         // let {data} = response;
         let obj = {
           boardId: boardId,
-          userSeq: this.currentUser.userSeq,
+          userSeq: this.currentUser.userSeq
         };
-        let {data} = await http.post(`/boards`, obj);
+        let { data } = await http.post(`/boards`, obj);
 
         console.log(data);
         if (data.result == "login") {
@@ -135,11 +156,21 @@ export default {
         } else {
           console.log(data.dto);
           // 날짜, 시간 분리
-          let {regDt} = data.dto;
+          let { regDt } = data.dto;
           let boardNew = {
-            regDate: util.makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, "-"),
-            regTime: util.makeTimeStr(regDt.time.hour, regDt.time.minute, regDt.time.second, ":"),
-            ...data.dto, //나머지는 여기서 받음 - 3dot operator rest
+            regDate: util.makeDateStr(
+              regDt.date.year,
+              regDt.date.month,
+              regDt.date.day,
+              "-"
+            ),
+            regTime: util.makeTimeStr(
+              regDt.time.hour,
+              regDt.time.minute,
+              regDt.time.second,
+              ":"
+            ),
+            ...data.dto //나머지는 여기서 받음 - 3dot operator rest
           };
 
           //현재 board 교체
@@ -157,13 +188,13 @@ export default {
       let params = {
         limit: this.limit,
         offset: this.offset,
-        searchWord: this.searchWord,
+        searchWord: this.searchWord
       };
 
       try {
         // axios가 json으로 parameter를 보내는 방법 : 객체를 전달
-        let response = await http.get("/boards", {params});
-        let {data} = response;
+        let response = await http.get("/boards", { params });
+        let { data } = response;
         console.log(response);
 
         // interceptor session check fail
@@ -216,7 +247,7 @@ export default {
     async boardDelete() {
       try {
         let response = await http.delete("/admin/boards/" + this.board.boardId);
-        let {data} = response;
+        let { data } = response;
         if (data.result == "login") {
           this.$router.push("/users/login");
         } else {
@@ -226,7 +257,7 @@ export default {
       } catch (error) {
         // console.error(error);
       }
-    },
+    }
   },
   created() {
     this.userClsf = this.currentUser.userClsf;
@@ -241,13 +272,13 @@ export default {
   filters: {
     makeDateStr(date, type) {
       return util.makeDateStr(date.year, date.month, date.day, type); //import한 util을 이용해서 filter
-    },
+    }
   },
   watch: {
     board() {
       this.boardList();
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

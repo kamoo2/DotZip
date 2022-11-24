@@ -11,7 +11,7 @@
         <a
           class="page-link"
           @click="paginationChanged(startPageIndex - 1 + index)"
-          v-bind:class="{active: startPageIndex - 1 + index == currentPageIndex}"
+          v-bind:class="{activepage: startPageIndex - 1 + index == currentPageIndex}"
           >{{ startPageIndex - 1 + index }}</a
         >
       </li>
@@ -82,5 +82,8 @@ export default {
 <style>
 .page-item {
   cursor: pointer;
+}
+.activepage {
+  background: #008ecc;
 }
 </style>
