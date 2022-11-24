@@ -1,6 +1,7 @@
 package com.mycom.myapp.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class UserController {
 	private final String DUPLICATED = "duplicated";
 	
 	
-	@PostMapping(value="users/login")
+	@PostMapping(value="/users/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto dto, HttpSession session){    	
     	System.out.println("login:"+dto);
     	
@@ -83,7 +84,12 @@ public class UserController {
 
         return new ResponseEntity<Map<String, Object>>(map, status);
     }
-
+	
+	@GetMapping(value="/users/all")
+	public List<UserDto> getUsers(){
+		List<UserDto> userList = userService.getUsers();
+		return userList;
+	}
 	
 	@PostMapping(value="/users/register")
 	public ResponseEntity<Map<String, String>> userRegister(@RequestBody UserDto dto,HttpSession session) {
