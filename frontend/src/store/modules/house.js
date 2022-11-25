@@ -32,7 +32,8 @@ export default {
       lat: "",
       lng: "",
       no: 0
-    }
+    },
+    chartData: []
   },
   mutations: {
     SET_SIDOLIST(state, payload) {

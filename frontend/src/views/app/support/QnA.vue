@@ -50,7 +50,7 @@
             v-on:call-parent-move-page="movePage"
           ></pagination-u-i>
           <button
-            v-show="userClsf == '003'"
+            v-show="userClsf == '001'"
             class="btn btn-success"
             type="button"
             @click="showInsertModal"
@@ -171,7 +171,7 @@ export default {
           console.log("userSeq: " + data.dto.userSeq);
           if (
             this.currentUser.userClsf == "003" ||
-            this.currentUser.userSeq == data.userSeq
+            this.currentUser.userSeq == data.dto.userSeq
           ) {
             //현재 board 교체
             this.qna = qnaNew;

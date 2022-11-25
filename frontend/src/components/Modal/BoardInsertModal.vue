@@ -1,7 +1,13 @@
 <template>
   <!-- Modal Insert-->
   <!--부트스트랩의 클래스가 들어가있어야 함-->
-  <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="insertModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -19,7 +25,12 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="titleInsert" class="form-label">제목</label>
-            <input type="text" class="form-control" id="titleInsert" v-model="title" />
+            <input
+              type="text"
+              class="form-control"
+              id="titleInsert"
+              v-model="title"
+            />
           </div>
           <div class="mb-3">
             <label for="contentInsert" class="form-label">내용</label>
@@ -28,18 +39,41 @@
           </div>
           <div class="mb-3">
             <div class="form-check">
-              <input v-model="attachFile" class="form-check-input" type="checkbox" value="" id="chkFileUploadInsert" />
-              <label class="form-check-label" for="chkFileUploadInsert">파일 추가</label>
+              <input
+                v-model="attachFile"
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="chkFileUploadInsert"
+              />
+              <label class="form-check-label" for="chkFileUploadInsert"
+                >파일 추가</label
+              >
             </div>
           </div>
           <div class="mb-3" v-show="attachFile" id="imgFileUploadInsertWrapper">
-            <input @change="changeFile" type="file" id="inputFileUploadInsert" multiple />
+            <input
+              @change="changeFile"
+              type="file"
+              id="inputFileUploadInsert"
+              multiple
+            />
             <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper">
               <!-- vue 방식으로 첨부파일 이미지 thumbnail 을 보이는 방법 -->
-              <img v-for="(file, index) in fileList" :key="index" v-bind:src="file" alt="" />
+              <img
+                v-for="(file, index) in fileList"
+                :key="index"
+                v-bind:src="file"
+                alt=""
+              />
             </div>
           </div>
-          <button @click="boardInsert" id="btnBoardInsert" type="button" class="btn btn-sm btn-primary float-end">
+          <button
+            @click="boardInsert"
+            id="btnBoardInsert"
+            type="button"
+            class="btn btn-sm btn-primary float-end"
+          >
             등록
           </button>
         </div>
@@ -49,7 +83,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import Vue from "vue";
 import CKEditor from "@ckeditor/ckeditor5-vue2";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -58,14 +92,14 @@ Vue.use(CKEditor);
 
 export default {
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser"])
   },
   data() {
     return {
       title: "",
       CKEditor: null,
       attachFile: false, //체크박스와 연동 위함
-      fileList: [],
+      fileList: []
     };
   },
   methods: {
@@ -81,7 +115,7 @@ export default {
       this.fileList = [];
 
       const fileArray = Array.from(fileEvent.target.files);
-      fileArray.forEach((file) => {
+      fileArray.forEach(file => {
         this.fileList.push(URL.createObjectURL(file));
       });
     },
@@ -95,17 +129,17 @@ export default {
       let attachFiles = document.querySelector("#inputFileUploadInsert").files;
       if (attachFiles.length > 0) {
         const fileArray = Array.from(attachFiles);
-        fileArray.forEach((file) => formData.append("file", file));
+        fileArray.forEach(file => formData.append("file", file));
       }
 
       // multipart/form-data
       let options = {
-        headers: {"Content-Type": "multipart/form-data"},
+        headers: { "Content-Type": "multipart/form-data" }
       };
 
       try {
         let response = await http.post("/admin/boards", formData, options);
-        let {data} = response;
+        let { data } = response;
         console.log(data);
         if (data.result == "login") {
           this.$router.push("/login");
@@ -120,11 +154,13 @@ export default {
     },
     closeModal() {
       this.$emit("call-parent-insert");
-    },
+    }
   },
   async mounted() {
     try {
-      this.CKEditor = await ClassicEditor.create(document.querySelector("#divEditorInsert"));
+      this.CKEditor = await ClassicEditor.create(
+        document.querySelector("#divEditorInsert")
+      );
     } catch (error) {
       // console.error(error);
     }
@@ -136,7 +172,7 @@ export default {
       // 현 시점의 this는 event 처리자, vue component가 아니다.
       $this.initUI();
     });
-  },
+  }
 };
 </script>
 

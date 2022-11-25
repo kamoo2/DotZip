@@ -34,7 +34,7 @@
           <div class="mb-3">
             <label for="contentInsert" class="form-label">내용</label>
             <!-- CKEditor insert-->
-            <div id="divEditorInsert"></div>
+            <div id="divEditorInsert2"></div>
           </div>
           <div class="mb-3">
             <div class="form-check">
@@ -152,8 +152,9 @@ export default {
   },
   async mounted() {
     try {
+      console.log("??");
       this.CKEditor = await ClassicEditor.create(
-        document.querySelector("#divEditorInsert")
+        document.querySelector("#divEditorInsert2")
       );
     } catch (error) {
       // console.error(error);

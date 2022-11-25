@@ -59,7 +59,7 @@
 import IconCard from "@/components/Cards/IconCard";
 import LineChart from "@/components/Charts/Line";
 import { lineChartData } from "@/data/charts.js";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -97,7 +97,7 @@ export default {
   },
   created() {
     this.isNone = true;
-    this.name = "관심 지역 클릭해주세요.";
+    this.name = "관심지역 평균 거래량";
     this.getUsersAction(this.currentUser.userSeq);
     this.getFriendCountAction(this.currentUser.userSeq);
     this.getFollowerListAction(this.currentUser.userSeq);
@@ -111,6 +111,9 @@ export default {
         this.name = `${this.selectedArea} 거래량`;
         this.isNone = false;
       }
+    },
+    lineChartData() {
+      console.log(this.lineChartData);
     }
   }
 };
@@ -125,7 +128,7 @@ export default {
 }
 
 .dashboard__main {
-  width: 70%;
+  width: 63%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -164,7 +167,7 @@ export default {
 }
 
 .dashboard__aside {
-  width: 28%;
+  width: 35%;
   padding: 10px;
 }
 .aside__list__wrap {
@@ -188,7 +191,7 @@ export default {
 }
 .aside__list__scroll {
   height: 580px;
-  padding: 0 20px;
+  padding: 10px 20px;
   overflow-y: scroll;
 }
 
