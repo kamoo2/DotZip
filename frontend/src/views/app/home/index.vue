@@ -59,7 +59,7 @@
                   v-for="(item, index) in bookmarkAreaList"
                   :key="index"
                   variant="primary"
-                  class="mr-2 home__area"
+                  class="mr-2 mb-2 home__area"
                   @click="onClickBookmarkArea(item.name)"
                   pill
                   >{{ item.name }}</b-badge
@@ -78,7 +78,8 @@
 
 <script>
 import SingleLightbox from "@/components/Profile/SingleLightbox";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { lineChartData } from "@/data/charts.js";
 
 export default {
   // 얻어야 하는 데이터
@@ -88,7 +89,8 @@ export default {
   data() {
     return {
       repAreaList: [],
-      isNotExistBookmarkArea: false
+      isNotExistBookmarkArea: false,
+      lineChartData
     };
   },
   computed: {
@@ -97,7 +99,8 @@ export default {
       "bookmarkAreaList",
       "bookmarkedHouseCountOfUser",
       "bookmarkedAreaCountOfUser"
-    ])
+    ]),
+    ...mapState(["chartData"])
   },
   methods: {
     ...mapMutations(["SET_SELECTED_AREA"]),
@@ -115,6 +118,13 @@ export default {
     },
     onClickBookmarkArea(name) {
       this.SET_SELECTED_AREA(name);
+      const data = [];
+      for (let i = 0; i < 7; i++) {
+        const num = Math.floor(Math.random() * 100) + 1;
+        data.push(num);
+      }
+      this.lineChartData.datasets.data = [...data];
+      this.chartData = [...this.lineCharData];
     },
     onClickOpenEditModal() {}
   },

@@ -56,18 +56,6 @@ const routes = [
         ]
       },
       {
-        path: "my",
-        component: () => import("@/views/app/my"),
-        redirect: `${adminRoot}/my/profile`,
-        children: [
-          {
-            name: "Profile",
-            path: "profile",
-            component: () => import("@/views/app/my/Profile")
-          }
-        ]
-      },
-      {
         path: "search",
         component: () => import("@/views/app/search"),
         redirect: `${adminRoot}/search/area`,

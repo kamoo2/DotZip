@@ -57,10 +57,10 @@ export default {
   justify-content: space-between;
 }
 .user__item__username {
-  font-size: 20px;
+  font-size: 18px;
 }
 .following__toggle__btn {
-  font-size: 15px;
+  font-size: 13px;
   cursor: pointer;
 }
 </style>
